@@ -23,6 +23,17 @@
     box-shadow: 0 0 7px 1px var(--bgColor2);
 } */
 
+#resume h2 {
+    text-align: left;
+    margin-bottom: 10px;
+    margin-top: 40px;
+}
+
+#resume ul {
+    text-align: left;
+    margin-bottom: 40px;
+}
+
 .resume-container {
     background-color: var(--darkPurple1);
     color: var(--textColor);
@@ -36,36 +47,12 @@
     box-shadow: 0 0 3px 5px var(--shadowColor);
 }
 
-.project {
-    background: linear-gradient(to top left, var(--hoverAccent), rgba(0, 0, 0, 0));
-}
-
-.project-image {
-    width: auto;
-    height: auto;
-}
-
 #games {
     box-shadow: 0 0 3px 5px var(--shadowColor);
 }
 
-.projects-container {
-    /* max-width: 1500px; */
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
-    gap: 30px;
-}
 
 /* Card styling */
-.project-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 0 3px 5px var(--shadowColor);
-    transition: transform 0.3s ease;
-    background-color: var(--darkPurple1);
-}
-
 #projects .secondary-link {
     font-size: 1.125rem;
 }
@@ -73,10 +60,31 @@
 .project-card img {
     width: 300px;
     height: auto;
-    transition: transform 0.3s ease;
+    border-radius: 7.5px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--darkPurple2);
 }
 
-/* Hover effects */
-.project-card:hover {
-    transform: scale(1.065);
+.projects-container {
+    max-width: 100%;
+    border-radius: 20px;
+    margin-bottom: 50px;
+    margin-top: 20px;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(600px, 0.9fr));
+    justify-content: center;
+    gap: 20px;
+}
+
+
+.project-card {
+    background-color: var(--darkPurple1);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
 }

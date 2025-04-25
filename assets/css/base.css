@@ -114,6 +114,7 @@ h1 {
 h2 {
     font-size: 2rem;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 h3 {
@@ -194,14 +195,25 @@ ul {
 
 .horizontal-container-between {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: stretch;
+    align-items: bottom;
 }
 
 .horizontal-container-around {
     display: flex;
+    flex-direction: row;
     justify-content: space-around;
-    align-items: center;
+    align-items: stretch;
+    gap: 20px;
+}
+
+.horizontal-container-stretch {
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: stretch;
     gap: 20px;
 }
 
@@ -217,7 +229,7 @@ ul {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: space-between; 
+    justify-content: center; 
     gap: 20px;  
 }
 
