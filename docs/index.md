@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Test
+title: Home
 ---
 
 <h1>Welcome to BifrostGames!</h1>
