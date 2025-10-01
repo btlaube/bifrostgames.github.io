@@ -3,11 +3,20 @@
 }
 
 .featured-projects {
+    width: 90%;
     gap: 20px;
     background-color: var(--darkPurple1);
     color: var(--textColor); /* Consistent text color */
     border-radius: 15px;
     box-shadow: 0 0 7px 1px var(--shadowColor);
+}
+
+.featured-project-display {
+    max-width: 60%;
+}
+
+.featured-project-info {
+    max-width: 40%;
 }
 
 .game {
@@ -23,8 +32,8 @@
 }
 
 .display-container a {
-    width: 500px;
-    height: 400px;
+    /* width: 500px; */
+    /* height: 400px; */
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 2px 5px var(--shadowColor);
@@ -43,7 +52,7 @@
 }
 
 .main-image {
-    width: 250px;
+    width: 100%;
     height: auto;
     border-radius: 12px;
     box-shadow: 0 2px 6px var(--shadowColor);
@@ -72,7 +81,7 @@
 }
 
 .about-container {
-    max-width: 900px;
+    width: 90%;
     background-color: var(--lightPurple3);
     color: var(--textColor);
     border-radius: 20px;
@@ -90,7 +99,7 @@
 
 .links-container {
     width: 90%;
-    max-width: 1400px;
+    /* max-width: 1400px; */
     background-color: var(--darkPurple1);
     border-radius: 20px;
 }
