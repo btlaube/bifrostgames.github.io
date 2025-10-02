@@ -43,19 +43,20 @@ ol ol, ul ul {
 
 .game-info-container {
     width: 100%;
+    max-width: 1000px;
     display: flex;
     flex-direction: row;
     align-items: top;
 }
 
-/* .description {
+.description {
     max-width: 50%;
-    margin: 25px;
-} */
+}
 
 .game-banner-image {
     margin: 0 auto;
-    max-width: 100%;
+    width: 100%;
+    max-width: 1000px;
 }
 
 /* Card styling */

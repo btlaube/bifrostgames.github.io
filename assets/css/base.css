@@ -75,7 +75,7 @@ main {
 
 /* Basic styles for the entire website */
 body {
-    width: 100vw;
+    width: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -328,7 +328,7 @@ footer {
     z-index: 1000;
     width: 100%;
     margin: 0 auto;
-    padding: 20px;
+    padding-bottom: 20px;
 }
 
 .sticky-nav ul {
@@ -336,8 +336,7 @@ footer {
 }
 
 .sticky-nav-tabs {
-    /* max-width: 2000px; */
-    /* width: 75%; */
+    width: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;

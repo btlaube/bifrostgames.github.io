@@ -4,6 +4,7 @@
 
 .featured-projects {
     width: 90%;
+    /* max-width: 1000px; */
     gap: 20px;
     background-color: var(--darkPurple1);
     color: var(--textColor); /* Consistent text color */
