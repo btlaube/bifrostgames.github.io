@@ -23,3 +23,25 @@ function setDisplayImage(button, displayImage) {
         displayImage.src = buttonImage.src;
     }
 }
+
+document.querySelectorAll('.animated-pfp').forEach(img => {
+    const idleSrc = "/assets/img/PfpAnimFrames/Frame1.png";
+    const hoverSrc = "/assets/img/PfpAnimFrames/Frame2.png";
+    const clickSrc = "/assets/img/PfpAnimFrames/Frame3.png";
+
+    img.addEventListener('mouseover', () => {
+        img.src = hoverSrc;
+    });
+
+    img.addEventListener('mouseout', () => {
+        img.src = idleSrc;
+    });
+
+    img.addEventListener('mousedown', () => {
+        img.src = clickSrc;
+    });
+
+    img.addEventListener('mouseup', () => {
+        img.src = hoverSrc; // return to hover state after click
+    });
+});

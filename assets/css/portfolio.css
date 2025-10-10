@@ -7,7 +7,8 @@
 } */
 
 .about-container {
-    max-width: 900px;
+    width: 90%;
+    max-width: 1200px;
     background-color: var(--lightPurple3);
     color: var(--textColor);
     border-radius: 20px;
