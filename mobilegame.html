@@ -3,27 +3,28 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-<title>Mobile-First Canvas Game — Collect & Survive</title>
+<title>Orb Runner — Avoid & Blast (Mobile First)</title>
 <style>
   :root{
-    --bg:#0b1020;
+    --bg1: #071021;
+    --bg2: #0b1b2b;
     --panel: rgba(255,255,255,0.06);
-    --accent:#FFD24C;
-    --muted:#9aa4b2;
-    --danger:#ff6b6b;
+    --accent: #FFD66B;
+    --muted: #9fb0c8;
+    --danger: #ff6b6b;
   }
   html,body{
     height:100%;
     margin:0;
-    background: linear-gradient(180deg,#071021 0%, #0b1020 60%);
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: radial-gradient(1000px 600px at 10% 10%, rgba(255,255,255,0.02), transparent 20%), linear-gradient(180deg,var(--bg1),var(--bg2));
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     color:#e6eef8;
     -webkit-user-select:none;
     user-select:none;
     -webkit-tap-highlight-color:transparent;
+    -webkit-font-smoothing:antialiased;
   }
 
-  /* Container positions canvas and overlays */
   .game-wrap{
     position:relative;
     width:100%;
@@ -35,22 +36,19 @@
   }
 
   canvas#game {
-    background:
-      radial-gradient(1000px 600px at 10% 10%, rgba(255,255,255,0.02), transparent 10%),
-      linear-gradient(180deg, rgba(255,255,255,0.01), transparent 40%),
-      var(--bg);
     width:100%;
     height:100%;
     display:block;
     touch-action:none;
     image-rendering: optimizeSpeed;
+    background: transparent;
   }
 
   /* HUD */
   .hud{
     position:absolute;
-    top:12px;
-    left:12px;
+    top:10px;
+    left:10px;
     display:flex;
     gap:8px;
     align-items:center;
@@ -64,16 +62,15 @@
     display:flex;
     gap:8px;
     align-items:center;
-    box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+    box-shadow: 0 8px 26px rgba(2,6,23,0.5);
     backdrop-filter: blur(6px);
   }
-  .chip strong{ color:var(--accent); font-weight:600; margin-left:4px;}
+  .chip strong{ color:var(--accent); font-weight:700; margin-left:4px;}
 
-  /* Right top controls */
   .controls-top{
     position:absolute;
-    top:12px;
-    right:12px;
+    top:10px;
+    right:10px;
     display:flex;
     gap:8px;
     z-index:40;
@@ -91,13 +88,13 @@
   }
   .btn:active { transform: translateY(1px); }
 
-  /* Mobile controls (joystick + action) */
+  /* Mobile controls */
   .mobile-controls{
     position:absolute;
     bottom:12px;
     left:12px;
     right:12px;
-    pointer-events:none; /* children will enable */
+    pointer-events:none;
     z-index:30;
     display:flex;
     justify-content:space-between;
@@ -128,11 +125,12 @@
     width:52px;
     height:52px;
     border-radius:50%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
     border: 2px solid rgba(255,255,255,0.06);
     transform: translate(0,0);
     transition: transform 0.03s linear;
     pointer-events:none;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
   }
 
   .action-button {
@@ -140,26 +138,18 @@
     width:96px;
     height:96px;
     border-radius:50%;
-    background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.08));
+    background: linear-gradient(180deg, rgba(255,210,120,0.06), rgba(0,0,0,0.08));
     display:flex;
     align-items:center;
     justify-content:center;
-    font-weight:700;
-    font-size:18px;
+    font-weight:800;
+    font-size:16px;
     color:var(--accent);
     border:3px solid rgba(255,255,255,0.04);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
   }
 
-  /* Small screen adjustments */
-  @media (max-width:520px){
-    .joystick { width:120px; height:120px; }
-    .stick-knob { width:46px; height:46px; }
-    .action-button { width:84px; height:84px; font-size:16px; }
-    .chip { font-size:13px; padding:6px 10px; border-radius:10px;}
-  }
-
-  /* Center overlay for messages */
+  /* overlay panel */
   .overlay {
     position:absolute;
     inset:0;
@@ -175,7 +165,7 @@
     border-radius:14px;
     padding:18px;
     text-align:center;
-    min-width:220px;
+    min-width:240px;
     color:#f2f6ff;
     box-shadow: 0 12px 40px rgba(2,6,23,0.6);
     backdrop-filter: blur(6px);
@@ -183,7 +173,6 @@
   .panel h2{ margin:0 0 8px; font-size:20px; color:var(--accent); }
   .panel p{ margin:0 0 12px; color:var(--muted); font-size:14px; }
 
-  /* small footer hint */
   .hint {
     position:absolute;
     bottom:10px;
@@ -195,27 +184,32 @@
     text-shadow: 0 2px 6px rgba(0,0,0,0.6);
   }
 
-  /* accessibility hidden label for screen reader */
+  @media (max-width:520px){
+    .joystick { width:120px; height:120px; }
+    .stick-knob { width:46px; height:46px; }
+    .action-button { width:84px; height:84px; font-size:15px; }
+    .chip { font-size:13px; padding:6px 10px; border-radius:10px;}
+  }
+
   .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
 </style>
 </head>
 <body>
 <div class="game-wrap" id="gameWrap">
-  <canvas id="game" width="900" height="1600" aria-label="Action game canvas"></canvas>
+  <canvas id="game" width="900" height="1600" aria-label="Avoid obstacles game canvas"></canvas>
 
   <div class="hud" role="region" aria-live="polite">
-    <div class="chip" id="scoreChip">Score: <strong id="score">0</strong></div>
-    <div class="chip" id="healthChip">HP: <strong id="hp">5</strong></div>
+    <div class="chip">Score: <strong id="score">0</strong></div>
+    <div class="chip">HP: <strong id="hp">5</strong></div>
   </div>
 
   <div class="controls-top">
-    <div class="btn" id="soundToggle" role="button" tabindex="0" aria-pressed="false">Sound: On</div>
     <div class="btn" id="pauseBtn" role="button" tabindex="0">Pause</div>
   </div>
 
   <div class="mobile-controls" id="mobileControls" aria-hidden="false">
     <div class="joystick" id="joystick" aria-label="Movement joystick">
-      <div class="stick-base" id="stickBase">
+      <div class="stick-base">
         <div class="stick-knob" id="stickKnob" aria-hidden="true"></div>
       </div>
     </div>
@@ -235,263 +229,211 @@
     </div>
   </div>
 
-  <div class="hint" id="hint">Mobile: use joystick + blast — Desktop: arrow keys/WASD + Space</div>
+  <div class="hint">Mobile: joystick + blast · Desktop: WASD/Arrows + Space</div>
 </div>
 
-<!-- Screen reader friendly status -->
 <div class="sr-only" id="srStatus" aria-live="polite"></div>
 
 <script>
-/* ===========================
-   Mobile-First Canvas Game
-   - Mobile: on-screen joystick + action button
-   - Desktop: keyboard controls
-   - Simple collect & survive gameplay
-   =========================== */
-
 (() => {
-  // CONFIG: Tweak these for difficulty and feel
+  // CONFIG
   const CONFIG = {
     worldWidth: 900,
     worldHeight: 1600,
-    playerRadius: 20,
-    playerSpeed: 320,         // pixels per second when joystick full
-    enemySpeedBase: 60,
-    enemySpeedIncrease: 6,    // per wave
-    enemySpawnInterval: 1500, // milliseconds
-    coinSpawnInterval: 900,
+    playerR: 20,
+    playerSpeed: 340,
+    enemyBaseSpeed: 60,
+    enemySpawnBase: 1400,
+    coinSpawnBase: 1100,
+    blastCooldown: 2000,
+    blastRadius: 120,
     maxHP: 5,
-    blastCooldown: 2200,      // ms
-    blastRadius: 110,
-    coinValue: 10,
-    dprLimit: 2.5,            // clamp DPR to avoid huge textures on old phones
+    dprLimit: 2.5,
   };
 
-  // Canvas + context
+  // canvas
   const canvas = document.getElementById('game');
-  const ctx = canvas.getContext('2d', { alpha: false });
+  const ctx = canvas.getContext('2d', { alpha: true });
 
-  // DOM elements
+  // UI elements
   const scoreEl = document.getElementById('score');
   const hpEl = document.getElementById('hp');
   const overlay = document.getElementById('overlay');
   const panel = document.getElementById('panel');
-  const panelTitle = document.getElementById('panelTitle');
-  const panelBody = document.getElementById('panelBody');
+  const pauseBtn = document.getElementById('pauseBtn');
   const resumeBtn = document.getElementById('resumeBtn');
   const restartBtn = document.getElementById('restartBtn');
-  const pauseBtn = document.getElementById('pauseBtn');
-  const soundToggle = document.getElementById('soundToggle');
-  const mobileControls = document.getElementById('mobileControls');
-  const joystickWrap = document.getElementById('joystick');
-  const stickKnob = document.getElementById('stickKnob');
   const actionBtn = document.getElementById('actionBtn');
-  const srStatus = document.getElementById('srStatus');
+  const stickKnob = document.getElementById('stickKnob');
 
-  // Game state
+  // state
   const state = {
     running: false,
     paused: false,
     lastTime: 0,
     score: 0,
     hp: CONFIG.maxHP,
-    player: { x: CONFIG.worldWidth/2, y: CONFIG.worldHeight*0.8, vx:0, vy:0 },
+    player: { x: CONFIG.worldWidth/2, y: CONFIG.worldHeight*0.7, vx:0, vy:0 },
     enemies: [],
-    coins: [],
     particles: [],
-    spawnTimers: { enemy: 0, coin: 0 },
+    spawnTimers: { enemy:0, coin:0 },
     enemyWave: 0,
-    lastBlast: -99999,
-    soundEnabled: true,
+    lastBlast: -999999,
+    startTime: 0,
   };
 
-  // Touch/joystick state
+  // joystick
   const joystick = {
     active: false,
     startX: 0, startY: 0,
-    dx: 0, dy: 0,
-    maxRadius: 48,
-    outputX:0, outputY:0, // -1..1
+    maxRadius: 52,
+    outputX: 0, // -1..1 (left..right)
+    outputY: 0, // 1 = up, -1 = down (we'll apply minus when moving)
   };
 
-  // Audio: small procedural effects via WebAudio
-  let audioCtx = null;
-  function ensureAudio() {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    return audioCtx;
-  }
-  function beep(freq = 440, time = 0.06, volume=0.05) {
-    if (!state.soundEnabled) return;
-    const ac = ensureAudio();
-    const o = ac.createOscillator();
-    const g = ac.createGain();
-    o.type = 'sine';
-    o.frequency.value = freq;
-    g.gain.value = volume;
-    o.connect(g); g.connect(ac.destination);
-    o.start();
-    o.stop(ac.currentTime + time);
-  }
-  function thump(time = 0.08, volume=0.12){
-    if (!state.soundEnabled) return;
-    const ac = ensureAudio();
-    const o = ac.createOscillator();
-    const g = ac.createGain();
-    o.type = 'square';
-    o.frequency.value = 120;
-    g.gain.value = volume;
-    o.connect(g); g.connect(ac.destination);
-    o.start();
-    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + time);
-    o.stop(ac.currentTime + time);
-  }
+  // keyboard state
+  const keys = {};
 
-  // Responsive canvas: mobile-first, fit container while maintaining world aspect ratio
+  // Responsive canvas sizing
   function resizeCanvas(){
     const wrap = document.getElementById('gameWrap');
     const rect = wrap.getBoundingClientRect();
-    // world aspect ratio
-    const aspect = CONFIG.worldWidth / CONFIG.worldHeight;
-    let w = rect.width;
-    let h = rect.height;
-    // fit by height or width depending on orientation
-    if (w / h > aspect) {
-      // too wide, limit by height
-      const targetH = h;
-      const targetW = targetH * aspect;
-      w = targetW; // center by css width/height cover handles
-    } else {
-      const targetW = w;
-      const targetH = targetW / aspect;
-      h = targetH;
-    }
-    // device pixel ratio handling
     const dpr = Math.min(window.devicePixelRatio || 1, CONFIG.dprLimit);
     canvas.style.width = rect.width + 'px';
     canvas.style.height = rect.height + 'px';
     canvas.width = Math.floor(rect.width * dpr);
     canvas.height = Math.floor(rect.height * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // work in CSS pixels
+    ctx.setTransform(dpr,0,0,dpr,0,0);
   }
   window.addEventListener('resize', resizeCanvas);
-  window.addEventListener('orientationchange', () => { resizeCanvas(); });
+  window.addEventListener('orientationchange', resizeCanvas);
 
-  // Utils
-  function rand(min,max){ return Math.random()*(max-min)+min; }
-  function dist(a,b,c,d){ const dx=a-c, dy=b-d; return Math.hypot(dx,dy); }
-  function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+  // utilities
+  const rand = (a,b) => Math.random()*(b-a)+a;
+  const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+  const dist = (x1,y1,x2,y2) => Math.hypot(x1-x2, y1-y2);
 
-  // Spawn helpers
-  function spawnEnemy() {
-    const margin = 80;
+  // spawn enemy
+  function spawnEnemy(){
     // spawn at random edge
     const edge = Math.floor(Math.random()*4);
     let x,y;
-    if (edge===0){ x = rand(-50, CONFIG.worldWidth+50); y = -40; }
-    else if (edge===1){ x = rand(-50, CONFIG.worldWidth+50); y = CONFIG.worldHeight+40; }
-    else if (edge===2){ x = -40; y = rand(-50, CONFIG.worldHeight+50); }
-    else { x = CONFIG.worldWidth+40; y = rand(-50, CONFIG.worldHeight+50); }
-    const spd = CONFIG.enemySpeedBase + state.enemyWave * CONFIG.enemySpeedIncrease + rand(-6,12);
-    state.enemies.push({ x,y, r: 18 + Math.random()*10, hp:1, speed: spd, wob: Math.random()*2000 });
-  }
-  function spawnCoin() {
-    const pad = 60;
-    const x = rand(pad, CONFIG.worldWidth - pad);
-    const y = rand(pad, CONFIG.worldHeight - pad);
-    state.coins.push({ x,y, r:10 + Math.random()*6, rot: Math.random()*Math.PI*2 });
+    if (edge===0){ x = rand(-40, CONFIG.worldWidth+40); y = -60; }
+    else if (edge===1){ x = rand(-40, CONFIG.worldWidth+40); y = CONFIG.worldHeight + 60; }
+    else if (edge===2){ x = -60; y = rand(-40, CONFIG.worldHeight+40); }
+    else { x = CONFIG.worldWidth + 60; y = rand(-40, CONFIG.worldHeight+40); }
+    const speed = CONFIG.enemyBaseSpeed + state.enemyWave*6 + rand(-8,16);
+    const size = rand(12,26);
+    const spin = rand(-0.12,0.12);
+    state.enemies.push({ x,y, r: size, speed, spin, ang: rand(0,Math.PI*2) });
   }
 
-  // Reset / Start / Pause
+  // spawn some ambient particles for background
+  const bgParticles = [];
+  function createBgParticles(){
+    const n = 40;
+    for (let i=0;i<n;i++){
+      bgParticles.push({
+        x: rand(0, CONFIG.worldWidth),
+        y: rand(0, CONFIG.worldHeight),
+        r: rand(1.2,4.6),
+        vx: rand(-6,6),
+        vy: rand(-6,6),
+        alpha: rand(0.06,0.22),
+      });
+    }
+  }
+  createBgParticles();
+
+  // reset game
   function resetGame(){
     state.score = 0;
     state.hp = CONFIG.maxHP;
     state.player.x = CONFIG.worldWidth/2;
-    state.player.y = CONFIG.worldHeight * 0.8;
-    state.enemies.length = 0;
-    state.coins.length = 0;
-    state.particles.length = 0;
+    state.player.y = CONFIG.worldHeight*0.7;
+    state.enemies = [];
+    state.particles = [];
     state.spawnTimers.enemy = 0;
-    state.spawnTimers.coin = 0;
     state.enemyWave = 0;
-    state.lastBlast = -99999;
+    state.lastBlast = -999999;
     state.running = true;
     state.paused = false;
-    updateHud();
+    state.startTime = performance.now();
+    updateUI();
+    // pre-spawn some enemies
+    for (let i=0;i<3;i++) spawnEnemy();
   }
 
-  function updateHud(){
-    scoreEl.textContent = state.score;
+  function updateUI(){
+    scoreEl.textContent = Math.floor(state.score);
     hpEl.textContent = state.hp;
-    srStatus.textContent = `Score ${state.score}, HP ${state.hp}`;
+    document.getElementById('srStatus').textContent = `Score ${Math.floor(state.score)} HP ${state.hp}`;
   }
 
+  // blast action
+  function doBlast(){
+    const now = performance.now();
+    if (now - state.lastBlast < CONFIG.blastCooldown) return;
+    state.lastBlast = now;
+    // eliminate enemies within radius
+    const px = state.player.x, py = state.player.y;
+    for (let i = state.enemies.length-1; i>=0; i--){
+      const e = state.enemies[i];
+      const d = dist(px,py,e.x,e.y);
+      if (d <= CONFIG.blastRadius + e.r){
+        spawnParticles(e.x, e.y, Math.floor(e.r/2)+6);
+        state.enemies.splice(i,1);
+        state.score += 8;
+      }
+    }
+    spawnParticles(px,py,18);
+  }
+
+  // particle helper
+  function spawnParticles(x,y,n=8){
+    for (let i=0;i<n;i++){
+      const a = rand(0,Math.PI*2);
+      const s = rand(40,240);
+      state.particles.push({
+        x,y,
+        vx: Math.cos(a)*s,
+        vy: Math.sin(a)*s,
+        life: rand(400,1100),
+        born: performance.now(),
+        size: rand(1.5,4.6),
+        color: `hsla(${Math.floor(rand(180,260))}, 90%, ${rand(60,80)}%, 1)`
+      });
+    }
+  }
+
+  // game over
+  function gameOver(){
+    state.running = false;
+    showPanel('Game Over', `Score: ${Math.floor(state.score)}`);
+  }
+
+  // panel controls
   function showPanel(title, body, withButtons=true){
-    panelTitle.textContent = title;
-    panelBody.textContent = body;
+    document.getElementById('panelTitle').textContent = title;
+    document.getElementById('panelBody').textContent = body || '';
     panel.style.display = 'block';
     overlay.style.pointerEvents = 'auto';
-    panel.parentElement.style.pointerEvents = 'auto';
     overlay.setAttribute('aria-hidden','false');
-    panel.setAttribute('tabindex','-1');
-    panel.focus?.();
-    if (withButtons) {
-      resumeBtn.style.display = '';
+    if (!withButtons){
+      resumeBtn.style.display = 'none';
       restartBtn.style.display = '';
     } else {
-      resumeBtn.style.display = 'none';
+      resumeBtn.style.display = '';
       restartBtn.style.display = '';
     }
   }
   function hidePanel(){
     panel.style.display = 'none';
-    overlay.setAttribute('aria-hidden','true');
     overlay.style.pointerEvents = 'none';
+    overlay.setAttribute('aria-hidden','true');
   }
 
-  // Blast action: damages nearby enemies, creates particles, big sound
-  function doBlast(){
-    const now = performance.now();
-    if (now - state.lastBlast < CONFIG.blastCooldown) return;
-    state.lastBlast = now;
-    // sound
-    thump(0.15, 0.18);
-    // damage enemies
-    const px = state.player.x, py = state.player.y;
-    for (let i = state.enemies.length -1; i>=0; i--){
-      const e = state.enemies[i];
-      const d = dist(px,py,e.x,e.y);
-      if (d < CONFIG.blastRadius + e.r){
-        // kill enemy and award points
-        spawnParticles(e.x, e.y, 8);
-        state.enemies.splice(i,1);
-        state.score += 8;
-      }
-    }
-    // visual particles
-    spawnParticles(px,py,18, true);
-    updateHud();
-  }
-
-  // Particles for feedback
-  function spawnParticles(x,y,n=6, fadeOut=false){
-    for (let i=0;i<n;i++){
-      const a = rand(0,Math.PI*2);
-      const s = rand(30,160);
-      state.particles.push({
-        x,y,
-        vx: Math.cos(a)*s,
-        vy: Math.sin(a)*s,
-        life: rand(300,900),
-        born: performance.now(),
-        size: rand(2,6),
-        fade: fadeOut ? 1 : 0,
-      });
-    }
-  }
-
-  // Main update loop
+  // main loop
   function update(ts){
     if (!state.running || state.paused){
       state.lastTime = ts;
@@ -499,319 +441,238 @@
       return;
     }
     if (!state.lastTime) state.lastTime = ts;
-    let dt = (ts - state.lastTime) / 1000; // seconds
-    if (dt > 0.05) dt = 0.05; // clamp big frames
+    let dt = (ts - state.lastTime)/1000;
+    dt = Math.min(dt, 0.05);
     state.lastTime = ts;
 
-    // Input -> player velocity
-    const inpX = joystick.outputX || (keys.ArrowLeft?-1:keys.ArrowRight?1:0) || (keys.a?-1:keys.d?1:0);
-    const inpY = joystick.outputY || (keys.ArrowUp?-1:keys.ArrowDown?1:0) || (keys.w?-1:keys.s?1:0);
-    // normalize diagonal
-    let mag = Math.hypot(inpX, inpY);
-    let nx=0, ny=0;
-    if (mag > 0.001){
-      nx = inpX/mag;
-      ny = inpY/mag;
-    }
-    state.player.vx = nx * CONFIG.playerSpeed;
-    state.player.vy = ny * CONFIG.playerSpeed;
-    state.player.x += state.player.vx * dt;
-    state.player.y += state.player.vy * dt;
+    // input: horizontal from joystick or keyboard
+    const jx = joystick.outputX || 0;
+    const jy = joystick.outputY || 0; // 1 = up, -1 = down (we apply below)
+    const kx = (keys.ArrowRight || keys.d) ? 1 : (keys.ArrowLeft || keys.a) ? -1 : 0;
+    const ky = (keys.ArrowUp || keys.w) ? 1 : (keys.ArrowDown || keys.s) ? -1 : 0;
 
-    // clamp player inside world
+    const inputX = Math.abs(jx) > 0.01 ? jx : kx;
+    const inputY = Math.abs(jy) > 0.01 ? jy : ky; // positive means up
+
+    // move player: horizontal directly, vertical subtract because canvas y grows downward
+    state.player.x += inputX * CONFIG.playerSpeed * dt;
+    state.player.y -= inputY * CONFIG.playerSpeed * dt; // subtract so positive inputY moves up
+
+    // clamp
     state.player.x = clamp(state.player.x, 12, CONFIG.worldWidth - 12);
     state.player.y = clamp(state.player.y, 12, CONFIG.worldHeight - 12);
 
-    // spawn timers (scale with difficulty slightly)
+    // spawn enemies over time, faster as waves increase
     state.spawnTimers.enemy += dt*1000;
-    state.spawnTimers.coin += dt*1000;
-    if (state.spawnTimers.enemy > CONFIG.enemySpawnInterval){
+    const spawnInterval = Math.max(600, CONFIG.enemySpawnBase - state.enemyWave*12);
+    if (state.spawnTimers.enemy >= spawnInterval){
       state.spawnTimers.enemy = 0;
       spawnEnemy();
-      // every N enemies increase wave
       state.enemyWave++;
     }
-    if (state.spawnTimers.coin > CONFIG.coinSpawnInterval){
-      state.spawnTimers.coin = 0;
-      spawnCoin();
-    }
 
-    // update enemies: move toward player
-    for (let e of state.enemies){
-      // small wobble
-      const wob = Math.sin((performance.now() + e.wob)/600) * 0.4;
-      const dx = state.player.x - e.x + wob*30;
-      const dy = state.player.y - e.y + wob*30;
-      const d = Math.hypot(dx,dy) || 1;
+    // enemies movement: move toward player
+    for (let i=state.enemies.length-1;i>=0;i--){
+      const e = state.enemies[i];
+      e.ang += e.spin * dt * 60;
+      const dx = state.player.x - e.x;
+      const dy = state.player.y - e.y;
+      const d = Math.hypot(dx, dy) || 1;
       e.x += (dx/d) * e.speed * dt;
       e.y += (dy/d) * e.speed * dt;
-    }
-
-    // update coins (rotate)
-    for (let c of state.coins){
-      c.rot += dt * 6;
-    }
-
-    // particles
-    for (let i = state.particles.length -1; i>=0; i--){
-      const p = state.particles[i];
-      const lifeElapsed = performance.now() - p.born;
-      p.x += p.vx * dt;
-      p.y += p.vy * dt;
-      if (p.fade) p.vx *= 0.98;
-      if (lifeElapsed > p.life) state.particles.splice(i,1);
-    }
-
-    // collisions: player & coins
-    for (let i = state.coins.length -1; i>=0; i--){
-      const c = state.coins[i];
-      const d = dist(state.player.x, state.player.y, c.x, c.y);
-      if (d < CONFIG.playerRadius + c.r){
-        state.coins.splice(i,1);
-        state.score += CONFIG.coinValue;
-        spawnParticles(c.x,c.y,8);
-        beep(800,0.06,0.04);
-      }
-    }
-
-    // collisions: enemies & player
-    for (let i = state.enemies.length -1; i>=0; i--){
-      const e = state.enemies[i];
-      const d = dist(state.player.x, state.player.y, e.x, e.y);
-      if (d < CONFIG.playerRadius + e.r){
-        // hurt player
-        spawnParticles(e.x,e.y,6);
-        beep(180,0.08,0.12);
+      // collision with player
+      if (dist(e.x,e.y, state.player.x, state.player.y) < e.r + CONFIG.playerR){
+        spawnParticles(e.x, e.y, 10);
         state.enemies.splice(i,1);
         state.hp -= 1;
-        updateHud();
-        if (state.hp <= 0) {
-          gameOver();
-          return;
-        }
+        if (state.hp <= 0) { updateUI(); gameOver(); return; }
       }
     }
 
-    // blast cooldown visuals (we only limit by time)
-    // (If keyboard space pressed do blast)
-    if (keys.Space && performance.now() - state.lastBlast > CONFIG.blastCooldown){
-      doBlast();
+    // update particles
+    for (let i=state.particles.length-1;i>=0;i--){
+      const p = state.particles[i];
+      const life = performance.now() - p.born;
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      p.vx *= 0.98;
+      p.vy *= 0.98;
+      if (life > p.life) state.particles.splice(i,1);
     }
 
-    // increase score slightly over time (survival incentive)
-    state.score += Math.floor(dt * 1.2);
-    updateHud();
+    // background particles gentle drift
+    for (const bp of bgParticles){
+      bp.x += bp.vx * dt * 0.15;
+      bp.y += bp.vy * dt * 0.15;
+      if (bp.x < -10) bp.x = CONFIG.worldWidth + 10;
+      if (bp.x > CONFIG.worldWidth + 10) bp.x = -10;
+      if (bp.y < -10) bp.y = CONFIG.worldHeight + 10;
+      if (bp.y > CONFIG.worldHeight + 10) bp.y = -10;
+    }
 
+    // auto-score by survival time and enemies dodged
+    state.score += dt * 2.6;
+    updateUI();
     render();
     requestAnimationFrame(update);
   }
 
-  // Render (draw world scaled to canvas size)
+  // render everything
   function render(){
-    // clear
-    const cw = canvas.width / (window.devicePixelRatio || 1);
-    const ch = canvas.height / (window.devicePixelRatio || 1);
-    ctx.clearRect(0,0,cw,ch);
+    const cssW = canvas.width / (window.devicePixelRatio || 1);
+    const cssH = canvas.height / (window.devicePixelRatio || 1);
+    ctx.clearRect(0,0, cssW, cssH);
 
-    // background pattern (subtle grid)
-    drawBackground(cw,ch);
+    // scale world to CSS area: we will draw using virtual world coordinates
+    // but canvas CSS is stretched to the viewport; we map world to canvas rect
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = rect.width / CONFIG.worldWidth;
+    const scaleY = rect.height / CONFIG.worldHeight;
+    // use uniform scale to preserve aspect
+    const scale = Math.min(scaleX, scaleY);
+    const offsetX = (rect.width - CONFIG.worldWidth * scale) / 2;
+    const offsetY = (rect.height - CONFIG.worldHeight * scale) / 2;
 
-    // draw coins
-    for (const c of state.coins){
-      ctx.save();
-      ctx.translate(c.x, c.y);
-      ctx.rotate(c.rot);
-      // glow
-      const g = ctx.createRadialGradient(0,0,c.r*0.1, 0,0,c.r*1.6);
-      g.addColorStop(0, 'rgba(255,226,115,0.9)');
-      g.addColorStop(0.6, 'rgba(255,200,60,0.35)');
-      g.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = g;
+    // helper to transform world coords to canvas coords
+    function wx(x){ return x * scale + offsetX; }
+    function wy(y){ return y * scale + offsetY; }
+
+    // background gradient
+    const g = ctx.createLinearGradient(0,0,0,rect.height);
+    g.addColorStop(0, '#071021');
+    g.addColorStop(1, '#061428');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0, rect.width, rect.height);
+
+    // subtle background particles glow
+    for (const bp of bgParticles){
       ctx.beginPath();
-      ctx.arc(0,0,c.r*1.6,0,Math.PI*2);
+      ctx.fillStyle = `rgba(140,190,255,${bp.alpha})`;
+      ctx.arc(wx(bp.x), wy(bp.y), bp.r * scale * 0.9, 0, Math.PI*2);
       ctx.fill();
-
-      // coin body
-      ctx.fillStyle = '#FFDD6A';
-      ctx.beginPath();
-      ctx.ellipse(0,0,c.r, c.r*0.7, 0, 0, Math.PI*2);
-      ctx.fill();
-      ctx.restore();
     }
 
-    // draw enemies
+    // decorative rotating rings subtle
+    const t = performance.now()*0.00012;
+    ctx.save();
+    ctx.globalAlpha = 0.06;
+    for (let i=0;i<3;i++){
+      ctx.beginPath();
+      ctx.strokeStyle = `hsl(${200 + i*30}, 60%, 60%)`;
+      ctx.lineWidth = 120 * (0.9 - i*0.18) * scale;
+      ctx.arc(rect.width/2, rect.height*0.33, (rect.width*0.4) + Math.sin(t*1.6 + i)*40, 0, Math.PI*2);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // draw enemies (as rotating shards/triangles)
     for (const e of state.enemies){
+      const cx = wx(e.x), cy = wy(e.y);
       ctx.save();
-      ctx.translate(e.x, e.y);
+      ctx.translate(cx, cy);
+      ctx.rotate(e.ang);
       // shadow
       ctx.beginPath();
-      ctx.ellipse(6, 10, e.r*1.1, e.r*0.6, 0, 0, Math.PI*2);
-      ctx.fillStyle = 'rgba(0,0,0,0.25)';
+      ctx.fillStyle = 'rgba(0,0,0,0.22)';
+      ctx.ellipse(6*scale, 10*scale, e.r*1.2*scale, e.r*0.6*scale, 0, 0, Math.PI*2);
       ctx.fill();
-
-      // body
-      ctx.beginPath();
-      ctx.fillStyle = '#8B2D2D';
-      ctx.arc(0, 0, e.r, 0, Math.PI*2);
-      ctx.fill();
-
-      // eye
-      ctx.beginPath();
-      ctx.fillStyle = '#fff';
-      ctx.ellipse(-e.r*0.25, -e.r*0.15, e.r*0.35, e.r*0.25, 0, 0, Math.PI*2);
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.fillStyle = '#111';
-      ctx.arc(-e.r*0.25, -e.r*0.15, e.r*0.12, 0, Math.PI*2);
-      ctx.fill();
+      // shards
+      for (let s=0; s<3; s++){
+        ctx.beginPath();
+        ctx.moveTo(0, -e.r*scale);
+        ctx.lineTo(e.r*scale*0.6, e.r*scale*0.8);
+        ctx.lineTo(-e.r*scale*0.6, e.r*scale*0.8);
+        ctx.closePath();
+        const hue = 10 + (s*20);
+        ctx.fillStyle = `hsl(${hue}, 85%, ${35 - s*4}%)`;
+        ctx.fill();
+      }
       ctx.restore();
     }
 
-    // player (draw on top)
+    // draw player as glowing pulsing orb with core and aura
     const p = state.player;
-    ctx.save();
-    ctx.translate(p.x, p.y);
-    // shadow
+    const px = wx(p.x), py = wy(p.y);
+    const pulse = 1 + Math.sin(performance.now()*0.008) * 0.07;
+    const auraR = CONFIG.playerR * 2.8 * pulse * scale;
+    // aura
+    const rg = ctx.createRadialGradient(px, py, 0, px, py, auraR);
+    rg.addColorStop(0, 'rgba(140,220,255,0.25)');
+    rg.addColorStop(0.6, 'rgba(100,170,255,0.09)');
+    rg.addColorStop(1, 'rgba(20,40,70,0)');
+    ctx.fillStyle = rg;
     ctx.beginPath();
-    ctx.ellipse(10, 18, CONFIG.playerRadius*1.2, CONFIG.playerRadius*0.6, 0, 0, Math.PI*2);
-    ctx.fillStyle = 'rgba(0,0,0,0.28)';
+    ctx.arc(px, py, auraR, 0, Math.PI*2);
     ctx.fill();
 
-    // player body
+    // core orb
+    const orbR = CONFIG.playerR * scale;
+    const orbG = ctx.createLinearGradient(px-10*scale, py-10*scale, px+10*scale, py+10*scale);
+    orbG.addColorStop(0, '#BFF7FF');
+    orbG.addColorStop(1, '#58A6FF');
+    ctx.fillStyle = orbG;
     ctx.beginPath();
-    // gradient body
-    const g = ctx.createLinearGradient(-CONFIG.playerRadius, -CONFIG.playerRadius, CONFIG.playerRadius, CONFIG.playerRadius);
-    g.addColorStop(0, '#9FE9FF');
-    g.addColorStop(1, '#4CA6FF');
-    ctx.fillStyle = g;
-    ctx.arc(0,0, CONFIG.playerRadius, 0, Math.PI*2);
+    ctx.arc(px, py, orbR, 0, Math.PI*2);
     ctx.fill();
 
-    // player core
+    // inner core
     ctx.beginPath();
-    ctx.fillStyle = '#ffffff';
-    ctx.arc(0,0, CONFIG.playerRadius*0.38, 0, Math.PI*2);
+    ctx.fillStyle = 'white';
+    ctx.globalAlpha = 0.9;
+    ctx.arc(px - orbR*0.15, py - orbR*0.15, orbR*0.38, 0, Math.PI*2);
     ctx.fill();
+    ctx.globalAlpha = 1;
 
-    // blast radius indicator (if ready)
-    if (performance.now() - state.lastBlast > CONFIG.blastCooldown) {
+    // blast ready indicator
+    if (performance.now() - state.lastBlast > CONFIG.blastCooldown){
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(255,210,100,0.12)';
-      ctx.lineWidth = 6;
-      ctx.arc(0,0, CONFIG.blastRadius, 0, Math.PI*2);
+      ctx.lineWidth = 3 * scale;
+      ctx.strokeStyle = 'rgba(255,220,120,0.12)';
+      ctx.arc(px, py, CONFIG.blastRadius * scale * 0.96, 0, Math.PI*2);
+      ctx.stroke();
+    } else {
+      // show cooldown ring fraction around player
+      const frac = (performance.now() - state.lastBlast) / CONFIG.blastCooldown;
+      ctx.beginPath();
+      ctx.lineWidth = 5 * scale;
+      ctx.strokeStyle = 'rgba(255,220,120,0.14)';
+      ctx.arc(px, py, CONFIG.blastRadius * scale * 0.9, -Math.PI/2, -Math.PI/2 + frac*Math.PI*2);
       ctx.stroke();
     }
 
-    ctx.restore();
-
     // draw particles
-    for (const p of state.particles){
-      const life = (performance.now() - p.born) / p.life;
-      const alpha = clamp(1 - life, 0, 1);
-      ctx.globalAlpha = alpha;
+    for (const part of state.particles){
+      const lifeFrac = clamp((performance.now() - part.born) / part.life, 0, 1);
+      ctx.globalAlpha = 1 - lifeFrac;
       ctx.beginPath();
-      ctx.fillStyle = 'rgba(255,255,255,0.9)';
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+      ctx.fillStyle = part.color || 'rgba(255,255,255,0.9)';
+      ctx.arc(wx(part.x), wy(part.y), part.size*scale*0.6, 0, Math.PI*2);
       ctx.fill();
-      ctx.globalAlpha = 1;
     }
+    ctx.globalAlpha = 1;
 
-    // UI overlays (cooldown arc)
-    // draw blast cooldown near action button location on canvas (approx bottom-right)
-    // We'll draw a small cooldown arc in HUD area
-    const hudX = cw - 68;
-    const hudY = ch - 68;
-    const cd = clamp((performance.now() - state.lastBlast) / CONFIG.blastCooldown, 0, 1);
+    // optional HUD on canvas (small blast icon)
     ctx.save();
-    ctx.translate(hudX, hudY);
+    ctx.globalAlpha = 0.9;
+    const hudX = rect.width - 84;
+    const hudY = rect.height - 84;
     ctx.beginPath();
-    ctx.fillStyle = 'rgba(0,0,0,0.35)';
-    ctx.arc(0,0,36,0,Math.PI*2);
+    ctx.fillStyle = 'rgba(0,0,0,0.28)';
+    ctx.arc(hudX, hudY, 36, 0, Math.PI*2);
     ctx.fill();
+    // cooldown arc
+    const cd = clamp((performance.now() - state.lastBlast)/CONFIG.blastCooldown, 0, 1);
     ctx.beginPath();
-    ctx.strokeStyle = 'rgba(255,210,100,0.9)';
     ctx.lineWidth = 6;
-    ctx.beginPath();
-    ctx.arc(0,0,30, -Math.PI/2, -Math.PI/2 + cd * Math.PI*2);
+    ctx.strokeStyle = 'rgba(255,210,100,0.95)';
+    ctx.arc(hudX, hudY, 30, -Math.PI/2, -Math.PI/2 + cd*Math.PI*2);
     ctx.stroke();
     ctx.restore();
   }
 
-  function drawBackground(cw,ch){
-    // simple starfield / noise-like dots
-    ctx.fillStyle = '#071021';
-    ctx.fillRect(0,0,cw,ch);
-    // subtle grid lines
-    ctx.strokeStyle = 'rgba(255,255,255,0.015)';
-    ctx.lineWidth = 1;
-    const step = Math.floor(120);
-    for (let x=0;x<=CONFIG.worldWidth;x+=step){
-      ctx.beginPath();
-      ctx.moveTo(x,0);
-      ctx.lineTo(x,CONFIG.worldHeight);
-      ctx.stroke();
-    }
-    for (let y=0;y<=CONFIG.worldHeight;y+=step){
-      ctx.beginPath();
-      ctx.moveTo(0,y);
-      ctx.lineTo(CONFIG.worldWidth,y);
-      ctx.stroke();
-    }
-  }
-
-  // Game Over
-  function gameOver(){
-    state.running = false;
-    showPanel('Game Over', `Your score: ${state.score}`, true);
-    beep(120, 0.5, 0.12);
-  }
-
-  /* --------------------------
-     Input handling (touch + mouse + keyboard)
-     - Pointer events for joystick + action
-     - Keyboard for desktop
-     -------------------------- */
-  // Keyboard
-  const keys = {};
-  window.addEventListener('keydown', (e) => {
-    keys[e.key] = true;
-    // prevent page scroll for arrows/space
-    if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
-  });
-  window.addEventListener('keyup', (e) => {
-    keys[e.key] = false;
-    if (e.key === ' ') keys.Space = false;
-  });
-
-  // Map space bar to Space
-  window.addEventListener('keydown', (e)=>{
-    if (e.key === ' ') keys.Space = true;
-  }, { passive: false });
-
-  // Joystick pointer logic
-  function getPointer(e){
-    if (e.touches && e.touches.length) {
-      return { x: e.touches[0].clientX, y: e.touches[0].clientY, id: e.touches[0].identifier };
-    } else {
-      return { x: e.clientX, y: e.clientY, id: 'mouse' };
-    }
-  }
-
-  // Convert screen coords to world coords
-  function screenToWorld(clientX, clientY){
-    const rect = canvas.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, CONFIG.dprLimit);
-    // We rendered using CSS pixels; world coords correspond to CSS pixel space scaled to world size
-    // We'll map canvas CSS width/height to world width/height
-    const cssW = rect.width;
-    const cssH = rect.height;
-    const sx = (clientX - rect.left) / cssW;
-    const sy = (clientY - rect.top) / cssH;
-    return { x: sx * CONFIG.worldWidth, y: sy * CONFIG.worldHeight };
-  }
-
-  // joystick pointer handling (touch or mouse)
+  // input handling
+  // pointer for joystick
+  const joystickWrap = document.getElementById('joystick');
   let stickPointerId = null;
   joystickWrap.addEventListener('pointerdown', (e) => {
     e.preventDefault();
@@ -819,50 +680,49 @@
     joystick.startX = e.clientX;
     joystick.startY = e.clientY;
     stickPointerId = e.pointerId;
-    joystick.dx = 0; joystick.dy = 0;
-    joystick.outputX = 0; joystick.outputY = 0;
+    joystick.outputX = 0;
+    joystick.outputY = 0;
     joystickWrap.setPointerCapture(stickPointerId);
   });
   joystickWrap.addEventListener('pointermove', (e) => {
     if (!joystick.active || e.pointerId !== stickPointerId) return;
     e.preventDefault();
-    const nx = e.clientX - joystick.startX;
-    const ny = e.clientY - joystick.startY;
-    // clamp to max radius
-    const r = Math.hypot(nx,ny);
+    const nx = e.clientX - joystick.startX; // right positive
+    const ny = joystick.startY - e.clientY; // up positive (startY - currentY)
     const max = joystick.maxRadius;
-    const factor = r>max ? max/r : 1;
-    const ox = nx * factor;
-    const oy = ny * factor;
-    stickKnob.style.transform = `translate(${ox}px, ${oy}px)`;
-    joystick.outputX = clamp(ox/max, -1, 1);
-    joystick.outputY = clamp(oy/max, -1, 1) * 1; // invert Y? No - keep standard screen coords (up negative)
-    // convert to game axis: up should be negative Y, so we invert outputY
-    joystick.outputY *= -1;
+    const fx = clamp(nx / max, -1, 1);
+    const fy = clamp(ny / max, -1, 1); // fy: 1 = up, -1 = down
+    joystick.outputX = fx;
+    joystick.outputY = fy;
+    // move knob visually (limit to radius)
+    const knobX = fx * max;
+    const knobY = -fy * max; // invert for CSS because positive fy is up but translate Y positive moves down
+    stickKnob.style.transform = `translate(${knobX}px, ${knobY}px)`;
   });
   joystickWrap.addEventListener('pointerup', (e) => {
     if (e.pointerId !== stickPointerId) return;
     joystick.active = false;
     stickPointerId = null;
+    joystick.outputX = 0;
+    joystick.outputY = 0;
     stickKnob.style.transform = `translate(0px, 0px)`;
-    joystick.outputX = 0; joystick.outputY = 0;
-    joystickWrap.releasePointerCapture?.(e.pointerId);
+    try { joystickWrap.releasePointerCapture(e.pointerId); } catch(_) {}
   });
   joystickWrap.addEventListener('pointercancel', (e) => {
     joystick.active = false;
     stickPointerId = null;
+    joystick.outputX = 0;
+    joystick.outputY = 0;
     stickKnob.style.transform = `translate(0px, 0px)`;
-    joystick.outputX = 0; joystick.outputY = 0;
   });
 
-  // Action button pointer
+  // action button
   let actionPointerId = null;
   actionBtn.addEventListener('pointerdown', (e) => {
     e.preventDefault();
     if (actionPointerId !== null) return;
     actionPointerId = e.pointerId;
     actionBtn.setAttribute('aria-pressed','true');
-    // trigger blast
     doBlast();
   });
   actionBtn.addEventListener('pointerup', (e) => {
@@ -875,24 +735,28 @@
     actionBtn.setAttribute('aria-pressed','false');
   });
 
-  // Desktop click options
-  pauseBtn.addEventListener('click', togglePause);
+  // keyboard
+  window.addEventListener('keydown', (e) => {
+    keys[e.key] = true;
+    if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
+    // quick controls
+    if (e.key === 'p') togglePause();
+  });
+  window.addEventListener('keyup', (e) => {
+    keys[e.key] = false;
+  });
+  window.addEventListener('keyup', (e) => {
+    if (e.code === 'Space' || e.key === ' ') doBlast();
+  });
+
+  // pause / resume / restart
+  pauseBtn.addEventListener('click', () => togglePause());
   resumeBtn.addEventListener('click', () => { togglePause(false); hidePanel(); });
   restartBtn.addEventListener('click', () => { hidePanel(); resetGame(); startLoop(); });
 
-  soundToggle.addEventListener('click', () => {
-    state.soundEnabled = !state.soundEnabled;
-    soundToggle.textContent = `Sound: ${state.soundEnabled ? 'On' : 'Off'}`;
-    soundToggle.setAttribute('aria-pressed', String(state.soundEnabled));
-  });
-
-  // Pause toggling
   function togglePause(force){
-    if (typeof force === 'boolean') {
-      state.paused = force;
-    } else {
-      state.paused = !state.paused;
-    }
+    if (typeof force === 'boolean') state.paused = force;
+    else state.paused = !state.paused;
     if (state.paused){
       showPanel('Paused', 'Tap resume to continue.');
       pauseBtn.textContent = 'Resume';
@@ -902,64 +766,36 @@
     }
   }
 
-  // Start loop (kick off)
+  // start loop
   function startLoop(){
-    if (!state.running) resetGame();
-    // ensure audio unlock on mobile (must be triggered by user gesture)
-    if (!audioCtx && typeof AudioContext !== 'undefined') {
-      try {
-        ensureAudio();
-        // if context is suspended, resume by user gesture
-        if (audioCtx.state === 'suspended') {
-          audioCtx.resume().catch(()=>{});
-        }
-      } catch(e){}
-    }
     resizeCanvas();
+    if (!state.running) resetGame();
     state.lastTime = 0;
     requestAnimationFrame(update);
     hidePanel();
   }
 
-  // Friendly start screen prompt on first load
-  function showStartOverlay(){
-    panelTitle.textContent = 'Collect & Survive';
-    panelBody.textContent = 'Use the joystick and blast to survive. Tap to start!';
-    panel.style.display = 'block';
-    overlay.setAttribute('aria-hidden','false');
-    // clicking panel starts
+  // initial overlay start
+  function showStartScreen(){
+    showPanel('Orb Runner', 'Use joystick to dodge enemies. Blast destroys nearby enemies. Tap to start!', true);
+    // start on panel click/tap
     panel.onclick = () => {
       panel.onclick = null;
-      panel.style.display = 'none';
-      overlay.setAttribute('aria-hidden','true');
+      hidePanel();
       startLoop();
     };
   }
 
-  // initial setup: spawn a few coins
-  for (let i=0;i<6;i++) spawnCoin();
-  for (let i=0;i<2;i++) spawnEnemy();
-
-  // Start paused with overlay so mobile user can tap to unlock audio / begin
+  // initial spawn
+  for (let i=0;i<3;i++) spawnEnemy();
   state.running = false;
-  showStartOverlay();
+  showStartScreen();
 
-  // keyboard space mapping for blast
-  window.addEventListener('keyup', (e) => {
-    if (e.code === 'Space' || e.key === ' ') {
-      doBlast();
-    }
-  });
+  // expose state for debugging
+  window._gameState = state;
+  window._CONFIG = CONFIG;
 
-  // Accessibility: keyboard focus on action button triggers blast
-  actionBtn.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      doBlast();
-    }
-  });
-
-  // Prevent double-tap zoom on iOS/Android
+  // prevent double-tap zoom on mobile
   let lastTouch = 0;
   document.addEventListener('touchend', (e) => {
     const t = performance.now();
@@ -967,9 +803,6 @@
     lastTouch = t;
   }, { passive: false });
 
-  // expose for console tweaks
-  window._gameState = state;
-  window._CONFIG = CONFIG;
 })();
 </script>
 </body>
