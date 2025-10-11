@@ -1,0 +1,976 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+<title>Mobile-First Canvas Game — Collect & Survive</title>
+<style>
+  :root{
+    --bg:#0b1020;
+    --panel: rgba(255,255,255,0.06);
+    --accent:#FFD24C;
+    --muted:#9aa4b2;
+    --danger:#ff6b6b;
+  }
+  html,body{
+    height:100%;
+    margin:0;
+    background: linear-gradient(180deg,#071021 0%, #0b1020 60%);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color:#e6eef8;
+    -webkit-user-select:none;
+    user-select:none;
+    -webkit-tap-highlight-color:transparent;
+  }
+
+  /* Container positions canvas and overlays */
+  .game-wrap{
+    position:relative;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  canvas#game {
+    background:
+      radial-gradient(1000px 600px at 10% 10%, rgba(255,255,255,0.02), transparent 10%),
+      linear-gradient(180deg, rgba(255,255,255,0.01), transparent 40%),
+      var(--bg);
+    width:100%;
+    height:100%;
+    display:block;
+    touch-action:none;
+    image-rendering: optimizeSpeed;
+  }
+
+  /* HUD */
+  .hud{
+    position:absolute;
+    top:12px;
+    left:12px;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    z-index:40;
+  }
+  .chip{
+    background:var(--panel);
+    padding:8px 12px;
+    border-radius:12px;
+    font-size:14px;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+    backdrop-filter: blur(6px);
+  }
+  .chip strong{ color:var(--accent); font-weight:600; margin-left:4px;}
+
+  /* Right top controls */
+  .controls-top{
+    position:absolute;
+    top:12px;
+    right:12px;
+    display:flex;
+    gap:8px;
+    z-index:40;
+  }
+  .btn {
+    background:var(--panel);
+    border-radius:10px;
+    padding:8px 10px;
+    display:inline-flex;
+    gap:8px;
+    align-items:center;
+    cursor:pointer;
+    font-size:13px;
+    user-select:none;
+  }
+  .btn:active { transform: translateY(1px); }
+
+  /* Mobile controls (joystick + action) */
+  .mobile-controls{
+    position:absolute;
+    bottom:12px;
+    left:12px;
+    right:12px;
+    pointer-events:none; /* children will enable */
+    z-index:30;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+  }
+  .joystick {
+    width:140px;
+    height:140px;
+    pointer-events:auto;
+    touch-action:none;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .stick-base {
+    width:100%;
+    height:100%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.03), transparent 40%);
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,0.03);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6) inset;
+  }
+  .stick-knob {
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    border: 2px solid rgba(255,255,255,0.06);
+    transform: translate(0,0);
+    transition: transform 0.03s linear;
+    pointer-events:none;
+  }
+
+  .action-button {
+    pointer-events:auto;
+    width:96px;
+    height:96px;
+    border-radius:50%;
+    background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.08));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:18px;
+    color:var(--accent);
+    border:3px solid rgba(255,255,255,0.04);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  }
+
+  /* Small screen adjustments */
+  @media (max-width:520px){
+    .joystick { width:120px; height:120px; }
+    .stick-knob { width:46px; height:46px; }
+    .action-button { width:84px; height:84px; font-size:16px; }
+    .chip { font-size:13px; padding:6px 10px; border-radius:10px;}
+  }
+
+  /* Center overlay for messages */
+  .overlay {
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:50;
+    pointer-events:none;
+  }
+  .panel {
+    pointer-events:auto;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.08));
+    border-radius:14px;
+    padding:18px;
+    text-align:center;
+    min-width:220px;
+    color:#f2f6ff;
+    box-shadow: 0 12px 40px rgba(2,6,23,0.6);
+    backdrop-filter: blur(6px);
+  }
+  .panel h2{ margin:0 0 8px; font-size:20px; color:var(--accent); }
+  .panel p{ margin:0 0 12px; color:var(--muted); font-size:14px; }
+
+  /* small footer hint */
+  .hint {
+    position:absolute;
+    bottom:10px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:12px;
+    color:var(--muted);
+    z-index:40;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  }
+
+  /* accessibility hidden label for screen reader */
+  .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+</style>
+</head>
+<body>
+<div class="game-wrap" id="gameWrap">
+  <canvas id="game" width="900" height="1600" aria-label="Action game canvas"></canvas>
+
+  <div class="hud" role="region" aria-live="polite">
+    <div class="chip" id="scoreChip">Score: <strong id="score">0</strong></div>
+    <div class="chip" id="healthChip">HP: <strong id="hp">5</strong></div>
+  </div>
+
+  <div class="controls-top">
+    <div class="btn" id="soundToggle" role="button" tabindex="0" aria-pressed="false">Sound: On</div>
+    <div class="btn" id="pauseBtn" role="button" tabindex="0">Pause</div>
+  </div>
+
+  <div class="mobile-controls" id="mobileControls" aria-hidden="false">
+    <div class="joystick" id="joystick" aria-label="Movement joystick">
+      <div class="stick-base" id="stickBase">
+        <div class="stick-knob" id="stickKnob" aria-hidden="true"></div>
+      </div>
+    </div>
+    <div style="display:flex; gap:12px; align-items:flex-end;">
+      <div class="action-button" id="actionBtn" role="button" tabindex="0" aria-pressed="false">BLAST</div>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="panel" id="panel" style="display:none;">
+      <h2 id="panelTitle">Paused</h2>
+      <p id="panelBody">Tap resume to continue.</p>
+      <div style="display:flex;gap:8px;justify-content:center;">
+        <div class="btn" id="resumeBtn">Resume</div>
+        <div class="btn" id="restartBtn">Restart</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hint" id="hint">Mobile: use joystick + blast — Desktop: arrow keys/WASD + Space</div>
+</div>
+
+<!-- Screen reader friendly status -->
+<div class="sr-only" id="srStatus" aria-live="polite"></div>
+
+<script>
+/* ===========================
+   Mobile-First Canvas Game
+   - Mobile: on-screen joystick + action button
+   - Desktop: keyboard controls
+   - Simple collect & survive gameplay
+   =========================== */
+
+(() => {
+  // CONFIG: Tweak these for difficulty and feel
+  const CONFIG = {
+    worldWidth: 900,
+    worldHeight: 1600,
+    playerRadius: 20,
+    playerSpeed: 320,         // pixels per second when joystick full
+    enemySpeedBase: 60,
+    enemySpeedIncrease: 6,    // per wave
+    enemySpawnInterval: 1500, // milliseconds
+    coinSpawnInterval: 900,
+    maxHP: 5,
+    blastCooldown: 2200,      // ms
+    blastRadius: 110,
+    coinValue: 10,
+    dprLimit: 2.5,            // clamp DPR to avoid huge textures on old phones
+  };
+
+  // Canvas + context
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d', { alpha: false });
+
+  // DOM elements
+  const scoreEl = document.getElementById('score');
+  const hpEl = document.getElementById('hp');
+  const overlay = document.getElementById('overlay');
+  const panel = document.getElementById('panel');
+  const panelTitle = document.getElementById('panelTitle');
+  const panelBody = document.getElementById('panelBody');
+  const resumeBtn = document.getElementById('resumeBtn');
+  const restartBtn = document.getElementById('restartBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const soundToggle = document.getElementById('soundToggle');
+  const mobileControls = document.getElementById('mobileControls');
+  const joystickWrap = document.getElementById('joystick');
+  const stickKnob = document.getElementById('stickKnob');
+  const actionBtn = document.getElementById('actionBtn');
+  const srStatus = document.getElementById('srStatus');
+
+  // Game state
+  const state = {
+    running: false,
+    paused: false,
+    lastTime: 0,
+    score: 0,
+    hp: CONFIG.maxHP,
+    player: { x: CONFIG.worldWidth/2, y: CONFIG.worldHeight*0.8, vx:0, vy:0 },
+    enemies: [],
+    coins: [],
+    particles: [],
+    spawnTimers: { enemy: 0, coin: 0 },
+    enemyWave: 0,
+    lastBlast: -99999,
+    soundEnabled: true,
+  };
+
+  // Touch/joystick state
+  const joystick = {
+    active: false,
+    startX: 0, startY: 0,
+    dx: 0, dy: 0,
+    maxRadius: 48,
+    outputX:0, outputY:0, // -1..1
+  };
+
+  // Audio: small procedural effects via WebAudio
+  let audioCtx = null;
+  function ensureAudio() {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    return audioCtx;
+  }
+  function beep(freq = 440, time = 0.06, volume=0.05) {
+    if (!state.soundEnabled) return;
+    const ac = ensureAudio();
+    const o = ac.createOscillator();
+    const g = ac.createGain();
+    o.type = 'sine';
+    o.frequency.value = freq;
+    g.gain.value = volume;
+    o.connect(g); g.connect(ac.destination);
+    o.start();
+    o.stop(ac.currentTime + time);
+  }
+  function thump(time = 0.08, volume=0.12){
+    if (!state.soundEnabled) return;
+    const ac = ensureAudio();
+    const o = ac.createOscillator();
+    const g = ac.createGain();
+    o.type = 'square';
+    o.frequency.value = 120;
+    g.gain.value = volume;
+    o.connect(g); g.connect(ac.destination);
+    o.start();
+    g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + time);
+    o.stop(ac.currentTime + time);
+  }
+
+  // Responsive canvas: mobile-first, fit container while maintaining world aspect ratio
+  function resizeCanvas(){
+    const wrap = document.getElementById('gameWrap');
+    const rect = wrap.getBoundingClientRect();
+    // world aspect ratio
+    const aspect = CONFIG.worldWidth / CONFIG.worldHeight;
+    let w = rect.width;
+    let h = rect.height;
+    // fit by height or width depending on orientation
+    if (w / h > aspect) {
+      // too wide, limit by height
+      const targetH = h;
+      const targetW = targetH * aspect;
+      w = targetW; // center by css width/height cover handles
+    } else {
+      const targetW = w;
+      const targetH = targetW / aspect;
+      h = targetH;
+    }
+    // device pixel ratio handling
+    const dpr = Math.min(window.devicePixelRatio || 1, CONFIG.dprLimit);
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = rect.height + 'px';
+    canvas.width = Math.floor(rect.width * dpr);
+    canvas.height = Math.floor(rect.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // work in CSS pixels
+  }
+  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('orientationchange', () => { resizeCanvas(); });
+
+  // Utils
+  function rand(min,max){ return Math.random()*(max-min)+min; }
+  function dist(a,b,c,d){ const dx=a-c, dy=b-d; return Math.hypot(dx,dy); }
+  function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+
+  // Spawn helpers
+  function spawnEnemy() {
+    const margin = 80;
+    // spawn at random edge
+    const edge = Math.floor(Math.random()*4);
+    let x,y;
+    if (edge===0){ x = rand(-50, CONFIG.worldWidth+50); y = -40; }
+    else if (edge===1){ x = rand(-50, CONFIG.worldWidth+50); y = CONFIG.worldHeight+40; }
+    else if (edge===2){ x = -40; y = rand(-50, CONFIG.worldHeight+50); }
+    else { x = CONFIG.worldWidth+40; y = rand(-50, CONFIG.worldHeight+50); }
+    const spd = CONFIG.enemySpeedBase + state.enemyWave * CONFIG.enemySpeedIncrease + rand(-6,12);
+    state.enemies.push({ x,y, r: 18 + Math.random()*10, hp:1, speed: spd, wob: Math.random()*2000 });
+  }
+  function spawnCoin() {
+    const pad = 60;
+    const x = rand(pad, CONFIG.worldWidth - pad);
+    const y = rand(pad, CONFIG.worldHeight - pad);
+    state.coins.push({ x,y, r:10 + Math.random()*6, rot: Math.random()*Math.PI*2 });
+  }
+
+  // Reset / Start / Pause
+  function resetGame(){
+    state.score = 0;
+    state.hp = CONFIG.maxHP;
+    state.player.x = CONFIG.worldWidth/2;
+    state.player.y = CONFIG.worldHeight * 0.8;
+    state.enemies.length = 0;
+    state.coins.length = 0;
+    state.particles.length = 0;
+    state.spawnTimers.enemy = 0;
+    state.spawnTimers.coin = 0;
+    state.enemyWave = 0;
+    state.lastBlast = -99999;
+    state.running = true;
+    state.paused = false;
+    updateHud();
+  }
+
+  function updateHud(){
+    scoreEl.textContent = state.score;
+    hpEl.textContent = state.hp;
+    srStatus.textContent = `Score ${state.score}, HP ${state.hp}`;
+  }
+
+  function showPanel(title, body, withButtons=true){
+    panelTitle.textContent = title;
+    panelBody.textContent = body;
+    panel.style.display = 'block';
+    overlay.style.pointerEvents = 'auto';
+    panel.parentElement.style.pointerEvents = 'auto';
+    overlay.setAttribute('aria-hidden','false');
+    panel.setAttribute('tabindex','-1');
+    panel.focus?.();
+    if (withButtons) {
+      resumeBtn.style.display = '';
+      restartBtn.style.display = '';
+    } else {
+      resumeBtn.style.display = 'none';
+      restartBtn.style.display = '';
+    }
+  }
+  function hidePanel(){
+    panel.style.display = 'none';
+    overlay.setAttribute('aria-hidden','true');
+    overlay.style.pointerEvents = 'none';
+  }
+
+  // Blast action: damages nearby enemies, creates particles, big sound
+  function doBlast(){
+    const now = performance.now();
+    if (now - state.lastBlast < CONFIG.blastCooldown) return;
+    state.lastBlast = now;
+    // sound
+    thump(0.15, 0.18);
+    // damage enemies
+    const px = state.player.x, py = state.player.y;
+    for (let i = state.enemies.length -1; i>=0; i--){
+      const e = state.enemies[i];
+      const d = dist(px,py,e.x,e.y);
+      if (d < CONFIG.blastRadius + e.r){
+        // kill enemy and award points
+        spawnParticles(e.x, e.y, 8);
+        state.enemies.splice(i,1);
+        state.score += 8;
+      }
+    }
+    // visual particles
+    spawnParticles(px,py,18, true);
+    updateHud();
+  }
+
+  // Particles for feedback
+  function spawnParticles(x,y,n=6, fadeOut=false){
+    for (let i=0;i<n;i++){
+      const a = rand(0,Math.PI*2);
+      const s = rand(30,160);
+      state.particles.push({
+        x,y,
+        vx: Math.cos(a)*s,
+        vy: Math.sin(a)*s,
+        life: rand(300,900),
+        born: performance.now(),
+        size: rand(2,6),
+        fade: fadeOut ? 1 : 0,
+      });
+    }
+  }
+
+  // Main update loop
+  function update(ts){
+    if (!state.running || state.paused){
+      state.lastTime = ts;
+      requestAnimationFrame(update);
+      return;
+    }
+    if (!state.lastTime) state.lastTime = ts;
+    let dt = (ts - state.lastTime) / 1000; // seconds
+    if (dt > 0.05) dt = 0.05; // clamp big frames
+    state.lastTime = ts;
+
+    // Input -> player velocity
+    const inpX = joystick.outputX || (keys.ArrowLeft?-1:keys.ArrowRight?1:0) || (keys.a?-1:keys.d?1:0);
+    const inpY = joystick.outputY || (keys.ArrowUp?-1:keys.ArrowDown?1:0) || (keys.w?-1:keys.s?1:0);
+    // normalize diagonal
+    let mag = Math.hypot(inpX, inpY);
+    let nx=0, ny=0;
+    if (mag > 0.001){
+      nx = inpX/mag;
+      ny = inpY/mag;
+    }
+    state.player.vx = nx * CONFIG.playerSpeed;
+    state.player.vy = ny * CONFIG.playerSpeed;
+    state.player.x += state.player.vx * dt;
+    state.player.y += state.player.vy * dt;
+
+    // clamp player inside world
+    state.player.x = clamp(state.player.x, 12, CONFIG.worldWidth - 12);
+    state.player.y = clamp(state.player.y, 12, CONFIG.worldHeight - 12);
+
+    // spawn timers (scale with difficulty slightly)
+    state.spawnTimers.enemy += dt*1000;
+    state.spawnTimers.coin += dt*1000;
+    if (state.spawnTimers.enemy > CONFIG.enemySpawnInterval){
+      state.spawnTimers.enemy = 0;
+      spawnEnemy();
+      // every N enemies increase wave
+      state.enemyWave++;
+    }
+    if (state.spawnTimers.coin > CONFIG.coinSpawnInterval){
+      state.spawnTimers.coin = 0;
+      spawnCoin();
+    }
+
+    // update enemies: move toward player
+    for (let e of state.enemies){
+      // small wobble
+      const wob = Math.sin((performance.now() + e.wob)/600) * 0.4;
+      const dx = state.player.x - e.x + wob*30;
+      const dy = state.player.y - e.y + wob*30;
+      const d = Math.hypot(dx,dy) || 1;
+      e.x += (dx/d) * e.speed * dt;
+      e.y += (dy/d) * e.speed * dt;
+    }
+
+    // update coins (rotate)
+    for (let c of state.coins){
+      c.rot += dt * 6;
+    }
+
+    // particles
+    for (let i = state.particles.length -1; i>=0; i--){
+      const p = state.particles[i];
+      const lifeElapsed = performance.now() - p.born;
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      if (p.fade) p.vx *= 0.98;
+      if (lifeElapsed > p.life) state.particles.splice(i,1);
+    }
+
+    // collisions: player & coins
+    for (let i = state.coins.length -1; i>=0; i--){
+      const c = state.coins[i];
+      const d = dist(state.player.x, state.player.y, c.x, c.y);
+      if (d < CONFIG.playerRadius + c.r){
+        state.coins.splice(i,1);
+        state.score += CONFIG.coinValue;
+        spawnParticles(c.x,c.y,8);
+        beep(800,0.06,0.04);
+      }
+    }
+
+    // collisions: enemies & player
+    for (let i = state.enemies.length -1; i>=0; i--){
+      const e = state.enemies[i];
+      const d = dist(state.player.x, state.player.y, e.x, e.y);
+      if (d < CONFIG.playerRadius + e.r){
+        // hurt player
+        spawnParticles(e.x,e.y,6);
+        beep(180,0.08,0.12);
+        state.enemies.splice(i,1);
+        state.hp -= 1;
+        updateHud();
+        if (state.hp <= 0) {
+          gameOver();
+          return;
+        }
+      }
+    }
+
+    // blast cooldown visuals (we only limit by time)
+    // (If keyboard space pressed do blast)
+    if (keys.Space && performance.now() - state.lastBlast > CONFIG.blastCooldown){
+      doBlast();
+    }
+
+    // increase score slightly over time (survival incentive)
+    state.score += Math.floor(dt * 1.2);
+    updateHud();
+
+    render();
+    requestAnimationFrame(update);
+  }
+
+  // Render (draw world scaled to canvas size)
+  function render(){
+    // clear
+    const cw = canvas.width / (window.devicePixelRatio || 1);
+    const ch = canvas.height / (window.devicePixelRatio || 1);
+    ctx.clearRect(0,0,cw,ch);
+
+    // background pattern (subtle grid)
+    drawBackground(cw,ch);
+
+    // draw coins
+    for (const c of state.coins){
+      ctx.save();
+      ctx.translate(c.x, c.y);
+      ctx.rotate(c.rot);
+      // glow
+      const g = ctx.createRadialGradient(0,0,c.r*0.1, 0,0,c.r*1.6);
+      g.addColorStop(0, 'rgba(255,226,115,0.9)');
+      g.addColorStop(0.6, 'rgba(255,200,60,0.35)');
+      g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(0,0,c.r*1.6,0,Math.PI*2);
+      ctx.fill();
+
+      // coin body
+      ctx.fillStyle = '#FFDD6A';
+      ctx.beginPath();
+      ctx.ellipse(0,0,c.r, c.r*0.7, 0, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // draw enemies
+    for (const e of state.enemies){
+      ctx.save();
+      ctx.translate(e.x, e.y);
+      // shadow
+      ctx.beginPath();
+      ctx.ellipse(6, 10, e.r*1.1, e.r*0.6, 0, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(0,0,0,0.25)';
+      ctx.fill();
+
+      // body
+      ctx.beginPath();
+      ctx.fillStyle = '#8B2D2D';
+      ctx.arc(0, 0, e.r, 0, Math.PI*2);
+      ctx.fill();
+
+      // eye
+      ctx.beginPath();
+      ctx.fillStyle = '#fff';
+      ctx.ellipse(-e.r*0.25, -e.r*0.15, e.r*0.35, e.r*0.25, 0, 0, Math.PI*2);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.fillStyle = '#111';
+      ctx.arc(-e.r*0.25, -e.r*0.15, e.r*0.12, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // player (draw on top)
+    const p = state.player;
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    // shadow
+    ctx.beginPath();
+    ctx.ellipse(10, 18, CONFIG.playerRadius*1.2, CONFIG.playerRadius*0.6, 0, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(0,0,0,0.28)';
+    ctx.fill();
+
+    // player body
+    ctx.beginPath();
+    // gradient body
+    const g = ctx.createLinearGradient(-CONFIG.playerRadius, -CONFIG.playerRadius, CONFIG.playerRadius, CONFIG.playerRadius);
+    g.addColorStop(0, '#9FE9FF');
+    g.addColorStop(1, '#4CA6FF');
+    ctx.fillStyle = g;
+    ctx.arc(0,0, CONFIG.playerRadius, 0, Math.PI*2);
+    ctx.fill();
+
+    // player core
+    ctx.beginPath();
+    ctx.fillStyle = '#ffffff';
+    ctx.arc(0,0, CONFIG.playerRadius*0.38, 0, Math.PI*2);
+    ctx.fill();
+
+    // blast radius indicator (if ready)
+    if (performance.now() - state.lastBlast > CONFIG.blastCooldown) {
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(255,210,100,0.12)';
+      ctx.lineWidth = 6;
+      ctx.arc(0,0, CONFIG.blastRadius, 0, Math.PI*2);
+      ctx.stroke();
+    }
+
+    ctx.restore();
+
+    // draw particles
+    for (const p of state.particles){
+      const life = (performance.now() - p.born) / p.life;
+      const alpha = clamp(1 - life, 0, 1);
+      ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(255,255,255,0.9)';
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+
+    // UI overlays (cooldown arc)
+    // draw blast cooldown near action button location on canvas (approx bottom-right)
+    // We'll draw a small cooldown arc in HUD area
+    const hudX = cw - 68;
+    const hudY = ch - 68;
+    const cd = clamp((performance.now() - state.lastBlast) / CONFIG.blastCooldown, 0, 1);
+    ctx.save();
+    ctx.translate(hudX, hudY);
+    ctx.beginPath();
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    ctx.arc(0,0,36,0,Math.PI*2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(255,210,100,0.9)';
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.arc(0,0,30, -Math.PI/2, -Math.PI/2 + cd * Math.PI*2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawBackground(cw,ch){
+    // simple starfield / noise-like dots
+    ctx.fillStyle = '#071021';
+    ctx.fillRect(0,0,cw,ch);
+    // subtle grid lines
+    ctx.strokeStyle = 'rgba(255,255,255,0.015)';
+    ctx.lineWidth = 1;
+    const step = Math.floor(120);
+    for (let x=0;x<=CONFIG.worldWidth;x+=step){
+      ctx.beginPath();
+      ctx.moveTo(x,0);
+      ctx.lineTo(x,CONFIG.worldHeight);
+      ctx.stroke();
+    }
+    for (let y=0;y<=CONFIG.worldHeight;y+=step){
+      ctx.beginPath();
+      ctx.moveTo(0,y);
+      ctx.lineTo(CONFIG.worldWidth,y);
+      ctx.stroke();
+    }
+  }
+
+  // Game Over
+  function gameOver(){
+    state.running = false;
+    showPanel('Game Over', `Your score: ${state.score}`, true);
+    beep(120, 0.5, 0.12);
+  }
+
+  /* --------------------------
+     Input handling (touch + mouse + keyboard)
+     - Pointer events for joystick + action
+     - Keyboard for desktop
+     -------------------------- */
+  // Keyboard
+  const keys = {};
+  window.addEventListener('keydown', (e) => {
+    keys[e.key] = true;
+    // prevent page scroll for arrows/space
+    if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
+  });
+  window.addEventListener('keyup', (e) => {
+    keys[e.key] = false;
+    if (e.key === ' ') keys.Space = false;
+  });
+
+  // Map space bar to Space
+  window.addEventListener('keydown', (e)=>{
+    if (e.key === ' ') keys.Space = true;
+  }, { passive: false });
+
+  // Joystick pointer logic
+  function getPointer(e){
+    if (e.touches && e.touches.length) {
+      return { x: e.touches[0].clientX, y: e.touches[0].clientY, id: e.touches[0].identifier };
+    } else {
+      return { x: e.clientX, y: e.clientY, id: 'mouse' };
+    }
+  }
+
+  // Convert screen coords to world coords
+  function screenToWorld(clientX, clientY){
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, CONFIG.dprLimit);
+    // We rendered using CSS pixels; world coords correspond to CSS pixel space scaled to world size
+    // We'll map canvas CSS width/height to world width/height
+    const cssW = rect.width;
+    const cssH = rect.height;
+    const sx = (clientX - rect.left) / cssW;
+    const sy = (clientY - rect.top) / cssH;
+    return { x: sx * CONFIG.worldWidth, y: sy * CONFIG.worldHeight };
+  }
+
+  // joystick pointer handling (touch or mouse)
+  let stickPointerId = null;
+  joystickWrap.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    joystick.active = true;
+    joystick.startX = e.clientX;
+    joystick.startY = e.clientY;
+    stickPointerId = e.pointerId;
+    joystick.dx = 0; joystick.dy = 0;
+    joystick.outputX = 0; joystick.outputY = 0;
+    joystickWrap.setPointerCapture(stickPointerId);
+  });
+  joystickWrap.addEventListener('pointermove', (e) => {
+    if (!joystick.active || e.pointerId !== stickPointerId) return;
+    e.preventDefault();
+    const nx = e.clientX - joystick.startX;
+    const ny = e.clientY - joystick.startY;
+    // clamp to max radius
+    const r = Math.hypot(nx,ny);
+    const max = joystick.maxRadius;
+    const factor = r>max ? max/r : 1;
+    const ox = nx * factor;
+    const oy = ny * factor;
+    stickKnob.style.transform = `translate(${ox}px, ${oy}px)`;
+    joystick.outputX = clamp(ox/max, -1, 1);
+    joystick.outputY = clamp(oy/max, -1, 1) * 1; // invert Y? No - keep standard screen coords (up negative)
+    // convert to game axis: up should be negative Y, so we invert outputY
+    joystick.outputY *= -1;
+  });
+  joystickWrap.addEventListener('pointerup', (e) => {
+    if (e.pointerId !== stickPointerId) return;
+    joystick.active = false;
+    stickPointerId = null;
+    stickKnob.style.transform = `translate(0px, 0px)`;
+    joystick.outputX = 0; joystick.outputY = 0;
+    joystickWrap.releasePointerCapture?.(e.pointerId);
+  });
+  joystickWrap.addEventListener('pointercancel', (e) => {
+    joystick.active = false;
+    stickPointerId = null;
+    stickKnob.style.transform = `translate(0px, 0px)`;
+    joystick.outputX = 0; joystick.outputY = 0;
+  });
+
+  // Action button pointer
+  let actionPointerId = null;
+  actionBtn.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    if (actionPointerId !== null) return;
+    actionPointerId = e.pointerId;
+    actionBtn.setAttribute('aria-pressed','true');
+    // trigger blast
+    doBlast();
+  });
+  actionBtn.addEventListener('pointerup', (e) => {
+    if (e.pointerId !== actionPointerId) return;
+    actionPointerId = null;
+    actionBtn.setAttribute('aria-pressed','false');
+  });
+  actionBtn.addEventListener('pointercancel', (e) => {
+    actionPointerId = null;
+    actionBtn.setAttribute('aria-pressed','false');
+  });
+
+  // Desktop click options
+  pauseBtn.addEventListener('click', togglePause);
+  resumeBtn.addEventListener('click', () => { togglePause(false); hidePanel(); });
+  restartBtn.addEventListener('click', () => { hidePanel(); resetGame(); startLoop(); });
+
+  soundToggle.addEventListener('click', () => {
+    state.soundEnabled = !state.soundEnabled;
+    soundToggle.textContent = `Sound: ${state.soundEnabled ? 'On' : 'Off'}`;
+    soundToggle.setAttribute('aria-pressed', String(state.soundEnabled));
+  });
+
+  // Pause toggling
+  function togglePause(force){
+    if (typeof force === 'boolean') {
+      state.paused = force;
+    } else {
+      state.paused = !state.paused;
+    }
+    if (state.paused){
+      showPanel('Paused', 'Tap resume to continue.');
+      pauseBtn.textContent = 'Resume';
+    } else {
+      hidePanel();
+      pauseBtn.textContent = 'Pause';
+    }
+  }
+
+  // Start loop (kick off)
+  function startLoop(){
+    if (!state.running) resetGame();
+    // ensure audio unlock on mobile (must be triggered by user gesture)
+    if (!audioCtx && typeof AudioContext !== 'undefined') {
+      try {
+        ensureAudio();
+        // if context is suspended, resume by user gesture
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume().catch(()=>{});
+        }
+      } catch(e){}
+    }
+    resizeCanvas();
+    state.lastTime = 0;
+    requestAnimationFrame(update);
+    hidePanel();
+  }
+
+  // Friendly start screen prompt on first load
+  function showStartOverlay(){
+    panelTitle.textContent = 'Collect & Survive';
+    panelBody.textContent = 'Use the joystick and blast to survive. Tap to start!';
+    panel.style.display = 'block';
+    overlay.setAttribute('aria-hidden','false');
+    // clicking panel starts
+    panel.onclick = () => {
+      panel.onclick = null;
+      panel.style.display = 'none';
+      overlay.setAttribute('aria-hidden','true');
+      startLoop();
+    };
+  }
+
+  // initial setup: spawn a few coins
+  for (let i=0;i<6;i++) spawnCoin();
+  for (let i=0;i<2;i++) spawnEnemy();
+
+  // Start paused with overlay so mobile user can tap to unlock audio / begin
+  state.running = false;
+  showStartOverlay();
+
+  // keyboard space mapping for blast
+  window.addEventListener('keyup', (e) => {
+    if (e.code === 'Space' || e.key === ' ') {
+      doBlast();
+    }
+  });
+
+  // Accessibility: keyboard focus on action button triggers blast
+  actionBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      doBlast();
+    }
+  });
+
+  // Prevent double-tap zoom on iOS/Android
+  let lastTouch = 0;
+  document.addEventListener('touchend', (e) => {
+    const t = performance.now();
+    if (t - lastTouch < 300) e.preventDefault();
+    lastTouch = t;
+  }, { passive: false });
+
+  // expose for console tweaks
+  window._gameState = state;
+  window._CONFIG = CONFIG;
+})();
+</script>
+</body>
+</html>
