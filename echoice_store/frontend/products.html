@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>eChoice - Products</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="navbar.js" defer></script>
+</head>
+<body>
+    <div id="navbar"></div>
+    <div class="container">
+        <h1>Products</h1>
+        <div id="products-container"></div>
+    </div>
+
+    <script>
+        async function loadProducts() {
+            const container = document.getElementById('products-container');
+            try {
+                const res = await fetch('http://127.0.0.1:5000/products');
+                if (!res.ok) throw new Error("Failed to load products");
+                const products = await res.json();
+                container.innerHTML = '';
+                products.forEach(p => {
+                    const div = document.createElement('div');
+                    div.className = 'product';
+                    div.innerHTML = `
+                        <h3>${p.title}</h3>
+                        <p>${p.description}</p>
+                        <p>Price: $${(p.price_cents / 100).toFixed(2)}</p>
+                        <button onclick="buyProduct(${p.id})">Buy</button>
+                    `;
+                    container.appendChild(div);
+                });
+            } catch (err) {
+                console.error(err);
+                container.innerHTML = '<p>Error loading products.</p>';
+            }
+        }
+
+        async function buyProduct(productId) {
+            const user = JSON.parse(localStorage.getItem('user'));
+
+            if (!user) {
+                alert('Please log in to purchase.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                const res = await fetch('http://127.0.0.1:5000/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ product_id: productId, user_id: user.user_id })
+                });
+
+                const data = await res.json();
+                if (res.ok && data.url) {
+                    window.location.href = data.url;
+                } else if (data.error) {
+                    alert("Error: " + data.error);
+                } else {
+                    alert("Unknown error occurred.");
+                }
+            } catch (err) {
+                console.error("Fetch error:", err);
+                alert("Failed to create checkout session. See console for details.");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadProducts);
+    </script>
+</body>
+</html>

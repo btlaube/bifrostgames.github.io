@@ -1,0 +1,28 @@
+### Signup
+POST http://127.0.0.1:5000/signup
+Content-Type: application/json
+
+{
+    "email": "ben.t.laube@gmail.com",
+    "username": "echoice_user",
+    "password": "MadMan13!"
+}
+
+### Login
+POST http://127.0.0.1:5000/login
+Content-Type: application/json
+
+{
+    "email": "ben.t.laube@gmail.com",
+    "password": "MadMan13!"
+}
+
+### purchase
+POST http://127.0.0.1:5000/create-checkout-session
+Content-Type: application/json
+
+{
+    "product_id": 1,
+    "user_id": 1
+}
+
