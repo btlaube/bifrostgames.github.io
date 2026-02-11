@@ -196,7 +196,7 @@ ul {
 /* Centralized Content Container */
 .container {
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 20px 20px;
 }
 
 .horizontal-container-between {
@@ -215,7 +215,7 @@ ul {
 }
 
 .horizontal-container-stretch {
-    height: 500px;
+    /* height: 500px; */
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -364,7 +364,7 @@ footer {
     justify-content: center;
     align-items: center;
     margin: 40px;
-    padding: 40px;
+    /* padding: 40px; */
 }
 
 .banner-container {
@@ -372,7 +372,7 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 40px;
 }
 
 .banner-image {

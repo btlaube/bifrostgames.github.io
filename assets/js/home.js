@@ -1,5 +1,5 @@
 // Get all game containers
-var games = document.querySelectorAll('.game');
+var games = document.querySelectorAll('.featured-project');
 
 games.forEach(game => {
     // Get the dock buttons and display image within this game container
