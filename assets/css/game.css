@@ -1,10 +1,14 @@
+.main-section {
+    width: 100%;
+}
+
 .main-container {
-    max-width: 1000px;
+    width: 100%;
     background-color: var(--shadowColor);
     color: var(--textColor);
     border-radius: 20px;
     box-shadow: 0 0 3px 5px var(--shadowColor);
-    margin: 25px;
+    /* margin: 25px; */
 }
 
 p, h1, h2, h3, h4 {
@@ -38,23 +42,26 @@ ol ol, ul ul {
 }
 
 .game-info-container {
+    width: 100%;
+    max-width: 1000px;
     display: flex;
     flex-direction: row;
     align-items: top;
 }
 
 .description {
-    margin: 25px;
+    max-width: 50%;
 }
 
 .game-banner-image {
     margin: 0 auto;
-    max-width: 100%;
+    width: 100%;
+    max-width: 1000px;
 }
 
 /* Card styling */
 .screenshot {
-    overflow: hidden;
+    /* overflow: hidden; */
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
     width: 300px;
@@ -62,6 +69,7 @@ ol ol, ul ul {
 }
 
 .screenshots {
+    max-width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
