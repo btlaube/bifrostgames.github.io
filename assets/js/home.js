@@ -52,15 +52,13 @@ document.querySelectorAll('.animated-pfp').forEach(img => {
     let clickTimeout = null;
 
     // --- Hover states ---
-    let isHovered = false;
+    const canHover = window.matchMedia('(hover: hover)').matches;
 
     img.addEventListener('mouseover', () => {
-        isHovered = true;
         img.src = hoverSrc;
     });
 
     img.addEventListener('mouseout', () => {
-        isHovered = false;
         img.src = idleSrc;
     });
 
@@ -83,7 +81,12 @@ document.querySelectorAll('.animated-pfp').forEach(img => {
 
         if (clickTimeout) clearTimeout(clickTimeout);
         clickTimeout = setTimeout(() => {
-            img.src = isHovered ? hoverSrc : idleSrc;
+            if (canHover && img.matches(':hover')) {
+                img.src = hoverSrc;
+            } else {
+                img.src = idleSrc;
+            }
         }, CLICK_HOLD_DURATION);
+
     });
 });
