@@ -67,12 +67,6 @@ html {
     scroll-padding: 10rem;
 }
 
-main {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
 /* Basic styles for the entire website */
 body {
     width: 100%;

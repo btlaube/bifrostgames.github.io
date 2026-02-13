@@ -29,19 +29,63 @@ document.querySelectorAll('.animated-pfp').forEach(img => {
     const hoverSrc = "/assets/img/PfpAnimFrames/Frame2.png";
     const clickSrc = "/assets/img/PfpAnimFrames/Frame3.png";
 
+    const CLICK_HOLD_DURATION = 500;   // ms to hold click frame
+    const COUNTER_VISIBLE_TIME = 1000; // ms counter stays visible
+
+    // --- Create wrapper ---
+    const wrapper = document.createElement('div');
+    wrapper.style.position = 'relative';
+    wrapper.style.display = 'inline-block';
+
+    img.parentNode.insertBefore(wrapper, img);
+    wrapper.appendChild(img);
+
+     // --- Counter Bubble ---
+    const counterEl = document.createElement('div');
+    counterEl.textContent = "0";
+    counterEl.classList.add('pfp-counter-bubble');
+
+    wrapper.appendChild(counterEl);
+
+    let clickCount = 0;
+    let counterTimeout = null;
+    let clickTimeout = null;
+
+    // --- Hover states ---
     img.addEventListener('mouseover', () => {
         img.src = hoverSrc;
     });
 
     img.addEventListener('mouseout', () => {
+        if (img.src.includes(clickSrc)) return; // Don't change if currently showing click frame
         img.src = idleSrc;
     });
 
-    img.addEventListener('mousedown', () => {
-        img.src = clickSrc;
-    });
+    // --- Click behavior ---
+    img.addEventListener('click', () => {
+        clickCount++;
+        counterEl.textContent = "Youch! x" + clickCount;
 
-    img.addEventListener('mouseup', () => {
-        img.src = hoverSrc; // return to hover state after click
+        // Show counter
+        counterEl.style.opacity = '1';
+
+        // Reset counter hide timer
+        if (counterTimeout) clearTimeout(counterTimeout);
+        counterTimeout = setTimeout(() => {
+            counterEl.style.opacity = '0';
+        }, COUNTER_VISIBLE_TIME);
+
+        // Hold click frame briefly
+        img.src = clickSrc;
+
+        if (clickTimeout) clearTimeout(clickTimeout);
+        clickTimeout = setTimeout(() => {
+            // Return to correct state based on hover
+            if (img.matches(':hover')) {
+                img.src = hoverSrc;
+            } else {
+                img.src = idleSrc;
+            }
+        }, CLICK_HOLD_DURATION);
     });
 });

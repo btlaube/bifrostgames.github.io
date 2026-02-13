@@ -24,11 +24,20 @@ function showStartModal()
     startModalText.innerHTML = "Clicker Game!";
 }
 
-startButton.onclick = function()
+function hideStartModal()
 {
     startModal.style.display = "none";
-    startGame();
-};
+}
+
+function stopGame()
+{
+    block.style.animation = "none";
+    counter = 0;
+    document.getElementById("scoreSpan").innerHTML = counter;
+}
+
+stopGame()
+showStartModal();
 
 // Function to start the game
 function startGame()
@@ -36,6 +45,15 @@ function startGame()
     counter = 0;
     block.style.animation = "block 1s infinite linear";
 }
+
+startButton.onclick = function()
+{
+    console.log("Start button clicked");
+    hideStartModal();
+    startModal.style.display = "none";
+    startGame();
+};
+
 
 var checkDead = setInterval(function()
     {

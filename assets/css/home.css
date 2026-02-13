@@ -222,3 +222,40 @@
 /* .animated-pfp:active {
     background-image: url("/assets/img/PfpAnimFrames/Frame3.png");
 } */
+
+.pfp-counter-bubble {
+    position: absolute;
+    left: 50%;
+    top: 25%; /* slightly above center */
+    transform: translate(-50%, -50%);
+
+    background: var(--shadowColor);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-family: sans-serif;
+    font-weight: bold;
+
+    opacity: 0;
+    transition: opacity 0.25s ease;
+
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* Speech bubble pointer */
+.pfp-counter-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    width: 0px;
+    height: 0px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid var(--shadowColor);
+}
+
