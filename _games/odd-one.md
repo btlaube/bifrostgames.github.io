@@ -14,6 +14,8 @@ itch: https://bifrostgames.itch.io/odd-one
 source: https://github.com/btlaube/Odd-One
 
 links:
+  - label: Game Design Doc (Google Doc)
+    url: https://docs.google.com/document/d/1tC5ICCrQBXPAR37LwX4rgdOoAnaaqIBWQUtg7WdXunA/edit?usp=sharing
   - label: Source Code (Github)
     url: https://github.com/btlaube/Odd-One
 
