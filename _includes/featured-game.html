@@ -1,4 +1,4 @@
-<div class="featured-project">
+<article class="featured-project fp-showcase">
     {% if include.game.screenshots %}
     <div class="featured-project-media">
         <div class="showcase">
@@ -6,20 +6,22 @@
         </div>
         <div class="gallery">
             {% for shot in include.game.screenshots %}
-            <button class="dock-button"><img src="{{ shot.src }}" class="dock-image" alt="{{ shot.alt }}"></button>
+            <button class="dock-button" type="button"><img src="{{ shot.src }}" class="dock-image" alt="{{ shot.alt }}"></button>
             {% endfor %}
         </div>
     </div>
     {% endif %}
     <div class="featured-project-info">
-        <h2>{{ include.game.title }}</h2>
-        <p>{{ include.game.pitch }}</p>
-        {% if include.game.event %}<p class="align-left"><strong>Submission to {{ include.game.event }}</strong></p>{% endif %}
-        <div class="featured-project-links">
-            <a class="secondary-link" href="{{ include.game.itch }}" target="_blank">Play on Itch</a>
-            {% if include.game.source %}<a class="secondary-link" href="{{ include.game.source }}" target="_blank">Source Code</a>{% endif %}
+        <p class="fp-meta">
+            {% if include.game.event %}<span>{{ include.game.event }}</span>{% endif %}
+            <span>{{ include.game.date | date: "%B %Y" }}</span>
+        </p>
+        <h2 class="fp-title">{{ include.game.title }}</h2>
+        <p class="fp-pitch">{{ include.game.pitch }}</p>
+        <div class="fp-actions">
+            <a class="fp-btn fp-btn-primary" href="{{ include.game.itch }}" target="_blank" rel="noopener">Play on Itch</a>
+            <a class="fp-btn fp-btn-ghost" href="{{ include.game.url }}">Game page</a>
+            {% if include.game.source %}<a class="fp-link" href="{{ include.game.source }}" target="_blank" rel="noopener">Source code</a>{% endif %}
         </div>
-        <a class="secondary-link" href="{{ include.game.url }}">Game Page</a>
-        <h4 class="align-right">Released: {{ include.game.date | date: "%B %-d, %Y" }}</h4>
     </div>
-</div>
+</article>

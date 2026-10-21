@@ -11,15 +11,13 @@ portfolio: true
 banner: /assets/img/Games/shifty-scales/Banner.png
 cover: /assets/img/Games/SS_Cover.png
 itch: https://bifrostgames.itch.io/shifty-scales
-# TODO: the old page linked to the ShadowRetriever repo here (looks like a copy-paste slip). Replace with the Shifty Scales repo.
-source: https://github.com/btlaube/ShadowRetriever
+source: https://github.com/btlaube/ShiftyScales
 
 jam_note: Completed in 96 hours for GMTK 2024
 
 links:
-  # TODO: same as above, confirm this is the right repository.
   - label: Source Code (Github)
-    url: https://github.com/btlaube/ShadowRetriever
+    url: https://github.com/btlaube/ShiftyScales
 
 credits: All assets and code created by Ben Laube
 software:
