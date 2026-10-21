@@ -1,0 +1,79 @@
+---
+layout: shell
+---
+<section class="section">
+    <div class="main-container vertical-container">
+
+        <div class="game-banner-container">
+            {% if page.banner %}<img class="game-banner-image" src="{{ page.banner }}" alt="{{ page.title }} banner">{% endif %}
+            {% if page.itch %}<p class="align-center"><a class="secondary-link" href="{{ page.itch }}">Play on Itch.io</a></p>{% endif %}
+        </div>
+
+        <div class="game-info-container">
+            <div class="container description">
+
+                <h1>{{ page.title }}</h1>
+                {% if page.tagline %}<h3>{{ page.tagline }}</h3>{% endif %}
+                <hr>
+
+                {% comment %} Free-form description, controls, features, etc. from the Markdown body {% endcomment %}
+                {{ content }}
+
+                {% if page.jam_note %}
+                <hr>
+                <h4>{{ page.jam_note }}</h4>
+                {% endif %}
+
+                {% if page.links %}
+                <hr>
+                <div class="horizontal-container-around">
+                    {% for link in page.links %}
+                    <h4><a class="subtle-link" target="_blank" href="{{ link.url }}">{{ link.label }}</a></h4>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if page.audio %}
+                <hr>
+                <h3>Music from the Game</h3>
+                {% for track in page.audio %}
+                <p>{{ track.title }}</p>
+                <audio controls src="{{ track.src }}">Your browser does not support the audio element.</audio>
+                {% endfor %}
+                {% endif %}
+
+                {% if page.credits or page.software or page.sources %}
+                <hr>
+                <h2>Credits</h2>
+                {% if page.credits %}<p>{{ page.credits }}</p>{% endif %}
+                {% if page.software %}
+                <p>Software:</p>
+                <ul>
+                    {% for item in page.software %}<li>{{ item }}</li>{% endfor %}
+                </ul>
+                {% endif %}
+                {% if page.sources %}
+                <h3>Sources:</h3>
+                <ul>
+                    {% for source in page.sources %}<li><a class="subtle-link" target="_blank" href="{{ source.url }}">{{ source.label }}</a></li>{% endfor %}
+                </ul>
+                {% endif %}
+                {% endif %}
+
+                <hr>
+                <h4>Released: {{ page.date | date: "%B %-d, %Y" }}</h4>
+            </div>
+
+            {% if page.screenshots %}
+            <div class="container screenshots">
+                {% for shot in page.screenshots %}
+                <div class="screenshot">
+                    <img src="{{ shot.src }}" alt="{{ shot.alt }}">
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</section>

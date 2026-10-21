@@ -1,195 +1,171 @@
 ---
-layout: default
+layout: shell
+title: Astral Pulse Dev Log
+css: devlog
 ---
-<!DOCTYPE html>
-<html>
-<head>
-    <title>BifrostGames</title>
-    <link rel="icon" href="/assets/img/ProfileLogo_DarkBG.png" type="image/x-icon">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-    <link rel="stylesheet" href="/assets/css/base.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/devlog.css">
-</head>
-<body>
-    <header id="header">
-        <nav>
+<section id="banner" class="section"></section>
+    
+<!-- Sticky Navigation Tabs -->
+<div class="sticky-nav">
+    <ul class="horizontal-container-between sticky-nav-tabs">
+        <li><a href="#banner">Home</a></li>
+        <li><a href="./">All Dev Logs</a></li>
+    </ul>
+</div>
+
+<section id="devlog" class="section">
+    <div class="vertical-container devlog-container">
+        <h1>Astral Pulse Dev Log</h1>
+        <hr>
+        <div class="container vertical-container-stretch entry">
+            <h2>Dev Log 1: Design Pitch</h2>
+            <h3>November 23, 2023</h3>
+            <p>I had a few vague ideas going into creating my design pitch for my game. Working on VampPR showed me how much more lively and immersive a game can feel by having many independently moving parts and a densely populated scene.</p>
+            <p>Some of my initial ideas were as follows:</p>
             <ul>
-                <li><a href="/">BifrostGames</a></li>
-                <li><a href="/games/">Games</a></li>
-                <li><a href="/portfolio/">Portfolio</a></li>
-                <li><a href="/about/">About</a></li>
-                <li><a href="/contact/">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <section id="banner" class="section"></section>
-    
-    <!-- Sticky Navigation Tabs -->
-    <div class="sticky-nav">
-        <ul class="horizontal-container-between sticky-nav-tabs">
-            <li><a href="#banner">Home</a></li>
-            <li><a href="./">All Dev Logs</a></li>
-        </ul>
-    </div>
-    
-    <section id="devlog" class="section">
-        <div class="vertical-container devlog-container">
-            <h1>Astral Pulse Dev Log</h1>
-            <hr>
-            <div class="container vertical-container-stretch entry">
-                <h2>Dev Log 1: Design Pitch</h2>
-                <h3>November 23, 2023</h3>
-                <p>I had a few vague ideas going into creating my design pitch for my game. Working on VampPR showed me how much more lively and immersive a game can feel by having many independently moving parts and a densely populated scene.</p>
-                <p>Some of my initial ideas were as follows:</p>
-                <ul>
-                    <li>Simple main mechanic but lots of juice</li>
-                    <li>Chaotic Gameplay</li>
-                        <ul>
-                            <li>Lots of flashy visuals</li>
-                            <li>Minimal negative space</li>
-                        </ul>
-                    <li>Prioritize visuals and other extra effects</li>
-                        <ul>
-                            <li>Animation</li>
-                            <li>Sound effects</li>
-                            <li>Particles</li>
-                        </ul>
-                    <li>2D with simple artstyle</li>
-                        <ul>
-                            <li>Pixel art or hand drawn</li>
-                        </ul>
-                    <li>Chain reactions</li>
-                        <ul>
-                            <li>Player times input to maximize combos and create maximum chaos.</li>
-                        </ul>
-                </ul> 
-                <br>
-                <p>I also really liked the simple one-key input that VampPR had. It made the programming simple and gave us more time to focus on visuals. I struggled for a while to think of a main mechanic that could work well with minimal input while allowing the player to create complex chain reactions by timing their input.</p>
-                
-                <br>
-                <p>In the end, I landed on a space game inspired by asteroids and the third minigame from OUTBREAK (made by Liv, Laynie, and Danielle). You control an orbital demolition drone equipped with a chargeable pulse attack, and you must destroy various space themed obstacles (decommissioned satellites, asteroids, etc.). Your attacks are limited and you must collect fragments from destroyed obstacles to recharge your weapon. You will have to release your pulse attacks at the optimal time with the optimal strength to create chain reactions. Chain reactions are necessary to create the most fragments in order to recharge your weapon.</p>
-            </div>
-
-            <div class="container vertical-container-stretch entry">
-                <h2>Dev Log 2: Player Movement</h2>
-                <h3>November 24, 2023</h3>
-                <p>Day 2 was spent ironing out a movement system. It was fairly simple and did not take long. As you can see from the GIF below it is heavily inspired by asteroids as well as OUTBREAK</p>
-                <a><img class="border-image" src="/assets/img/Devlogs/astralPulse/playerMovement.gif" alt=""></a>
-            </div>
-
-            <div class="container vertical-container-stretch entry">
-                <h2>Dev Log 3: Player Attack Visuals</h2>
-                <h3>November 25, 2023</h3>
-                <p>I wanted to get an early start on visuals, specifically player visuals. I created multiple animations for the player: open/power on, idle, and a multi-stage attack animation that indicates the current charged attack level. </p>
-                <a><img class="border-image" src="/assets/img/Devlogs/astralPulse/openIdle.gif" alt=""></a>
-                <p>I wanted another way to show the player charging up an attack with varying levels of output potential, so I used a particle system and wrote a script that modified various attributes of the particle system to show an increase in power. </p>
-                <a><img class="border-image" src="/assets/img/Devlogs/astralPulse/openIdleCharge.gif" alt=""></a>
-                <p>I had not implemented many particle systems in past projects, so this was a learning experience. I had not realized how many customizable features Unity particle systems had, so I spent quite a bit of time experimenting. One thing I added was making the particles increase with opacity over their lifetime, which gave the effect of the particles materializing around the player. I also wanted the particles to have trails that would increase in opacity as well; however, I could not figure out a way to do this. It seems using Unity’s built in particle trail would apply the opacity to the entire trail as opposed to giving the trail its own gradient. I may come back to this later; however, I think the particles without trails achieves the look I was going for.</p>
-            </div>
-
-            <div class="container vertical-container-stretch entry">
-                <h2>Dev Log 4: Additional Player Visuals</h2>
-                <h3>November 26, 2023</h3>
-                <p>I added a twinkle animation to the player attack for some additional visual juice. I looked up twinling stars for reference and drew the animation in Aesprite.</p>
-                <a><img class="border-image" src="/assets/img/Devlogs/astralPulse/attackTwinkle.gif" alt=""></a>
-                <p>I also made an attack pulse animation. I drew the image in gimp, applied a wave filter, applied the same filter on different layers but with varying phase shift to create a growing effect, then I copied the file into Aesprite to shrink/pixelate it and finally cleaned it up a bit.</p>
-                <a><img class="border-image" src="/assets/img/Devlogs/astralPulse/attackShowcase.gif" alt=""></a>
-            </div>
-
-            <div class="container vertical-container-stretch entry">
-                <h2>Dev Log 5: A Break From Visuals</h2>
-                <h3>December 3, 2023</h3>
-                <p>Today I took a break from visuals to focus on the mechanics I needed for a minimum viable product. I was able to reuse and adapt much of the code I needed from past projects.</p>
-                <br>
-
-                <p>For example, I quickly created a health and death system by adapting a similar system.
-                    Obstacle spawning was a simple solution for now, and may need to be updated later. The obstacle health/death system was also an adaptation of my previously written code. In addition to making the player’s attacks damage and destroy obstacles, I made obstacles able to damage and destroy other obstacles on collisions. I am hoping this encourages the player to try to plan their attacks strategically. 
-                </p>
-                <br>
-
-                <p>I also added some additional game-juice effects, such as adjusting the scaling of both the attack visual and in-game effect programmatically depending on the player’s charged attack level and adjusting the time scale to create a slow-mo effect when the player fully charges their attack.</p>
-                <br>
-
-                <p>The last thing I added today was a boundary that deletes all objects, to increase performance.</p>
-            </div>
-
-            <div class="container vertical-container-stretch entry">
-                <h2>Dev Log 6: Reflecting on Playtest 1</h2>
-                <h3>December 4, 2023</h3>
-                <p>Quick brainstorm reflecting on playtest 1. Began implementing a new solution that may require more coding.</p>
-                <p>The following are the notes I took while playtesting:</p>
-                <ul>
-                    <li>Attack level 1 and 2 are too similar and attack 3 is obviously more powerful</li>
-                    <li>Limit Player attacks</li>
-                    <li>What UI do I need?</li>
-                        <ul>
-                            <li>Health</li>
-                            <li>Attack charge</li>
-                            <li>Indicating when player is hit</li>
-                        </ul>
-                    <li>Fix player death</li>
-                    <li>Dynamic UI elements</li>
-                    <li>Remaining mechanics</li>
-                    <li>Audio system and all sound asset</li>
-                </ul>
-                <p>Based on feedback and my own playing of the game, I decided the game was too complicated and there were too many controls to balance. I realized I could come to the root of the issue by taking note of the things the player has to keep track of while playing.</p>
-                <ul>
-                    <li>Moving, dodging, positioning</li>
-                    <li>Hitting things away from yourself</li>
-                    <li>Hitting things into other obstacles</li>
-                    <li>Collecting fragments (fuel for attack)</li>
-                    <li>When to hold and release attacks</li>
-                </ul>
-                <p>I realized that something needed to be limited in some way. I had a few ideas...</p>
-                <p>I knew I didn't want to limit the timing of charging and releasing the attack as that should be an integral part of the gameplay. I also didn't want to limit hitting things into other things or in other words triggering chain events.</p>
-                <ol>
-                    <li>
-                        <p>Limit collecing fragments: If I removed the need to collect fragments, that would be one less thing for the player to focus on. I could do this either by giving the player infinite attack or by making fragments autocollect.</p>
-                        <p>I figured that infinite attack would make the game too easy, but a cool down or autocollection would work.</p>
-                    </li>
-                    <li>
-                        <p>Limit movement: If the player movement was automated in some way it would mean one less thing for the player to focus on. I needed a creative way to limit movement, so I came up with a few ideas.</p>
-                        <p>Space Foosball: Up and down arrows move an array of drones, and space is used to attack.</p>
-                        <p>Rotate a space station or control an orbital drone: use left and right to rotate, up and down to switch weapons, and space to attack</p>
-                        <p>And finally a ricochet based movement where the player would sling shot around planets with gravity effects</p>
-                    </li>
-                </ol>
-            </div>
-
-            <div class="container vertical-container-stretch entry">
-                <h2>Dev Log 7: Testing a New Mechanic</h2>
-                <h3>December 5, 2023</h3>
-                <p>Today I decided to attempt to implement the ricochet mechanic I came up with the other day. I struggled with this for a while before eventually getting a ricochet/orbit system that I like enough, but not enough to continue working on it. I scratched that plan and went back to my original idea of free movement.</p>
-            </div>
-
-            <div class="container vertical-container-stretch entry">
-                <h2>Dev Log 8: More Art and Mechanics</h2>
-                <h3>December 6, 2023</h3>
-                <p>Today was spent getting as much done and put into the game before the due date as possile. I was able to get quite a lot done. I was able to add lots of UI elements, including a death canvas, dynamic main menu, score, health, and attack. Most of my time today was spent getting the visuals of the attack UI display working, and I am really happy with how it turned out.</p>
-                <p>I was also able to get multiple sprites drawn for the asteroids as well as the fragments that the asteroids break into. I got the fragment auto-collection system and attack charge system fully working. I added a glow to the fragments that looks great</p>
-                <p>Finally, I made some cover art, set up the Itch page and wrapped up my dev log. </p>
-            </div>
-
-            <div class="container vertical-container-stretch entry">
-                <h2>Reflection</h2>
-                <h3>December 13, 2023</h3>
-                <h3>Summary</h3>
-                <p>Astral Pulse is an arcade-style game about piloting an orbital demolition drone and destroying incoming asteroids. You use a powerful pulse attack to break asteroids into fragments and collect the fragments to charge more attakcs.</p>
-                <br>
-                <h3>What I Learned</h3>
-                <p>I learned a lesson that I have learned before and that is don't overscope. I think all of my projects this semster have been at least a little overscoped including astral pulse. For future assignments, I want to focus on coming up with a simple idea early on.</p>
-                <br>
-                <h3>What I am Most Proud Of</h3>
-                <p>I am most proud of the various visual elements, especially the player visual. I put a lot of effort toward the beginning of the project into making the player look good and feel good to control and I thing it payed off.</p>
-                <br>
-                <h3>My Biggest Challenge</h3>
-                <p>My Biggest Challenge was coming up with a game that fit the idea in my head. My initial idea was a game with minimal input (ideally one key) that the player would use at the right time to start chain reactions. This mechanic would be perfect for a puzzle game, but I also wanted chaotic gameplay and player movement. These ideas seemed to contradict and I got stuck for a while.</p>
-                <p>In the end I am proud of how the project turned out, and if I picked a project from the class to continue working on it would be Astral Pulse.</p>
-            </div>
+                <li>Simple main mechanic but lots of juice</li>
+                <li>Chaotic Gameplay</li>
+                    <ul>
+                        <li>Lots of flashy visuals</li>
+                        <li>Minimal negative space</li>
+                    </ul>
+                <li>Prioritize visuals and other extra effects</li>
+                    <ul>
+                        <li>Animation</li>
+                        <li>Sound effects</li>
+                        <li>Particles</li>
+                    </ul>
+                <li>2D with simple artstyle</li>
+                    <ul>
+                        <li>Pixel art or hand drawn</li>
+                    </ul>
+                <li>Chain reactions</li>
+                    <ul>
+                        <li>Player times input to maximize combos and create maximum chaos.</li>
+                    </ul>
+            </ul> 
+            <br>
+            <p>I also really liked the simple one-key input that VampPR had. It made the programming simple and gave us more time to focus on visuals. I struggled for a while to think of a main mechanic that could work well with minimal input while allowing the player to create complex chain reactions by timing their input.</p>
+            
+            <br>
+            <p>In the end, I landed on a space game inspired by asteroids and the third minigame from OUTBREAK (made by Liv, Laynie, and Danielle). You control an orbital demolition drone equipped with a chargeable pulse attack, and you must destroy various space themed obstacles (decommissioned satellites, asteroids, etc.). Your attacks are limited and you must collect fragments from destroyed obstacles to recharge your weapon. You will have to release your pulse attacks at the optimal time with the optimal strength to create chain reactions. Chain reactions are necessary to create the most fragments in order to recharge your weapon.</p>
         </div>
-    </section>
-     
-</body>
-</html>
+
+        <div class="container vertical-container-stretch entry">
+            <h2>Dev Log 2: Player Movement</h2>
+            <h3>November 24, 2023</h3>
+            <p>Day 2 was spent ironing out a movement system. It was fairly simple and did not take long. As you can see from the GIF below it is heavily inspired by asteroids as well as OUTBREAK</p>
+            <a><img class="border-image" src="/assets/img/Devlogs/astralPulse/playerMovement.gif" alt=""></a>
+        </div>
+
+        <div class="container vertical-container-stretch entry">
+            <h2>Dev Log 3: Player Attack Visuals</h2>
+            <h3>November 25, 2023</h3>
+            <p>I wanted to get an early start on visuals, specifically player visuals. I created multiple animations for the player: open/power on, idle, and a multi-stage attack animation that indicates the current charged attack level. </p>
+            <a><img class="border-image" src="/assets/img/Devlogs/astralPulse/openIdle.gif" alt=""></a>
+            <p>I wanted another way to show the player charging up an attack with varying levels of output potential, so I used a particle system and wrote a script that modified various attributes of the particle system to show an increase in power. </p>
+            <a><img class="border-image" src="/assets/img/Devlogs/astralPulse/openIdleCharge.gif" alt=""></a>
+            <p>I had not implemented many particle systems in past projects, so this was a learning experience. I had not realized how many customizable features Unity particle systems had, so I spent quite a bit of time experimenting. One thing I added was making the particles increase with opacity over their lifetime, which gave the effect of the particles materializing around the player. I also wanted the particles to have trails that would increase in opacity as well; however, I could not figure out a way to do this. It seems using Unity’s built in particle trail would apply the opacity to the entire trail as opposed to giving the trail its own gradient. I may come back to this later; however, I think the particles without trails achieves the look I was going for.</p>
+        </div>
+
+        <div class="container vertical-container-stretch entry">
+            <h2>Dev Log 4: Additional Player Visuals</h2>
+            <h3>November 26, 2023</h3>
+            <p>I added a twinkle animation to the player attack for some additional visual juice. I looked up twinling stars for reference and drew the animation in Aesprite.</p>
+            <a><img class="border-image" src="/assets/img/Devlogs/astralPulse/attackTwinkle.gif" alt=""></a>
+            <p>I also made an attack pulse animation. I drew the image in gimp, applied a wave filter, applied the same filter on different layers but with varying phase shift to create a growing effect, then I copied the file into Aesprite to shrink/pixelate it and finally cleaned it up a bit.</p>
+            <a><img class="border-image" src="/assets/img/Devlogs/astralPulse/attackShowcase.gif" alt=""></a>
+        </div>
+
+        <div class="container vertical-container-stretch entry">
+            <h2>Dev Log 5: A Break From Visuals</h2>
+            <h3>December 3, 2023</h3>
+            <p>Today I took a break from visuals to focus on the mechanics I needed for a minimum viable product. I was able to reuse and adapt much of the code I needed from past projects.</p>
+            <br>
+
+            <p>For example, I quickly created a health and death system by adapting a similar system.
+                Obstacle spawning was a simple solution for now, and may need to be updated later. The obstacle health/death system was also an adaptation of my previously written code. In addition to making the player’s attacks damage and destroy obstacles, I made obstacles able to damage and destroy other obstacles on collisions. I am hoping this encourages the player to try to plan their attacks strategically. 
+            </p>
+            <br>
+
+            <p>I also added some additional game-juice effects, such as adjusting the scaling of both the attack visual and in-game effect programmatically depending on the player’s charged attack level and adjusting the time scale to create a slow-mo effect when the player fully charges their attack.</p>
+            <br>
+
+            <p>The last thing I added today was a boundary that deletes all objects, to increase performance.</p>
+        </div>
+
+        <div class="container vertical-container-stretch entry">
+            <h2>Dev Log 6: Reflecting on Playtest 1</h2>
+            <h3>December 4, 2023</h3>
+            <p>Quick brainstorm reflecting on playtest 1. Began implementing a new solution that may require more coding.</p>
+            <p>The following are the notes I took while playtesting:</p>
+            <ul>
+                <li>Attack level 1 and 2 are too similar and attack 3 is obviously more powerful</li>
+                <li>Limit Player attacks</li>
+                <li>What UI do I need?</li>
+                    <ul>
+                        <li>Health</li>
+                        <li>Attack charge</li>
+                        <li>Indicating when player is hit</li>
+                    </ul>
+                <li>Fix player death</li>
+                <li>Dynamic UI elements</li>
+                <li>Remaining mechanics</li>
+                <li>Audio system and all sound asset</li>
+            </ul>
+            <p>Based on feedback and my own playing of the game, I decided the game was too complicated and there were too many controls to balance. I realized I could come to the root of the issue by taking note of the things the player has to keep track of while playing.</p>
+            <ul>
+                <li>Moving, dodging, positioning</li>
+                <li>Hitting things away from yourself</li>
+                <li>Hitting things into other obstacles</li>
+                <li>Collecting fragments (fuel for attack)</li>
+                <li>When to hold and release attacks</li>
+            </ul>
+            <p>I realized that something needed to be limited in some way. I had a few ideas...</p>
+            <p>I knew I didn't want to limit the timing of charging and releasing the attack as that should be an integral part of the gameplay. I also didn't want to limit hitting things into other things or in other words triggering chain events.</p>
+            <ol>
+                <li>
+                    <p>Limit collecing fragments: If I removed the need to collect fragments, that would be one less thing for the player to focus on. I could do this either by giving the player infinite attack or by making fragments autocollect.</p>
+                    <p>I figured that infinite attack would make the game too easy, but a cool down or autocollection would work.</p>
+                </li>
+                <li>
+                    <p>Limit movement: If the player movement was automated in some way it would mean one less thing for the player to focus on. I needed a creative way to limit movement, so I came up with a few ideas.</p>
+                    <p>Space Foosball: Up and down arrows move an array of drones, and space is used to attack.</p>
+                    <p>Rotate a space station or control an orbital drone: use left and right to rotate, up and down to switch weapons, and space to attack</p>
+                    <p>And finally a ricochet based movement where the player would sling shot around planets with gravity effects</p>
+                </li>
+            </ol>
+        </div>
+
+        <div class="container vertical-container-stretch entry">
+            <h2>Dev Log 7: Testing a New Mechanic</h2>
+            <h3>December 5, 2023</h3>
+            <p>Today I decided to attempt to implement the ricochet mechanic I came up with the other day. I struggled with this for a while before eventually getting a ricochet/orbit system that I like enough, but not enough to continue working on it. I scratched that plan and went back to my original idea of free movement.</p>
+        </div>
+
+        <div class="container vertical-container-stretch entry">
+            <h2>Dev Log 8: More Art and Mechanics</h2>
+            <h3>December 6, 2023</h3>
+            <p>Today was spent getting as much done and put into the game before the due date as possile. I was able to get quite a lot done. I was able to add lots of UI elements, including a death canvas, dynamic main menu, score, health, and attack. Most of my time today was spent getting the visuals of the attack UI display working, and I am really happy with how it turned out.</p>
+            <p>I was also able to get multiple sprites drawn for the asteroids as well as the fragments that the asteroids break into. I got the fragment auto-collection system and attack charge system fully working. I added a glow to the fragments that looks great</p>
+            <p>Finally, I made some cover art, set up the Itch page and wrapped up my dev log. </p>
+        </div>
+
+        <div class="container vertical-container-stretch entry">
+            <h2>Reflection</h2>
+            <h3>December 13, 2023</h3>
+            <h3>Summary</h3>
+            <p>Astral Pulse is an arcade-style game about piloting an orbital demolition drone and destroying incoming asteroids. You use a powerful pulse attack to break asteroids into fragments and collect the fragments to charge more attakcs.</p>
+            <br>
+            <h3>What I Learned</h3>
+            <p>I learned a lesson that I have learned before and that is don't overscope. I think all of my projects this semster have been at least a little overscoped including astral pulse. For future assignments, I want to focus on coming up with a simple idea early on.</p>
+            <br>
+            <h3>What I am Most Proud Of</h3>
+            <p>I am most proud of the various visual elements, especially the player visual. I put a lot of effort toward the beginning of the project into making the player look good and feel good to control and I thing it payed off.</p>
+            <br>
+            <h3>My Biggest Challenge</h3>
+            <p>My Biggest Challenge was coming up with a game that fit the idea in my head. My initial idea was a game with minimal input (ideally one key) that the player would use at the right time to start chain reactions. This mechanic would be perfect for a puzzle game, but I also wanted chaotic gameplay and player movement. These ideas seemed to contradict and I got stuck for a while.</p>
+            <p>In the end I am proud of how the project turned out, and if I picked a project from the class to continue working on it would be Astral Pulse.</p>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,16 @@
+{% comment %}
+  One card on the Games page: cover image, with title and pitch fading in on hover.
+  Usage: {% include game-card.html game=game %}
+  Needs in the game's front matter: title, pitch, cover (url comes from the collection).
+  The pitch is a full sentence starting with the game's title; the title inside it is bolded.
+{% endcomment %}
+{% capture bold_title %}<strong>{{ include.game.title }}</strong>{% endcapture %}
+<div class="game-card">
+    <a href="{{ include.game.url }}">
+        <img src="{{ include.game.cover }}" alt="{{ include.game.title }} cover art">
+        <div class="container overlay">
+            <h3>{{ include.game.title }}</h3>
+            <p>{{ include.game.pitch | replace_first: include.game.title, bold_title }}</p>
+        </div>
+    </a>
+</div>

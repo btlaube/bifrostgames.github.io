@@ -1,1 +1,16 @@
 title: BifrostGames
+description: Indie games and game development by Ben Laube.
+
+collections:
+  games:
+    output: true
+    permalink: /games/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: games
+    values:
+      layout: game
+      css: game
+      noindex: true      # keeps search engines away from preview pages; remove at switch-over

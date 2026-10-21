@@ -1,99 +1,31 @@
 ---
-layout: default
+layout: shell
+title: Games
+css: games
 ---
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Games | BifrostGames</title>
-    <link rel="icon" href="/assets/img/ProfileLogo_DarkBG.png" type="image/x-icon">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/base.css">
-    <link rel="stylesheet" type="text/css" href="/assets/css/games.css">
-</head>
-<body>
-    <header id="header">
-        <nav>
-            <ul>
-                <li><a href="/"><img class="nav-image" id="nav-image" src="/assets/img/BannerLogo_Bifrost.png" alt="Bifrost Games"></a></li>
-                <li><a href="/games/">Games</a></li>
-                <li><a href="/portfolio/">Portfolio</a></li>
-                <li><a href="/about/">About</a></li>
-                <li><a href="/contact/">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-	    
-    <section id="banner" class="section banner"></section>
+{% comment %}
+  Cards come from _games/*.md.
+  - "listed: false" in a game's front matter hides it from this page.
+  - Cards are ordered by each game's "order" number (1 = first).
+    To sort newest-first instead, use:  sort: "date" | reverse
+{% endcomment %}
+{% assign card_games = site.games | where_exp: "g", "g.listed != false" | sort: "order" %}
 
-    <section id="games" class="section">
-        <!-- <h1>Game Collection</h1> -->
-        <div class="container games-container">
-            <div class="game-card">
-                <a href="/games/eternal-blade/">
-                    <img src="/assets/img/Games/eternal-blade/EB_Cover.gif" alt="Game 1 cover art">
-                    <div class="container overlay">
-                        <h3>Eternal Blade</h3>
-                        <p><strong>Eternal Blade</strong> is an infinite, procedurally generated dungeon crawler where you play as a sword that can sacrifice its wielder to save itself.</p>
-                    </div>
-                </a>
-            </div>
-            <div class="game-card">
-                <a href="/games/shadow-retriever/">
-                    <img src="/assets/img/Games/SR_Cover.png" alt="Game 1 cover art">
-                    <div class="container overlay">
-                        <h3>Shadow Retriever</h3>
-                        <p><strong>Shadow Retriever</strong> puts you in the role of the alchemist's shadow, summoned to retrieve powerful lost artifacts. Explore the alchemist's lair and unlock new alchemical abilities from the items you collect to aid in your quest.</p>
-                    </div>
-                </a>
-            </div>
-            <div class="game-card">
-                <a href="/games/shifty-scales/">
-                    <img src="/assets/img/Games/SS_Cover.png" alt="Game 2 cover art">
-                    <div class="overlay game-content">
-                        <h3>Shifty Scales</h3>
-                        <p><strong>Shifty Scales</strong> is a puzzle game where you run a shop that fixes mis-scaled items with a special scale-shifting machine. Solve tricky puzzles and satisfy customer orders by resizing and reassembling objects.</p>
-                    </div>
-                </a>
-            </div>
-            <div class="game-card">
-                <a href="/games/deep-space-clean-up/">
-                    <img src="/assets/img/Games/DSCU_Cover.png" alt="Game 2 cover art">
-                    <div class="overlay game-content">
-                        <h3>Deep Space Clean Up</h3>
-                        <p><strong>Deep Space Clean Up</strong> puts you in the role of a space janitor sent to clean up the lost ISS Phoenix. After crash landing, explore the abandoned station, collect DNA samples, and use syringes to unlock new abilities as you uncover its dark secrets.</p>
-                    </div>
-                </a>
-            </div>
-            <div class="game-card">
-                <a href="/games/at-large/">
-                    <img src="/assets/img/Games/AL_Cover.png" alt="Game 4 cover art">
-                    <div class="overlay">
-                        <h3>At Large</h3>
-                        <p><strong>At Large</strong> is a stealth-based survival game where you play as an escaped convict trying to blend into a crowd every 5 seconds to avoid detection.</p>
-                    </div>
-                </a>
-            </div>
-            <div class="game-card">
-                <a href="/games/vices-grip/">
-                    <img src="/assets/img/Games/VG_Cover.png" alt="Game 5 cover art">
-                    <div class="overlay">
-                        <h3>Vice's Grip</h3>
-                        <p><strong>Vice's Grip</strong> is a fast-paced escape game where you're trapped by the Trash Compactor Killer. Can you escape the deadly compactor before it's too late?</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
+<section id="banner" class="section banner"></section>
 
-    <section id="links" class="section links">
-        <div class="container vertical-container-stretch">
-            <h2>Find more games on my Itch.io page:</h2>
-            <a class="primary-link" href="https://bifrostgames.itch.io/" target="_blank">
-                <i class="fas fa-gamepad"></i> Itch.io
-            </a>
-        </div>
-    </section>
+<section id="games" class="section">
+    <div class="container games-container">
+        {% for game in card_games %}
+            {% include game-card.html game=game %}
+        {% endfor %}
+    </div>
+</section>
 
-</body>
-</html>
+<section id="links" class="section links">
+    <div class="container vertical-container-stretch">
+        <h2>Find more games on my Itch.io page:</h2>
+        <a class="primary-link" href="https://bifrostgames.itch.io/" target="_blank">
+            <i class="fas fa-gamepad"></i> Itch.io
+        </a>
+    </div>
+</section>

@@ -1,348 +1,321 @@
 ---
 layout: default
+title: Portfolio
+css: portfolio
 ---
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Portfolio | BifrostGames</title>
-    <link rel="icon" href="/assets/img/ProfileLogo_DarkBG.png" type="image/x-icon" />
-	<meta charset="UTF-8">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-	<link rel="stylesheet" type="text/css" href="/assets/css/base.css">
-	<link rel="stylesheet" type="text/css" href="/assets/css/portfolio.css">
-</head>
+<!-- Sticky Navigation Tabs -->
+<div class="sticky-nav">
+    <ul class="horizontal-container-between sticky-nav-tabs">
+        <li><a href="#banner">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#resume">Resume</a></li>
+        <li><a href="#projects">Projects</a></li>
+    </ul>
+</div>
 
-<body id="content">    
-	<header id="header">
-        <nav>
-            <ul>
-                <li><a href="/"><img class="nav-image" id="nav-image" src="/assets/img/BannerLogo_Bifrost.png" alt="Bifrost Games"></a></li>
-                <li><a href="/games/">Games</a></li>
-                <li><a href="/portfolio/">Portfolio</a></li>
-                <li><a href="/about/">About</a></li>
-                <li><a href="/contact/">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+<section id="about" class="section">
+    <div class="container about-container">
+        <div class="vertical-container">
+            <h1>About Me</h1>
+            <div class="horizontal-container-around">
+                <div class="vertical-container-stretch">
+                    <p>Hi, I'm Ben Laube, a game developer with a Bachelor of Science in Computer Science from the University of Nebraska-Lincoln, with minors in Mathematics and Psychology.</p>
+                    <p>I specialize in Unity development and gameplay systems, combining strong programming fundamentals with creative design thinking. I've led student development teams, built polished prototypes and full projects, and completed a senior design VR application in collaboration with an industry sponsor.</p>
+                    <p>I enjoy solving technical challenges, building engaging mechanics, and creating interactive experiences that are both thoughtful and fun. I'm always looking to grow as a developer and contribute to meaningful game projects.</p>
+                    <p>Thank you for taking the time to read a little bit about me.</p>
+                    <div class="horizontal-container-around">
+                        <a class="secondary-link" href="https://github.com/btlaube" target="_blank">
+                            <i class="fab fa-github-square">&nbsp;</i> GitHub
+                        </a>
+                        <a class="secondary-link" href="https://www.linkedin.com/in/ben-laube/" target="_blank">
+                            <i class="fab fa-linkedin">&nbsp;</i> LinkedIn
+                        </a>
+                    </div>
+                </div>
+                <a><img class="about-image" id="profileImage" src="../assets/img/PfpAnimFrames/Frame1.png" alt="Hello, world!"></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="resume" class="section">
+    <div class="container resume-container">
+        <a class="subtle-link" href="/assets/Resume.pdf" download="ben_laube_resume"><h1>Resume&#10515;</h1></a>
     
-    <section id="banner" class="section banner"></section>
-
-    <!-- Sticky Navigation Tabs -->
-    <div class="sticky-nav">
-        <ul class="horizontal-container-between sticky-nav-tabs">
-            <li><a href="#banner">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#resume">Resume</a></li>
-            <li><a href="#projects">Projects</a></li>
+        <div class="horizontal-container-around">
+            <a class="subtle-link" href="mailto:@ben.t.laube@gmail.com">ben.t.laube@gmail.com</a>
+            <a class="subtle-link" href="mailto:@bifrost.games.inc@gmail.com">bifrost.games.inc@gmail.com</a>
+            <a class="subtle-link" href="https://www.linkedin.com/in/ben-laube/" target="_blank">linkedin.com/in/ben-laube</a>
+        </div>
+    
+        <h2>Education</h2>
+        <div class="horizontal-container-between">
+            <h3 class="alignleft">University of Nebraska-Lincoln, Lincoln, NE</h3>
+            <span class="align-right">August 2020 - May 2024</span>
+        </div>
+        <p>Bachelor of Science, Computer Science</p>
+        <p>Minors: Psychology, Mathematics</p>
+        <p>Honors: National Society of Collegiate Scholars, University Honors Program; GPA: 3.7</p>
+    
+        <h2>Professional Experience</h2>
+        <div class="horizontal-container-between">
+            <h3 class="alignleft">Intermediate Tutor, Tutor.com: A Service of the Princeton Review</h3>
+            <span class="align-right">November 2023 - Present</span>
+        </div>
+        <ul>
+            <li>Tutored college students of varying backgrounds and ages in Python and Computer Science Principles through online, one-on-one sessions.</li>
+            <li>Analyzed complex coding problems upon first encounter, providing clear, tailored explanations that guided students to independently reach solutions and deepen their understanding.</li>
+        </ul>
+    
+        <div class="horizontal-container-between">
+            <h3 class="alignleft">Learning Assistant, University of Nebraska-Lincoln, Lincoln, NE</h3>
+            <span class="align-right">January 2022 - May 2024</span>
+        </div>
+        <ul>
+            <li>Facilitated student learning in lab sections and office hours, improving overall class performance.</li>
+            <li>Provided tailored feedback on assignments to highlight successes and identify errors, to foster growth and development and provide actionable suggestions for student improvement.</li>
+        </ul>
+    
+        <h2>Leadership Experience</h2>
+        <div class="horizontal-container-between">
+            <h3 class="alignleft">Treasurer and Team Lead, UNL Game Development Club</h3>
+            <span class="align-right">August 2020 - May 2024</span>
+        </div>
+        <ul>
+            <li>Led 3 teams of 4-5 students in developing 2 games and 1 prototype using Unity and C#.</li>
+            <li>Guided teams in game development principles, including level design, prototyping, and playtesting.</li>
+            <li>Received feedback from faculty experts and presented projects at end-of-semester campus-wide events.</li>
+        </ul>
+        <div class="horizontal-container-between">
+            <h3 class="alignleft">Course Leader, University of Nebraska-Lincoln, Lincoln, NE</h3>
+            <span class="align-right">August 2023 - May 2024</span>
+        </div>
+        <ul>
+            <li>Delivered a 20 minute lecture on academic honesty and grading policies to promote academic integrity.</li>
+            <li>Coordinated Learning Assistants and distributed grading for efficient and quality feedback to students.</li>
+            <li>Documented course leadership responsibilities in a public Source Code to aid future leaders.</li>
+        </ul>
+    
+        <h2>Skills and Activities</h2>
+        <ul>
+            <li><strong>Programming Languages:</strong> C#, Python, Java, C, C++, HTML, CSS, JavaScript</li>
+            <li><strong>Game Engines & Tools:</strong> Unity, Unreal Engine, Git, Blender, Zenhub, Audacity</li>
+            <li><strong>Involvement:</strong> UNL Game Development Club (Treasurer, Team Lead)</li>
         </ul>
     </div>
+</section>
 
-	<section id="about" class="section">
-        <div class="container about-container">
-            <div class="vertical-container">
-                <h1>About Me</h1>
-                <div class="horizontal-container-around">
+<section id="projects" class="section projects">
+        <h2>Independent Games</h2>
+        <div class="container projects-container">
+            <div class="project-grid">
+                <!-- Eternal Blade -->
+                <div class="horizontal-container-around project-card">
                     <div class="vertical-container-stretch">
-                        <p>Hi, I'm Ben Laube, a game developer with a Bachelor of Science in Computer Science from the University of Nebraska-Lincoln, with minors in Mathematics and Psychology.</p>
-                        <p>I specialize in Unity development and gameplay systems, combining strong programming fundamentals with creative design thinking. I've led student development teams, built polished prototypes and full projects, and completed a senior design VR application in collaboration with an industry sponsor.</p>
-                        <p>I enjoy solving technical challenges, building engaging mechanics, and creating interactive experiences that are both thoughtful and fun. I'm always looking to grow as a developer and contribute to meaningful game projects.</p>
-                        <p>Thank you for taking the time to read a little bit about me.</p>
-                        <div class="horizontal-container-around">
-                            <a class="secondary-link" href="https://github.com/btlaube" target="_blank">
-                                <i class="fab fa-github-square">&nbsp;</i> GitHub
-                            </a>
-                            <a class="secondary-link" href="https://www.linkedin.com/in/ben-laube/" target="_blank">
-                                <i class="fab fa-linkedin">&nbsp;</i> LinkedIn
-                            </a>
+                        <img src="/assets/img/Games/eternal-blade/EB_Cover.gif" alt="eternal-blade cover art">
+                        <div class="horizontal-container-between">
+                            <a class="secondary-link" href="/games/eternal-blade/">Game Page</a>
                         </div>
                     </div>
-                    <a><img class="about-image" id="profileImage" src="../assets/img/PfpAnimFrames/Frame1.png" alt="Hello, world!"></a>
+                    <div class="vertical-container-stretch project-info">
+                        <a><h3 class="align-left">Eternal Blade</h3></a>
+                        <p><strong>Eternal Blade</strong> is an infinite, procedurally generated dungeon crawler where you play as a sword that can sacrifice its wielder to save itself.</p>
+                        <h4 class="align-left">Submission to Pirate Software Game Jam 16</h4>
+                        <h4 class="align-left">Released: January 31, 2025</h4>
+                    </div>
+                </div>
+
+                <!-- Shifty Scales -->
+                <div class="horizontal-container-around project-card">
+                    <div class="vertical-container-stretch">
+                        <img src="/assets/img/Games/SS_Cover.png" alt="Shifty Scales cover art">
+                        <div class="horizontal-container-between">
+                            <a class="secondary-link" href="/games/shifty-scales/">Game Page</a>
+                        </div>
+                    </div>
+                    <div class="vertical-container-stretch project-info">
+                        <a><h3 class="align-left">Shifty Scales</h3></a>
+                        <p><strong>Shifty Scales</strong> is a puzzle game where you run a shop that fixes mis-scaled items with a special scale-shifting machine. Solve tricky puzzles and satisfy customer orders by resizing and reassembling objects.</p>
+                        <h4 class="align-left">Submission to GMTK Game Jam 2024</h4>
+                        <h4 class="align-left">Released: August 20, 2024</h4>
+                    </div>
+                </div>
+
+                <!-- Shadow Retiever -->
+                <div class="horizontal-container-around project-card">
+                    <div class="vertical-container-stretch">
+                        <img src="/assets/img/Games/SR_Cover.png" alt="shadow-retriever cover art">
+                        <div class="horizontal-container-between">
+                            <a class="secondary-link" href="/games/shadow-retriever/">Game Page</a>
+                        </div>
+                    </div>
+                    <div class="vertical-container-stretch project-info">
+                        <h3 class="align-left">Shadow Retriever</h3>
+                        <p><strong>Shadow Retriever</strong> puts you in the role of the alchemist's shadow, summoned to retrieve powerful lost artifacts. Explore the alchemist's lair and unlock new abilities from the items you collect.</p>
+                        <h4 class="align-left">Submission to Pirate Software Game Jam 15</h4>
+                        <h4 class="align-left">Released: July 10, 2024</h4>
+                    </div>
+                </div>
+                
+                <!-- Vice's Grip -->
+                <div class="horizontal-container-around project-card">
+                    <div class="vertical-container-stretch">
+                        <img src="/assets/img/Games/VG_Cover.png" alt="Vice's Grip cover art">
+                        <div class="horizontal-container-between">
+                            <a class="secondary-link" href="/games/vices-grip/">Game Page</a>
+                        </div>
+                    </div>
+                    <div class="vertical-container-stretch project-info">
+                        <a><h3 class="align-left">Vice's Grip</h3></a>
+                        <p><strong>Vice's Grip</strong> is a fast-paced escape game where you're trapped by the Trash Compactor Killer. Can you escape the deadly compactor before it's too late?</p>
+                        <h4 class="align-left">Submission to Ludum Dare 54</h4>
+                        <h4 class="align-left">Released: October 2, 2023</h4>
+                    </div>
+                </div>
+                
+                <!-- Roll or Die -->
+                <div class="horizontal-container-around project-card">
+                    <div class="vertical-container-stretch">
+                        <img src="/assets/img/Games/roll-or-die/RD_Cover.png" alt="Roll or Die cover art">
+                        <div class="horizontal-container-between">
+                            <a class="secondary-link" href="/games/roll-or-die/">Game Page</a>
+                        </div>
+                    </div>
+                    <div class="vertical-container-stretch project-info">
+                        <a><h3 class="align-left">Roll or Die</h3></a>
+                        <p><strong>Roll or Die</strong> puts you in a one-on-one dice battle, where the values you roll control the power or your attacks, the amount you heal, and the number of new dice you can recieve.</p>
+                        <h4 class="align-left">Submission to GMTK Game Jam 2022</h4>
+                        <h4 class="align-left">Released: July 17, 2022</h4>
+                    </div>
+                </div>
+
+                <!-- Deep Space Clean Up -->
+                <div class="horizontal-container-around project-card">
+                    <div class="vertical-container-stretch">
+                        <img src="/assets/img/Games/DSCU_Cover.png" alt="Deep Space Clean Up cover art">
+                        <div class="horizontal-container-between">
+                            <a class="secondary-link" href="/games/deep-space-clean-up/">Game Page</a>
+                        </div>
+                    </div>
+                    <div class="vertical-container-stretch project-info">
+                        <a><h3 class="align-left">Deep Space Clean Up</h3></a>
+                        <p><strong>Deep Space Clean Up</strong> puts you in the role of a space janitor sent to clean up the lost ISS Phoenix. After crash landing, explore the abandoned station, collect DNA samples, and use syringes to unlock new abilities as you uncover its dark secrets.</p>
+                        <h4 class="align-left">Submission to Metroidvania Month 16</h4>
+                        <h4 class="align-left">Released: June 15, 2022</h4>
+                    </div>
+                </div>
+                
+                <!-- At Large -->
+                <div class="horizontal-container-around project-card">
+                    <div class="vertical-container-stretch">
+                        <img src="/assets/img/Games/AL_Cover.png" alt="At Large cover art">
+                        <div class="horizontal-container-between">
+                            <a class="secondary-link" href="/games/at-large/">Game Page</a>
+                        </div>
+                    </div>
+                    <div class="vertical-container-stretch project-info">
+                        <a><h3 class="align-left">At Large</h3></a>
+                        <p><strong>At Large</strong> is a stealth-based survival game where you play as an escaped convict trying to blend into a crowd every 5 seconds to avoid detection.</p>
+                        <h4 class="align-left">Submission to UNL Game Dev Club Game Jam 2022</h4>
+                        <h4 class="align-left">Released: November 14, 2022</h4>
+                    </div>
                 </div>
             </div>
         </div>
-	</section>
+        <h2>Game Design Class Projects</h2>
+        <div class="container projects-container">
+            <div class="project-grid">
+                <!-- Vamp PR -->
+                <div class="horizontal-container-around project-card">
+                    <div class="vertical-container-stretch">
+                        <img src="/assets/img/Games/VP_Cover.png" alt="Vamp PR cover art">
+                        <div class="horizontal-container-between">
+                            <a class="secondary-link" href="https://bifrostgames.itch.io/vamp-pr" target="_blank">Play on Itch</a>
+                        </div>
+                    </div>
+                    <div class="vertical-container-stretch project-info">
+                        <h3 class="align-left">Vamp PR</h3>
+                        <p><strong>Vamp PR</strong> is a side-scrolling game where you play as a misunderstood vampire trying to improve your reputation. Dodge obstacles, help citizens, and rack up points before sunrise to prove you're more than just a bloodthirsty legend.</p>
+                        <h4 class="align-left">My Role: Programmer</h4>
+                        <h4 class="align-left">Released: May 5, 2024</h4>
+                    </div>
+                </div>
 
-    <section id="resume" class="section">
-        <div class="container resume-container">
-            <a class="subtle-link" href="/assets/Resume.pdf" download="ben_laube_resume"><h1>Resume&#10515;</h1></a>
-        
-            <div class="horizontal-container-around">
-                <a class="subtle-link" href="mailto:@ben.t.laube@gmail.com">ben.t.laube@gmail.com</a>
-                <a class="subtle-link" href="mailto:@bifrost.games.inc@gmail.com">bifrost.games.inc@gmail.com</a>
-                <a class="subtle-link" href="https://www.linkedin.com/in/ben-laube/" target="_blank">linkedin.com/in/ben-laube</a>
+                <!-- Astral Pulse -->
+                <div class="horizontal-container-around project-card">
+                    <div class="vertical-container-stretch">
+                        <img src="/assets/img/Devlogs/astralPulse/NewCoverArt.png" alt="Astral Pulse Logo">
+                        <div class="horizontal-container-between">
+                            <a class="secondary-link" href="https://bifrostgames.itch.io/astral-pulse" target="_blank">Play on Itch</a>
+                            <a class="secondary-link" href="./devlogs/astral-pulse.html">Dev Log</a>
+                        </div>
+                    </div>
+                    <div class="vertical-container-stretch project-info">
+                        <h3 class="align-left">Astral Pulse</h3>
+                        <p><strong>Astral Pulse</strong> is an arcade-style game about piloting an orbital demolition drone and destroying incoming asteroids. You use a powerful pulse attack to break asteroids into fragments and collect the fragments to charge more attacks.</p>
+                        <h4 class="align-left">Assignment: Game Design - Prototyping in Unity</h4>
+                        <h4 class="align-left">Released: December 6, 2023</h4>
+                    </div>
+                </div>
             </div>
-        
-            <h2>Education</h2>
-            <div class="horizontal-container-between">
-                <h3 class="alignleft">University of Nebraska-Lincoln, Lincoln, NE</h3>
-                <span class="align-right">August 2020 - May 2024</span>
-            </div>
-            <p>Bachelor of Science, Computer Science</p>
-            <p>Minors: Psychology, Mathematics</p>
-            <p>Honors: National Society of Collegiate Scholars, University Honors Program; GPA: 3.7</p>
-        
-            <h2>Professional Experience</h2>
-            <div class="horizontal-container-between">
-                <h3 class="alignleft">Intermediate Tutor, Tutor.com: A Service of the Princeton Review</h3>
-                <span class="align-right">November 2023 - Present</span>
-            </div>
-            <ul>
-                <li>Tutored college students of varying backgrounds and ages in Python and Computer Science Principles through online, one-on-one sessions.</li>
-                <li>Analyzed complex coding problems upon first encounter, providing clear, tailored explanations that guided students to independently reach solutions and deepen their understanding.</li>
-            </ul>
-        
-            <div class="horizontal-container-between">
-                <h3 class="alignleft">Learning Assistant, University of Nebraska-Lincoln, Lincoln, NE</h3>
-                <span class="align-right">January 2022 - May 2024</span>
-            </div>
-            <ul>
-                <li>Facilitated student learning in lab sections and office hours, improving overall class performance.</li>
-                <li>Provided tailored feedback on assignments to highlight successes and identify errors, to foster growth and development and provide actionable suggestions for student improvement.</li>
-            </ul>
-        
-            <h2>Leadership Experience</h2>
-            <div class="horizontal-container-between">
-                <h3 class="alignleft">Treasurer and Team Lead, UNL Game Development Club</h3>
-                <span class="align-right">August 2020 - May 2024</span>
-            </div>
-            <ul>
-                <li>Led 3 teams of 4-5 students in developing 2 games and 1 prototype using Unity and C#.</li>
-                <li>Guided teams in game development principles, including level design, prototyping, and playtesting.</li>
-                <li>Received feedback from faculty experts and presented projects at end-of-semester campus-wide events.</li>
-            </ul>
-            <div class="horizontal-container-between">
-                <h3 class="alignleft">Course Leader, University of Nebraska-Lincoln, Lincoln, NE</h3>
-                <span class="align-right">August 2023 - May 2024</span>
-            </div>
-            <ul>
-                <li>Delivered a 20 minute lecture on academic honesty and grading policies to promote academic integrity.</li>
-                <li>Coordinated Learning Assistants and distributed grading for efficient and quality feedback to students.</li>
-                <li>Documented course leadership responsibilities in a public Source Code to aid future leaders.</li>
-            </ul>
-        
-            <h2>Skills and Activities</h2>
-            <ul>
-                <li><strong>Programming Languages:</strong> C#, Python, Java, C, C++, HTML, CSS, JavaScript</li>
-                <li><strong>Game Engines & Tools:</strong> Unity, Unreal Engine, Git, Blender, Zenhub, Audacity</li>
-                <li><strong>Involvement:</strong> UNL Game Development Club (Treasurer, Team Lead)</li>
-            </ul>
         </div>
-    </section>
-
-    <section id="projects" class="section projects">
-            <h2>Independent Games</h2>
-            <div class="container projects-container">
-                <div class="project-grid">
-                    <!-- Eternal Blade -->
-                    <div class="horizontal-container-around project-card">
-                        <div class="vertical-container-stretch">
-                            <img src="/assets/img/Games/eternal-blade/EB_Cover.gif" alt="eternal-blade cover art">
-                            <div class="horizontal-container-between">
-                                <a class="secondary-link" href="/games/eternal-blade/">Game Page</a>
-                            </div>
-                        </div>
-                        <div class="vertical-container-stretch project-info">
-                            <a><h3 class="align-left">Eternal Blade</h3></a>
-                            <p><strong>Eternal Blade</strong> is an infinite, procedurally generated dungeon crawler where you play as a sword that can sacrifice its wielder to save itself.</p>
-                            <h4 class="align-left">Submission to Pirate Software Game Jam 16</h4>
-                            <h4 class="align-left">Released: January 31, 2025</h4>
+        <h2>UNL Game Development Club Games</h2>
+        <div class="container projects-container">
+            <div class="project-grid">
+                <!-- Hell's Bakery -->
+                <div class="horizontal-container-around project-card">
+                    <div class="vertical-container-stretch">
+                        <img src="/assets/img/Games/HB_Cover.png" alt="Hell's Bakery cover art">
+                        <div class="horizontal-container-between">
+                            <a class="secondary-link" href="https://bifrostgames.itch.io/hells-bakery" target="_blank">Play Demo</a>
+                            <a class="secondary-link" href="https://github.com/btlaube/GDC-Survival-Game" target="_blank">Source Code</a>
                         </div>
                     </div>
-
-                    <!-- Shifty Scales -->
-                    <div class="horizontal-container-around project-card">
-                        <div class="vertical-container-stretch">
-                            <img src="/assets/img/Games/SS_Cover.png" alt="Shifty Scales cover art">
-                            <div class="horizontal-container-between">
-                                <a class="secondary-link" href="/games/shifty-scales/">Game Page</a>
-                            </div>
-                        </div>
-                        <div class="vertical-container-stretch project-info">
-                            <a><h3 class="align-left">Shifty Scales</h3></a>
-                            <p><strong>Shifty Scales</strong> is a puzzle game where you run a shop that fixes mis-scaled items with a special scale-shifting machine. Solve tricky puzzles and satisfy customer orders by resizing and reassembling objects.</p>
-                            <h4 class="align-left">Submission to GMTK Game Jam 2024</h4>
-                            <h4 class="align-left">Released: August 20, 2024</h4>
-                        </div>
-                    </div>
-
-                    <!-- Shadow Retiever -->
-                    <div class="horizontal-container-around project-card">
-                        <div class="vertical-container-stretch">
-                            <img src="/assets/img/Games/SR_Cover.png" alt="shadow-retriever cover art">
-                            <div class="horizontal-container-between">
-                                <a class="secondary-link" href="/games/shadow-retriever/">Game Page</a>
-                            </div>
-                        </div>
-                        <div class="vertical-container-stretch project-info">
-                            <h3 class="align-left">Shadow Retriever</h3>
-                            <p><strong>Shadow Retriever</strong> puts you in the role of the alchemist's shadow, summoned to retrieve powerful lost artifacts. Explore the alchemist's lair and unlock new abilities from the items you collect.</p>
-                            <h4 class="align-left">Submission to Pirate Software Game Jam 15</h4>
-                            <h4 class="align-left">Released: July 10, 2024</h4>
-                        </div>
-                    </div>
-                    
-                    <!-- Vice's Grip -->
-                    <div class="horizontal-container-around project-card">
-                        <div class="vertical-container-stretch">
-                            <img src="/assets/img/Games/VG_Cover.png" alt="Vice's Grip cover art">
-                            <div class="horizontal-container-between">
-                                <a class="secondary-link" href="/games/vices-grip/">Game Page</a>
-                            </div>
-                        </div>
-                        <div class="vertical-container-stretch project-info">
-                            <a><h3 class="align-left">Vice's Grip</h3></a>
-                            <p><strong>Vice's Grip</strong> is a fast-paced escape game where you're trapped by the Trash Compactor Killer. Can you escape the deadly compactor before it's too late?</p>
-                            <h4 class="align-left">Submission to Ludum Dare 54</h4>
-                            <h4 class="align-left">Released: October 2, 2023</h4>
-                        </div>
-                    </div>
-                    
-                    <!-- Roll or Die -->
-                    <div class="horizontal-container-around project-card">
-                        <div class="vertical-container-stretch">
-                            <img src="/assets/img/Games/roll-or-die/RD_Cover.png" alt="Roll or Die cover art">
-                            <div class="horizontal-container-between">
-                                <a class="secondary-link" href="/games/roll-or-die/">Game Page</a>
-                            </div>
-                        </div>
-                        <div class="vertical-container-stretch project-info">
-                            <a><h3 class="align-left">Roll or Die</h3></a>
-                            <p><strong>Roll or Die</strong> puts you in a one-on-one dice battle, where the values you roll control the power or your attacks, the amount you heal, and the number of new dice you can recieve.</p>
-                            <h4 class="align-left">Submission to GMTK Game Jam 2022</h4>
-                            <h4 class="align-left">Released: July 17, 2022</h4>
-                        </div>
-                    </div>
-
-                    <!-- Deep Space Clean Up -->
-                    <div class="horizontal-container-around project-card">
-                        <div class="vertical-container-stretch">
-                            <img src="/assets/img/Games/DSCU_Cover.png" alt="Deep Space Clean Up cover art">
-                            <div class="horizontal-container-between">
-                                <a class="secondary-link" href="/games/deep-space-clean-up/">Game Page</a>
-                            </div>
-                        </div>
-                        <div class="vertical-container-stretch project-info">
-                            <a><h3 class="align-left">Deep Space Clean Up</h3></a>
-                            <p><strong>Deep Space Clean Up</strong> puts you in the role of a space janitor sent to clean up the lost ISS Phoenix. After crash landing, explore the abandoned station, collect DNA samples, and use syringes to unlock new abilities as you uncover its dark secrets.</p>
-                            <h4 class="align-left">Submission to Metroidvania Month 16</h4>
-                            <h4 class="align-left">Released: June 15, 2022</h4>
-                        </div>
-                    </div>
-                    
-                    <!-- At Large -->
-                    <div class="horizontal-container-around project-card">
-                        <div class="vertical-container-stretch">
-                            <img src="/assets/img/Games/AL_Cover.png" alt="At Large cover art">
-                            <div class="horizontal-container-between">
-                                <a class="secondary-link" href="/games/at-large/">Game Page</a>
-                            </div>
-                        </div>
-                        <div class="vertical-container-stretch project-info">
-                            <a><h3 class="align-left">At Large</h3></a>
-                            <p><strong>At Large</strong> is a stealth-based survival game where you play as an escaped convict trying to blend into a crowd every 5 seconds to avoid detection.</p>
-                            <h4 class="align-left">Submission to UNL Game Dev Club Game Jam 2022</h4>
-                            <h4 class="align-left">Released: November 14, 2022</h4>
-                        </div>
+                    <div class="vertical-container-stretch project-info">
+                        <h3 class="align-left">Hell's Bakery</h3>
+                        <p><strong>Hell's Bakery</strong> is a semester-long group project for the UNL Game Development Club Fall 2022 semester. The monsters of hell are invading! Defend your bakery!</p>
+                        <h4 class="align-left">My Role: Team Lead</h4>
+                        <h4 class="align-left">Released: December 3, 2022</h4>
                     </div>
                 </div>
-            </div>
-            <h2>Game Design Class Projects</h2>
-            <div class="container projects-container">
-                <div class="project-grid">
-                    <!-- Vamp PR -->
-                    <div class="horizontal-container-around project-card">
-                        <div class="vertical-container-stretch">
-                            <img src="/assets/img/Games/VP_Cover.png" alt="Vamp PR cover art">
-                            <div class="horizontal-container-between">
-                                <a class="secondary-link" href="https://bifrostgames.itch.io/vamp-pr" target="_blank">Play on Itch</a>
-                            </div>
-                        </div>
-                        <div class="vertical-container-stretch project-info">
-                            <h3 class="align-left">Vamp PR</h3>
-                            <p><strong>Vamp PR</strong> is a side-scrolling game where you play as a misunderstood vampire trying to improve your reputation. Dodge obstacles, help citizens, and rack up points before sunrise to prove you're more than just a bloodthirsty legend.</p>
-                            <h4 class="align-left">My Role: Programmer</h4>
-                            <h4 class="align-left">Released: May 5, 2024</h4>
-                        </div>
-                    </div>
 
-                    <!-- Astral Pulse -->
-                    <div class="horizontal-container-around project-card">
-                        <div class="vertical-container-stretch">
-                            <img src="/assets/img/Devlogs/astralPulse/NewCoverArt.png" alt="Astral Pulse Logo">
-                            <div class="horizontal-container-between">
-                                <a class="secondary-link" href="https://bifrostgames.itch.io/astral-pulse" target="_blank">Play on Itch</a>
-                                <a class="secondary-link" href="./devlogs/astral-pulse.html">Dev Log</a>
-                            </div>
-                        </div>
-                        <div class="vertical-container-stretch project-info">
-                            <h3 class="align-left">Astral Pulse</h3>
-                            <p><strong>Astral Pulse</strong> is an arcade-style game about piloting an orbital demolition drone and destroying incoming asteroids. You use a powerful pulse attack to break asteroids into fragments and collect the fragments to charge more attacks.</p>
-                            <h4 class="align-left">Assignment: Game Design - Prototyping in Unity</h4>
-                            <h4 class="align-left">Released: December 6, 2023</h4>
+                <!-- Levels of Mystery -->
+                <div class="horizontal-container-around project-card">
+                    <div class="vertical-container-stretch">
+                        <img src="/assets/img/Games/LM_Cover.png" alt="Levels of Mystery cover art">
+                        <div class="horizontal-container-between">
+                            <a class="secondary-link" href="https://bifrostgames.itch.io/levels-of-mystery" target="_blank">Play on Itch</a>
+                            <a class="secondary-link" href="https://github.com/btlaube/Levels-Of-Mystery" target="_blank">Source Code</a>
                         </div>
                     </div>
-                </div>
-            </div>
-            <h2>UNL Game Development Club Games</h2>
-            <div class="container projects-container">
-                <div class="project-grid">
-                    <!-- Hell's Bakery -->
-                    <div class="horizontal-container-around project-card">
-                        <div class="vertical-container-stretch">
-                            <img src="/assets/img/Games/HB_Cover.png" alt="Hell's Bakery cover art">
-                            <div class="horizontal-container-between">
-                                <a class="secondary-link" href="https://bifrostgames.itch.io/hells-bakery" target="_blank">Play Demo</a>
-                                <a class="secondary-link" href="https://github.com/btlaube/GDC-Survival-Game" target="_blank">Source Code</a>
-                            </div>
-                        </div>
-                        <div class="vertical-container-stretch project-info">
-                            <h3 class="align-left">Hell's Bakery</h3>
-                            <p><strong>Hell's Bakery</strong> is a semester-long group project for the UNL Game Development Club Fall 2022 semester. The monsters of hell are invading! Defend your bakery!</p>
-                            <h4 class="align-left">My Role: Team Lead</h4>
-                            <h4 class="align-left">Released: December 3, 2022</h4>
-                        </div>
+                    <div class="vertical-container-stretch project-info">
+                        <h3 class="align-left">Levels of Mystery</h3>
+                        <p><strong>Levels of Mystery</strong> puts you in the shoes of a hotel elevator operator unraveling a murder mystery among the guests. With only 3 chances to accuse the right suspect, you must catch the killer before they slip away at the end of day 15.</p>
+                        <h4 class="align-left">My Role: Team Lead</h4>
+                        <h4 class="align-left">Released: December 4, 2021</h4>
                     </div>
-
-                    <!-- Levels of Mystery -->
-                    <div class="horizontal-container-around project-card">
+                </div> 
+            </div>
+        </div>
+        <h2>Personal Projects</h2>
+        <div class="container projects-container">
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="horizontal-container-around">
                         <div class="vertical-container-stretch">
-                            <img src="/assets/img/Games/LM_Cover.png" alt="Levels of Mystery cover art">
+                            <img src="/assets/img/Icons/BG_Cover.png" alt="BifrostGames Website cover art">
                             <div class="horizontal-container-between">
-                                <a class="secondary-link" href="https://bifrostgames.itch.io/levels-of-mystery" target="_blank">Play on Itch</a>
-                                <a class="secondary-link" href="https://github.com/btlaube/Levels-Of-Mystery" target="_blank">Source Code</a>
+                                <a class="secondary-link" href="https://github.com/btlaube/bifrostgames-website" target="_blank">Source Code</a>
                             </div>
                         </div>
                         <div class="vertical-container-stretch project-info">
-                            <h3 class="align-left">Levels of Mystery</h3>
-                            <p><strong>Levels of Mystery</strong> puts you in the shoes of a hotel elevator operator unraveling a murder mystery among the guests. With only 3 chances to accuse the right suspect, you must catch the killer before they slip away at the end of day 15.</p>
-                            <h4 class="align-left">My Role: Team Lead</h4>
-                            <h4 class="align-left">Released: December 4, 2021</h4>
-                        </div>
-                    </div> 
-                </div>
-            </div>
-            <h2>Personal Projects</h2>
-            <div class="container projects-container">
-                <div class="project-grid">
-                    <div class="project-card">
-                        <div class="horizontal-container-around">
-                            <div class="vertical-container-stretch">
-                                <img src="/assets/img/Icons/BG_Cover.png" alt="BifrostGames Website cover art">
-                                <div class="horizontal-container-between">
-                                    <a class="secondary-link" href="https://github.com/btlaube/bifrostgames-website" target="_blank">Source Code</a>
-                                </div>
-                            </div>
-                            <div class="vertical-container-stretch project-info">
-                                <h3 class="align-left">BifrostGames Website</h3>
-                                <p><strong>BifrostGames</strong> is my game developer pseudonym, and this site serves as a place to showcase my development projects and expertise.</p>
-                                <h4 class="align-left">Registered: March 25, 2023</h4>
-                            </div>
+                            <h3 class="align-left">BifrostGames Website</h3>
+                            <p><strong>BifrostGames</strong> is my game developer pseudonym, and this site serves as a place to showcase my development projects and expertise.</p>
+                            <h4 class="align-left">Registered: March 25, 2023</h4>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-</body>
-</html>
-
+    </div>
+</section>

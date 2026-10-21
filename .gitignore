@@ -75,3 +75,6 @@ node_modules/
 
 # Stripe secret keys or config files
 config.py
+
+
+./_site/
