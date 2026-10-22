@@ -1,0 +1,31 @@
+.devlog-container {
+    width: 100%;
+    max-width: 1000px;
+}
+
+.devlog-container img {
+    max-width: 50%;
+}
+
+.entry {
+    max-width: 1200px;
+    background-color: var(--lightPurple3);
+    border-radius: 20px;
+    box-shadow: 0 0 3px 5px var(--shadowColor);
+}
+
+.entry h3 {
+    text-align: left;
+}
+
+ol, ul {
+    margin-left: 50px; /* Adjust indentation for all lists */
+}
+
+ol ol, ul ul {
+    margin-left: 25px; /* Further indent nested lists */
+}
+
+li {
+    margin-bottom: 10px;
+}

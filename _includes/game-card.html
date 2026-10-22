@@ -1,16 +1,86 @@
-{% comment %}
-  One card on the Games page: cover image, with title and pitch fading in on hover.
-  Usage: {% include game-card.html game=game %}
-  Needs in the game's front matter: title, pitch, cover (url comes from the collection).
-  The pitch is a full sentence starting with the game's title; the title inside it is bolded.
-{% endcomment %}
-{% capture bold_title %}<strong>{{ include.game.title }}</strong>{% endcapture %}
-<div class="game-card">
-    <a href="{{ include.game.url }}">
-        <img src="{{ include.game.cover }}" alt="{{ include.game.title }} cover art">
-        <div class="container overlay">
-            <h3>{{ include.game.title }}</h3>
-            <p>{{ include.game.pitch | replace_first: include.game.title, bold_title }}</p>
-        </div>
-    </a>
-</div>
+{%- comment -%}
+  game-card.html: one game card for the games library.
+
+  Usage:   {% include game-card.html game=game %}
+
+  Front matter fields read from each file in _games/ (all optional except title):
+    title:        "Eternal Blade"
+    genre:        Action            # a string, or a list: [Action, Roguelike]
+    category:     jam               # jam | class | club | personal
+    event:        "Pirate Software Game Jam 16"
+    date:         2025-01-31        # release date (used for year + sorting)
+    description:  "One or two sentences."
+    cover:        /assets/img/Games/eternal-blade/EB_Cover.gif
+    color:        "#2b1f5c"         # cover fallback if there is no image
+    itch:         https://bifrostgames.itch.io/eternal-blade
+    source:       https://github.com/btlaube/YouAreTheWeapon
+    browser:      true              # set false if not playable in browser
+    new:          true              # shows a "New" badge
+{%- endcomment -%}
+
+{%- assign g = include.game -%}
+
+{%- case g.category -%}
+  {%- when "jam" -%}{%- assign category_label = "Game jam" -%}
+  {%- when "class" -%}{%- assign category_label = "Class project" -%}
+  {%- when "club" -%}{%- assign category_label = "Club project" -%}
+  {%- when "personal" -%}{%- assign category_label = "Personal project" -%}
+  {%- else -%}{%- assign category_label = "" -%}
+{%- endcase -%}
+
+{%- assign genre_csv = g.genre | join: "," -%}
+{%- assign genres = genre_csv | split: "," -%}
+{%- assign has_browser = true -%}
+{%- if g.browser == false -%}{%- assign has_browser = false -%}{%- endif -%}
+
+<article class="game-card"
+  data-title="{{ g.title | escape }}"
+  data-search="{{ g.title | append: ' ' | append: g.event | append: ' ' | append: g.description | append: ' ' | append: genre_csv | strip_html | downcase | escape }}"
+  data-genres="{{ g.genre | join: '|' | downcase | escape }}"
+  data-category="{{ g.category | default: 'other' }}"
+  data-year="{{ g.date | date: '%Y' }}"
+  data-date="{{ g.date | date: '%Y-%m-%d' }}"
+  data-browser="{{ has_browser }}"
+  data-source="{% if g.source %}true{% else %}false{% endif %}">
+
+  <div class="game-card__cover"
+    {%- if g.cover %} style="--cover: url('{{ g.cover | relative_url }}')"
+    {%- elsif g.color %} style="--cover-color: {{ g.color }}"{% endif %}>
+    {%- if g.new %}<span class="game-card__badge">New</span>{% endif %}
+    <h3 class="game-card__title"><a href="{{ g.url | relative_url }}">{{ g.title }}</a></h3>
+  </div>
+
+  <div class="game-card__body">
+    <ul class="game-card__tags">
+      {%- for genre in genres %}{% if genre != "" %}
+      <li class="tag">{{ genre }}</li>
+      {%- endif %}{% endfor %}
+      {%- if category_label != "" %}
+      <li class="tag tag--category">{{ category_label }}</li>
+      {%- endif %}
+      {%- if has_browser %}
+      <li class="tag tag--outline">Play in browser</li>
+      {%- endif %}
+    </ul>
+
+    <p class="game-card__meta">
+      {%- if g.event %}{{ g.event }}{% endif %}
+      {%- if g.event and g.date %} · {% endif %}
+      {%- if g.date %}<time datetime="{{ g.date | date: '%Y-%m-%d' }}">{{ g.date | date: "%b %Y" }}</time>{% endif -%}
+    </p>
+
+    {%- if g.description %}
+    <p class="game-card__desc">{{ g.description | strip_html }}</p>
+    {%- endif %}
+
+    <div class="game-card__actions">
+      {%- if g.itch %}
+      <a class="btn" href="{{ g.itch }}">Play</a>
+      {%- endif %}
+      <a class="link" href="{{ g.url | relative_url }}">Game page</a>
+      {%- if g.source %}
+      <a class="link" href="{{ g.source }}">Source</a>
+      {%- endif %}
+    </div>
+  </div>
+</article>

@@ -1,31 +1,138 @@
 ---
-layout: shell
+layout: bifrost-shell
 title: Games
 css: games
+js: games-filter
+permalink: /games/
+description: Every game BifrostGames has released, newest first. Filter by genre, what it was made for, year and more.
 ---
-{% comment %}
-  Cards come from _games/*.md.
-  - "listed: false" in a game's front matter hides it from this page.
-  - Cards are ordered by each game's "order" number (1 = first).
-    To sort newest-first instead, use:  sort: "date" | reverse
-{% endcomment %}
-{% assign card_games = site.games | where_exp: "g", "g.listed != false" | sort: "order" %}
 
-<section id="banner" class="section banner"></section>
+{%- comment -%}
+  Build the filter options from the games themselves, so new games show up
+  automatically. Newest first is also the no-JavaScript order.
+{%- endcomment -%}
+{%- assign games = site.games | sort: "date" | reverse -%}
 
-<section id="games" class="section">
-    <div class="container games-container">
-        {% for game in card_games %}
-            {% include game-card.html game=game %}
-        {% endfor %}
+{%- assign genre_csv = "" -%}
+{%- assign year_csv = "" -%}
+{%- for g in games -%}
+  {%- assign g_genres = g.genre | join: "," -%}
+  {%- assign genre_csv = genre_csv | append: g_genres | append: "," -%}
+  {%- assign g_year = g.date | date: "%Y" -%}
+  {%- assign year_csv = year_csv | append: g_year | append: "," -%}
+{%- endfor -%}
+{%- assign genre_list = genre_csv | split: "," | uniq | sort_natural -%}
+{%- assign year_list = year_csv | split: "," | uniq | sort | reverse -%}
+
+<main class="games-page no-js" data-games>
+
+  <header class="games-header">
+    <div class="games-header__text">
+      <p class="eyebrow">The library</p>
+      <h1>Games</h1>
+      <p class="lede">Every game I've released, newest first. Most are game jam entries and playable right in your browser.</p>
     </div>
-</section>
+    <a class="games-header__link" href="https://bifrostgames.itch.io">All games on itch.io →</a>
+  </header>
 
-<section id="links" class="section links">
-    <div class="container vertical-container-stretch">
-        <h2>Find more games on my Itch.io page:</h2>
-        <a class="primary-link" href="https://bifrostgames.itch.io/" target="_blank">
-            <i class="fas fa-gamepad"></i> Itch.io
-        </a>
+  <section class="games-library" aria-label="Game library">
+
+    <!-- FILTERS -->
+    <form class="filters" data-filters role="search" aria-label="Filter games" onsubmit="return false">
+      <div class="filters__top">
+        <div class="field field--search">
+          <label for="games-q">Search</label>
+          <input id="games-q" name="q" type="search" placeholder="Search by title, event or genre" autocomplete="off">
+        </div>
+        <div class="field field--sort">
+          <label for="games-sort">Sort by</label>
+          <select id="games-sort" name="sort">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="az">Title A to Z</option>
+            <option value="za">Title Z to A</option>
+          </select>
+        </div>
+      </div>
+
+      <details class="filters__panel" data-panel open>
+        <summary>
+          <span>Filters</span>
+          <span class="filters__active" data-active hidden></span>
+        </summary>
+
+        <div class="filters__groups">
+          <fieldset class="group">
+            <legend>Genre</legend>
+            <div class="chips">
+              {%- for name in genre_list %}{% if name != "" %}
+              <label class="chip"><input type="checkbox" name="genre" value="{{ name | downcase | escape }}"><span>{{ name }}</span></label>
+              {%- endif %}{% endfor %}
+            </div>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Made for</legend>
+            <div class="chips">
+              <label class="chip chip--jam"><input type="checkbox" name="category" value="jam"><span>Game jam</span></label>
+              <label class="chip chip--class"><input type="checkbox" name="category" value="class"><span>Class project</span></label>
+              <label class="chip chip--club"><input type="checkbox" name="category" value="club"><span>Club project</span></label>
+              <label class="chip chip--personal"><input type="checkbox" name="category" value="personal"><span>Personal project</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Year</legend>
+            <div class="chips">
+              {%- for y in year_list %}{% if y != "" %}
+              <label class="chip"><input type="checkbox" name="year" value="{{ y }}"><span>{{ y }}</span></label>
+              {%- endif %}{% endfor %}
+            </div>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Features</legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="feature" value="browser"><span>Play in browser</span></label>
+              <label class="chip"><input type="checkbox" name="feature" value="source"><span>Source code available</span></label>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="filters__footer">
+          <button type="button" class="btn btn--ghost" data-clear>Clear all filters</button>
+        </div>
+      </details>
+    </form>
+
+    <p class="results-count" data-count role="status" aria-live="polite">{{ games.size }} games</p>
+
+    <!-- GRID -->
+    <div class="games-grid" data-grid>
+      {%- for game in games %}
+      {% include game-card.html game=game %}
+      {%- endfor %}
     </div>
-</section>
+
+    <div class="empty" data-empty hidden>
+      <h2>No games match those filters</h2>
+      <p>Try removing a filter or searching for something else.</p>
+      <button type="button" class="btn" data-clear>Clear all filters</button>
+    </div>
+  </section>
+
+  <!-- COLLABORATE STRIP -->
+  <section class="collab">
+    <div class="collab__text">
+      <h2>Like what you see? Let's collaborate.</h2>
+      <p>I'm open to game development roles and projects. My portfolio has my experience and resume.</p>
+    </div>
+    <div class="collab__actions">
+      <a class="btn" href="{{ '/portfolio/' | relative_url }}">Hire me: view portfolio</a>
+      <a class="btn btn--ghost" href="{{ '/contact/' | relative_url }}">Get in touch</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- <script src="{{ '/assets/js/games-filter.js' | relative_url }}" defer></script> -->

@@ -1,0 +1,23 @@
+<header class="bifrost-header" id="header">
+    <div class="header-inner">
+        <nav aria-label="Main">
+            <ul>
+                <li>
+                    <a class="nav-logo" href="/"><img class="nav-image" id="nav-image" src="/assets/img/BannerLogo_Bifrost.png" alt="Bifrost Games"></a>
+                </li>
+                <li>
+                    <a class="nav-link" href="/games/"{% if page.url contains '/games/' %} aria-current="page"{% endif %}>Games</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="/about/"{% if page.url == '/about/' %} aria-current="page"{% endif %}>About</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="/contact/"{% if page.url == '/contact/' %} aria-current="page"{% endif %}>Contact</a>
+                </li>
+                <li>
+                    <a class="btn" href="https://bifrostgames.itch.io/" target="_blank" rel="noopener noreferrer">Play on itch.io</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>

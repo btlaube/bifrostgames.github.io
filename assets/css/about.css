@@ -1,22 +1,299 @@
-.about-container {
-    max-width: 1200px;
-    background-color: var(--lightPurple3);
-    color: var(--textColor);
-    border-radius: 20px;
-    box-shadow: 0 0 3px 5px var(--shadowColor);
+/* about.css: styles for /about/.
+  *
+  * Uses the palette variables from your global :root block (--bg-dark, --bg-light,
+  * --chakra-*, --accent, --text, --text-muted, --border, --on-color). Each has a
+  * fallback below, so this file still works if a variable is missing.
+  * Fonts: Chakra Petch (headings) and DM Sans (body).
+  *
+  * Sections alternate between the two backgrounds, and cards use the opposite
+  * background of the section they sit on.
+  */
+
+.about-page {
+  --a-dark: var(--bg-dark, #0a0013);
+  --a-light: var(--bg-light, #110020);
+  --a-text: var(--text, #f4ecff);
+  --a-muted: var(--text-muted, #b9a6d6);
+  --a-border: var(--border, #2b1448);
+  --a-accent: var(--accent, #9b4dff);
+  --a-on: var(--on-color, #0a0013);
+  --a-red: var(--chakra-red, #ff2e4d);
+  --a-green: var(--chakra-green, #1fe07a);
+  --a-violet: var(--chakra-violet, #9b4dff);
+
+  background: var(--a-dark);
+  color: var(--a-text);
+  font-size: 16px;
+  line-height: 1.6;
 }
 
-.about-image {
-    width: 400px;
-    height: auto;
+.about-page a { color: var(--a-accent); }
+.about-page a:hover { color: var(--a-text); }
+
+.about-page .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
-#about h2, h3, h4{
-    text-align: left;
-    margin-bottom: 0px;
+.about-page .eyebrow {
+  margin: 0;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--a-accent);
 }
 
-#about h4 {
-    color: rgba(var(primaryAccent), 0.5);
-    /* text-decoration: underline; */
+/* ---------- Intro ---------- */
+
+.about-intro { padding: 72px 0 64px; }
+
+.about-intro__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 56px;
+}
+
+.about-intro__text {
+  flex: 1 1 480px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.about-intro h1 {
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(40px, 5.6vw, 64px);
+  line-height: 1.06;
+}
+
+.about-intro .lede {
+  margin: 0;
+  max-width: 640px;
+  font-size: 19px;
+  color: var(--a-muted);
+}
+
+.about-intro__photo {
+  flex: 0 1 360px;
+  min-width: 0;
+  max-width: 340px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: block;
+  border: 1px solid var(--a-border);
+  border-radius: 20px;
+  background: var(--a-light);
+  overflow: hidden;
+}
+.about-intro__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.about-intro__photo:focus-visible { outline: 2px solid var(--a-accent); outline-offset: 3px; }
+
+/* ---------- The craft ---------- */
+
+.about-craft {
+  background: var(--a-light);
+  border-top: 1px solid var(--a-border);
+  border-bottom: 1px solid var(--a-border);
+  padding: 72px 0;
+}
+
+.about-craft__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 56px;
+}
+
+.about-craft__heading {
+  flex: 0 1 340px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.about-craft h2 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.15;
+}
+
+.about-craft__body {
+  flex: 1 1 560px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.about-craft__body > p {
+  margin: 0;
+  max-width: 700px;
+  font-size: 18px;
+  color: var(--a-muted);
+}
+
+.tools {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+}
+@media (max-width: 560px) {
+  .tools { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* cards on the light section use the dark background */
+.tool {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px;
+  background: var(--a-dark);
+  border: 1px solid var(--a-border);
+  border-radius: 14px;
+}
+.tool dt {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--a-muted);
+}
+.tool dd {
+  margin: 0;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* ---------- Where the name comes from ---------- */
+
+.about-name { padding: 88px 0; }
+
+.about-name .container {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.about-name__heading {
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.about-name h2 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1.1;
+}
+.about-name__heading > p:last-child {
+  margin: 0;
+  font-size: 18px;
+  color: var(--a-muted);
+}
+
+.stories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.story {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.story::before {
+  content: '';
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--a-violet);
+}
+.story--red::before { background: var(--a-red); }
+.story--green::before { background: var(--a-green); }
+.story--violet::before { background: var(--a-violet); }
+
+.story__when {
+  margin: 0;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--a-muted);
+}
+.story h3 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 24px;
+}
+.story p:last-child { margin: 0; color: var(--a-muted); }
+
+/* ---------- Call to action ---------- */
+
+.about-cta { padding: 0 0 88px; }
+
+/* sits on the dark page, so the card uses the light background */
+.about-cta__card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 36px 40px;
+  background: var(--a-light);
+  border: 1px solid var(--a-border);
+  border-radius: 18px;
+}
+.about-cta__text { max-width: 620px; }
+.about-cta h2 {
+  margin: 0 0 6px;
+  font-weight: 700;
+  font-size: 26px;
+}
+.about-cta p { margin: 0; color: var(--a-muted); }
+.about-cta__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ---------- Buttons ---------- */
+
+.about-page .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 24px;
+  border: 1px solid var(--a-accent);
+  border-radius: 10px;
+  background: var(--a-accent);
+  color: var(--a-on);
+  font-weight: 700;
+  text-decoration: none;
+}
+.about-page .btn:hover { filter: brightness(1.15); color: var(--a-on); }
+
+.about-page .btn--ghost {
+  background: transparent;
+  border-color: var(--a-border);
+  color: var(--a-text);
+}
+.about-page .btn--ghost:hover { border-color: var(--a-accent); color: var(--a-text); filter: none; }
+
+@media (max-width: 720px) {
+  .about-intro { padding: 48px 0 40px; }
+  .about-craft { padding: 48px 0; }
+  .about-name { padding: 56px 0; }
+  .about-name h2 { font-size: 36px; }
+  .about-cta { padding-bottom: 56px; }
+  .about-cta__card { padding: 24px; }
 }

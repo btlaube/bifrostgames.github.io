@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title and page.title != site.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.pitch | default: page.description | default: site.description }}">
+  {% if page.noindex %}<meta name="robots" content="noindex">{% endif %}
+  <link rel="icon" href="/assets/img/ProfileLogo_DarkBG.png">
+  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"> -->
+
+  <!-- Preconnect to Google Fonts domains for faster loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+
+  <!-- The specific font style link from fonts.google.com -->
+  <link href="https://googleapis.com" rel="stylesheet">
+
+  <link rel="stylesheet" href="/assets/css/base.css">
+  {% if page.css %}<link rel="stylesheet" href="/assets/css/{{ page.css }}.css">{% endif %}
+</head>
+<body>
+  {% include bifrost-header.html %}
+  {{ content }}
+  {% include bifrost-footer.html %}
+  {% if page.js %}<script src="/assets/js/{{ page.js }}.js"></script>{% endif %}
+</body>
+</html>

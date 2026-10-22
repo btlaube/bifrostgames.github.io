@@ -1,56 +1,104 @@
 ---
-layout: default
+layout: bifrost-shell
 title: About
 css: about
+permalink: /about/
+description: About Ben Laube, the independent game developer behind BifrostGames, and where the name comes from.
 ---
-<section id="banner" class="section banner"></section>
 
-<!-- Sticky Navigation Tabs -->
-<div class="sticky-nav">
-    <ul class="horizontal-container-around sticky-nav-tabs">
-        <li><a href="#banner">Home</a></li>
-        <li><a href="#about">About</a></li>
-    </ul>
-</div>
+<main class="about-page">
 
-<section id="about" class="section">
-    <div class="container about-container">
-        <div class="vertical-container-stretch">
-            <h1>About Me</h1>
-            <div class="horizontal-container-around">
-                <div class="vertical-container-stretch">
-                    <h2>About Ben Laube</h2>
-                    <h3>Intro</h3>
-                    <p>Hi there!</p>
-                    <p>I'm Ben Laube, a game developer with a Bachelor of Science in Computer Science from the University of Nebraska-Lincoln. My passion for video games began in childhood, inspired by the way games can spark imagination and immerse players in entirely new worlds. Over time, that fascination evolved into a commitment to designing and building interactive experiences of my own.</p>
-                    <p>Throughout my development journey, I've led student teams in developing full games and prototypes, guiding projects from concept to completion. Beyond that, I've worked on a wide range of projects, from game design class projects and game jams to personal projects and refined portfolio pieces. I primarily develop in Unity, create 2D art in Aseprite and Gimp, and model 3D objects and environments in Blender, and enjoy exploring new technologies that expand what interactive experiences can be. My goal is to create games that are not only fun to play but meaningful and memorable long after the credits roll.</p>
-                </div>
-                <a href="/secret/"><img class="about-image" id="profileImage" src="../assets/img/PfpAnimFrames/Frame1.png" alt="Hello, world!"></a>
-            </div>
-            <h3>Education</h3>
-            <p>In May 2024, I graduated from the University of Nebraska-Lincoln with a Bachelor of Science in Computer Science, along with minors in Mathematics and Psychology. My academic background provided a strong foundation in programming, software architecture, and analytical problem-solving skills, which directly support my work as a developer.</p>
-            <p>As part of my senior design project, my team developed a VR educational safety application in collaboration with an industry sponsor. This experience enabled me to work in a professional, client-driven environment, applying both technical and design principles to a real-world project.</p>
-            <h3>Development Journey</h3>
-            <p>I have been developing games in Unity for over five years, continuously building, iterating, and learning with each project. From small experimental prototypes to published releases, each experience has strengthened my understanding of gameplay systems, production workflows, and player-centered design.</p>
-            <p>Whether I'm implementing complex mechanics, experimenting with new tools, or refining the feel of a system, I strive to blend creativity with technical precision. I'm always looking for opportunities to grow as a developer and to create innovative, immersive experiences that resonate with players.</p>
-            <p>Thank you for taking the time to read a little bit about me.</p>
-            <div class="horizontal-container-around">
-                <a><img class="about-image" id="profileImage" src="../assets/img/ProfileLogo_NoBG.png" alt="Hello, world!"></a>
-                <div class="vertical-container-stretch">
-                    <h2>About BifrostGames</h2>
-                    <h4>Independent Game Development by Ben Laube</h4>
-                    <h3>Origins of the Name</h3>
-                    <p>The name “Bifrost” comes from the gamer tag I created for myself when I got my first PlayStation3 at 13 years old. At the time, I was very into Marvel movies (I still am), and Heimdall from the Thor films was my favorite character. </p>
-                    <p>In Norse mythology, Heimdall's responsibility is to operate and guard the Bifrost, the Asgardian transportation system between realms. Wanting a name inspired by Heimdall without directly using “Heimdall", I chose the gamer tag Bifrost_Guardian and have been using it ever since. Note the characteristic misspelling of the word guardian. This, being a result of 13-year-old me not knowing how to spell the word, became a part of my online-gaming persona.</p>
-                    <p>In the fall of 2022, during the first semester of my junior year of college, I began seriously considering starting a game development company for the first time. My main goal then was to publish a game; something playable and potentially monetizable. Not my magnum opus, but something that would give me a starting point. </p>
-                    <p>I thought step one should be to create a brand. I considered a few options, from creating a development persona and pseudonym to choosing a more collective studio-style name. In the end, I landed somewhere in between and chose to build from my longtime gamer tag. That's how BifrostGames was created, a name that now represents both my collection of games and my development identity.</p>
-                </div>
-            </div>
-            <div class="horizontal-container-around">
-                <div class="container vertical-container-stretch">
-                    
-                </div>
-            </div>
-        </div>
+  <!-- INTRO -->
+  <section class="about-intro">
+    <div class="container about-intro__inner">
+      <div class="about-intro__text">
+        <p class="eyebrow">About</p>
+        <h1>Hi there, I'm Ben Laube.</h1>
+        <p class="lede">My love of video games began in childhood, inspired by the way games spark imagination and pull you into entirely new worlds. Over time that fascination turned into a commitment to building interactive experiences of my own.</p>
+        <p class="lede">I've been developing games in Unity for over five years, from small experimental prototypes to published releases. My goal is to create games that are not only fun to play but meaningful and memorable long after the credits roll.</p>
+      </div>
+      <a class="about-intro__photo" href="{{ '/secret/' | relative_url }}">
+        <img src="{{ '/assets/img/PfpAnimFrames/Frame1.png' | relative_url }}" alt="Hello, world!" width="340" height="340">
+      </a>
     </div>
-</section>
+  </section>
+
+  <!-- THE CRAFT -->
+  <section class="about-craft">
+    <div class="container about-craft__inner">
+      <div class="about-craft__heading">
+        <p class="eyebrow">The craft</p>
+        <h2>How I make games</h2>
+      </div>
+      <div class="about-craft__body">
+        <p>Whether I'm implementing a complex mechanic, trying a new tool or refining the feel of a system, I try to blend creativity with technical precision, and I'm always looking for ways to create innovative, immersive experiences that resonate with players.</p>
+        <dl class="tools">
+          <div class="tool">
+            <dt>Engine</dt>
+            <dd>Unity</dd>
+          </div>
+          <div class="tool">
+            <dt>2D art</dt>
+            <dd>Aseprite and GIMP</dd>
+          </div>
+          <div class="tool">
+            <dt>3D</dt>
+            <dd>Blender</dd>
+          </div>
+          <div class="tool">
+            <dt>Game jams</dt>
+            <dd>GMTK, Ludum Dare, Pirate Software</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHERE THE NAME COMES FROM -->
+  <section class="about-name">
+    <div class="container">
+      <div class="about-name__heading">
+        <p class="eyebrow">About BifrostGames</p>
+        <h2>Where the name comes from</h2>
+        <p>BifrostGames is my development identity and the home of my game collection, built on a gamer tag I've used since I was 13.</p>
+      </div>
+
+      <div class="stories">
+        <article class="story story--red">
+          <p class="story__when">Age 13</p>
+          <h3>A gamer tag is born</h3>
+          <p>The name started as the gamer tag I made when I got my first PlayStation 3. I was deep into Marvel movies, and Heimdall from the Thor films was my favorite character.</p>
+        </article>
+
+        <article class="story story--green">
+          <p class="story__when">Norse mythology</p>
+          <h3>Guardian of the Bifrost</h3>
+          <p>Heimdall guards the Bifrost, the Asgardian bridge between realms. Wanting a name inspired by him, I chose Bifrost_Guardian, misspelling and all, since 13-year-old me couldn't spell the word. It became part of my online persona.</p>
+        </article>
+
+        <article class="story story--violet">
+          <p class="story__when">Fall 2022</p>
+          <h3>A brand takes shape</h3>
+          <p>In my junior year of college I started seriously considering a game development company. Step one was a brand, somewhere between a personal pseudonym and a studio name. BifrostGames now stands for both my games and my development identity.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="about-cta">
+    <div class="container">
+      <div class="about-cta__card">
+        <div class="about-cta__text">
+          <h2>Thanks for reading a little about me.</h2>
+          <p>Try a game, or say hello if you'd like to collaborate.</p>
+        </div>
+        <div class="about-cta__actions">
+          <a class="btn" href="{{ '/games/' | relative_url }}">Play my games</a>
+          <a class="btn btn--ghost" href="{{ '/contact/' | relative_url }}">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>

@@ -1,11 +1,24 @@
 @font-face {
     font-family: 'MainFont';
-    src: url("/assets/fonts/Rubik-Regular.ttf") format('woff2'), /* Modern format */
-         url("/assets/fonts/Rubik-Regular.ttf") format('woff'),   /* Fallback */
-         url("/assets/fonts/Rubik-Regular.ttf") format('truetype'); /* Fallback for older browsers */
+    src: url("/assets/fonts/Rubik-Regular.ttf") format('truetype');
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: "HeaderFont";
+    src: url("/assets/fonts/ChakraPetch-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BodyFont';
+    src: url("/assets/fonts/Rubik-Regular.ttf") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 /* Reset & Global Styles */
 :root {
@@ -19,6 +32,7 @@
     --textColor: #FFFFFF; /* White - Primary Text */
     --textColor2: #FFD9F2; /* Light Pink - Secondary Text */
     --textColor3: #88FFD6; /* Teal - Highlight Text */
+    --text-muted: #B0B0B0; /* Gray - Muted Text for Less Important Information */
 
     /* Accent Colors */
     --primaryAccent: #7e1600; /* Bright Orange - Primary Accent */
@@ -51,9 +65,19 @@
     --darkPurple2: #110020;
     --darkPurple3: #0a0013;
 
+    /* Chakra colors */
+    --chakra-red: #f44336;
+    --chakra-orange: #ff9800;
+    --chakra-yellow: #ffeb3b;
+    --chakra-green: #4caf50;
+    --chakra-blue: #03a9f4;
+    --chakra-indigo: #3f51b5;
+    --chakra-violet: #9c27b0;
 
     /* Font */
-    --font: "MainFont";
+    --font: "HeaderFont", sans-serif;
+    --font-head: "HeaderFont", sans-serif;
+    --font-body: "BodyFont", sans-serif;
 }
 
 
@@ -73,7 +97,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: var(--font);
+    font-family: var(--font-body);
     background: var(--darkPurple3);
     color: var(--textColor);
     display: flex;
@@ -99,32 +123,34 @@ hr {
 }
 
 /* Headings */
-h1, h2, h3 {
+h1, h2, h3, h4 {
     color: var(--textColor2);
+    /* text-align: center; */
+    font-family: var(--font-head);
 }
 
 h1 {
     font-size: 3rem;
     margin-bottom: 10px;
-    text-align: center;
+    /* text-align: center; */
 }
 
 h2 {
     font-size: 2rem;
     margin-bottom: 10px;
-    text-align: center;
+    /* text-align: center; */
 }
 
 h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    text-align: center;
+    /* text-align: center; */
 }
 
 h4 {
     font-size: 1.25rem;
     margin-bottom: 10px;
-    text-align: center;
+    /* text-align: center; */
 }
 
 p, a, li {
@@ -269,40 +295,82 @@ ul {
 }
 
 /* Header styles */
-header {
+/* header {
     padding-top: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
+} */
+
+.bifrost-header {
+    border-bottom: 1px solid var(--border, #2b1448);
 }
 
-nav ul {
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+}
+
+.bifrost-header nav ul {
     list-style: none;
     display: flex;
+    flex-wrap: wrap;            /* links wrap under the logo on narrow screens */
     justify-content: center;
     align-items: center;
+    gap: 4px;
+
+    padding: 0;
+    margin: 0;
 }
 
-nav li {
-    margin-right: 10px;
+/* Logo stays on the left, everything else is pushed right */
+.bifrost-header nav ul li:first-child {
+    margin-right: auto;
 }
 
-nav a {
+.bifrost-header .nav-logo {
     display: block;
-    padding: 15px;
-    color: var(--accentColor);
-    font-size: 1.65rem;
+    line-height: 0;
     text-decoration: none;
 }
 
-nav a:hover {
-    background-color: var(--secondaryAccent);
-    color: var(--accentColor);
-}
-
-.nav-image {
+.bifrost-header .nav-image {
     height: 40px;
     width: auto;
+}
+
+/* Page links: Games, About, Contact */
+.bifrost-header .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 16px;
+    color: var(--text-muted, #b9a6d6);
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+}
+
+.bifrost-header .nav-link:hover {
+    color: var(--text, #f4ecff);
+}
+
+/* Current page: brighter text and a bottom border */
+.bifrost-header .nav-link[aria-current="page"] {
+    color: var(--text, #f4ecff);
+    border-bottom-color: var(--accent, #9b4dff);
+}
+
+.bifrost-header .nav-link:focus-visible {
+    outline: 2px solid var(--accent, #9b4dff);
+    outline-offset: 2px;
+}
+
+/* Space before the itch.io button. Its look comes from .btn in base.css. */
+.bifrost-header nav ul li:last-child {
+    margin-left: 12px;
 }
 
 /* Footer styles */
@@ -317,10 +385,11 @@ footer {
 .sticky-nav {
     position: sticky;
     top: 0;
-    background-color: var(--darkPurple3);
+    background-color: var(--darkPurple2);
     border-bottom: 2px solid var(--primaryAccent);
     z-index: 1000;
     width: 100%;
+    /* max-width: 1200px; */
     margin: 0 auto;
     padding: 20px 0 20px 0;
 }
@@ -331,6 +400,7 @@ footer {
 
 .sticky-nav-tabs {
     width: 100%;
+    max-width: 1200px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -357,8 +427,10 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 40px;
-    /* padding: 40px; */
+    /* margin-top: 40px; */
+    /* margin-bottom: 40px; */
+    padding: 40px 0 40px 0;
+    border-top: 1px solid var(--darkPurple1);
 }
 
 .banner-container {
@@ -373,3 +445,129 @@ footer {
     height: 150px;
     width: auto;
 }
+
+.bifrost-footer {
+    /* Set your border thickness */
+    border-top: 5px solid transparent; 
+
+    /* Apply the hard-edged 7-color gradient */
+    border-image-source: linear-gradient(
+    to right,
+    var(--chakra-red) 0% 14.285%,
+    var(--chakra-orange) 14.285% 28.57%,
+    var(--chakra-yellow) 28.57% 42.855%,
+    var(--chakra-green) 42.855% 57.14%,
+    var(--chakra-blue) 57.14% 71.425%,
+    var(--chakra-indigo) 71.425% 85.71%,
+    var(--chakra-violet) 85.71% 100%
+    );
+
+    /* Ensures the border slices and displays correctly */
+    border-image-slice: 1;
+
+    color: var(--text);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    line-height: 1.6;
+}
+
+.footer-container {
+    max-width: 1200px;
+    background-color: var(--darkPurple1);
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 56px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.footer-main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+/* Brand block */
+.footer-brand {
+  flex: 1 1 280px;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.footer-logo {
+    max-width: 200px;
+}
+
+.footer-brand p { margin: 0; font-size: 15px; color: var(--text-muted); text-align: left;}
+
+/* Link columns */
+.footer-cols { display: flex; flex-wrap: wrap; gap: 56px; }
+.footer-cols nav { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; color: var(--text-muted); }
+
+.footer-cols h2 {
+  margin: 0 0 8px;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.footer-cols a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  color: var(--text);
+  text-decoration: none;
+}
+.footer-cols a:hover { color: var(--accent); }
+.footer-cols small { margin-left: 8px; font-size: 14px; color: var(--text-muted); }
+
+/* Bottom bar */
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid var(--darkPurple1);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+.footer-bottom a { color: var(--text); text-decoration: none; }
+.footer-bottom a:hover { color: var(--accent); }
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--chakra-violet);
+  border-radius: 10px;
+  background: var(--chakra-violet);
+  color: var(--darkPurple3);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn:hover { filter: brightness(1.15); color: var(--darkPurple3); }
+.btn:disabled { opacity: 0.45; cursor: default; filter: none; }
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--darkPurple3);
+  color: var(--textColor);
+}
+.btn--ghost:hover { border-color: var(--chakra-violet); color: var(--darkPurple3); filter: none; }

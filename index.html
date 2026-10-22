@@ -1,10 +1,19 @@
 ---
-layout: shell
+layout: bifrost-shell
 title: BifrostGames
 description: Indie games by Ben Laube.
 css: home
 js: home
 ---
+<!-- Sticky Navigation Tabs -->
+<!-- <div class="sticky-nav">
+    <ul class="horizontal-container-between sticky-nav-tabs">
+        <li><a href="#banner">Home</a></li>
+        <li><a href="#featured-projects">Featured</a></li>
+        <li><a href="#links">Links</a></li>
+        <li><a href="#about">About</a></li>
+    </ul>
+</div> -->
 <!-- <main> -->
 <section id="banner" class="section banner">
     <div class="banner-container">
@@ -12,16 +21,6 @@ js: home
         <h3>Indie Game Developer and Designer</h3>
     </div>
 </section>
-
-<!-- Sticky Navigation Tabs -->
-<div class="sticky-nav">
-    <ul class="horizontal-container-between sticky-nav-tabs">
-        <li><a href="#banner">Home</a></li>
-        <li><a href="#featured-projects">Featured</a></li>
-        <li><a href="#links">Links</a></li>
-        <li><a href="#about">About</a></li>
-    </ul>
-</div>
 
 {% assign featured = site.games | where_exp: "g", "g.featured == true" | sort: "date" | reverse %}
 <section id="featured-projects" class="section">
@@ -34,7 +33,57 @@ js: home
     </div>
 </section>
 
-<section>
+<section id="recent-releases" class="section">
+    <div class="vertical-container featured-projects">
+        <h1>Recent Releases</h1>
+        <hr>
+        {% assign recent_releases = site.games | where_exp: "g", "g.date" | sort: "date" | reverse %}
+        {% for game in recent_releases limit:1 %}
+            {% include featured-game.html game=game %}
+        {% endfor %}
+    </div>
+</section>
+
+<section id="about" class="section">
+    <div class="container about-container">
+        <h1>About Me</h1>
+        <div class="horizontal-container-around">
+            <a class="subtle-link"><img class="animated-pfp about-image" src="/assets/img/PfpAnimFrames/Frame1.png" alt="Hello, world!"></a>
+            <div class="vertical-container-stretch">
+                <p>Hi there!</p>
+                <p>My name is Ben Laube, and I'm the independent game developer behind BifrostGames. I've been creating games since 2019, developing projects through my university's Game Development Club, and participating in game jams like GMTK.</p>
+                <p>Through BifrostGames, I explore new mechanics, experiment with ideas, and continue growing as both a developer and a creator. My goal is to craft games that are not only fun to play but memorable long after the credits roll.</p>
+                <div class="horizontal-container-around">
+                    <a class="secondary-link" href="/about/">More about me</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="collab-card">
+        <div class="collab-card__stripe" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="collab-card__inner">
+        <div class="collab-card__text">
+            <p class="collab-card__eyebrow">Work with me</p>
+            <h2>Let's collaborate.</h2>
+            <p>I'm open to game development roles and projects. See my experience, skills and resume on my portfolio, or keep exploring what I've made.</p>
+        </div>
+
+        <div class="collab-card__actions">
+            <a class="btn btn--lg" href="/portfolio/">Hire me: view my portfolio</a>
+            <div class="collab-card__secondary">
+            <a class="btn btn--ghost" href="/games/">Play games</a>
+            <a class="btn btn--ghost" href="/about/">About me</a>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- <section>
     <div class="container vertical-container">
         <div class="horizontal-container-around links-container">
             <a class="secondary-link" href="/games">
@@ -45,9 +94,9 @@ js: home
             </a>
         </div>
     </div>
-</section>
+</section> -->
 
-<section id="links" class="section links">
+<!-- <section id="links" class="section links">
     <div class="container links-container">
         <div class="link-grid">
             <div class="link-category">
@@ -81,12 +130,12 @@ js: home
                     <a class="secondary-link" href="https://www.redbubble.com/people/BifrostGames/shop" target="_blank">
                         <i class="fas fa-paint-brush"></i> Redbubble
                     </a>
-                    <!-- <a class="secondary-link">
+                    <a class="secondary-link">
                         <i class="fas fa-cubes"></i> Unity Asset Store (coming soon...)
                     </a>
                     <a class="secondary-link">
                         <i class="fas fa-briefcase"></i> Fiverr (coming soon...)
-                    </a> -->
+                    </a>
                 </div>
             </div>
             <div class="link-category">
@@ -97,22 +146,6 @@ js: home
             </div>       
         </div>
     </div>
-</section>
+</section> -->
 
-<section id="about" class="section">
-    <div class="container about-container">
-        <h1>About Me</h1>
-        <div class="horizontal-container-around">
-            <div class="vertical-container-stretch">
-                <p>Hi there!</p>
-                <p>My name is Ben Laube, and I'm the independent game developer behind BifrostGames. I've been creating games since 2019, developing projects through my university's Game Development Club, and participating in game jams like GMTK.</p>
-                <p>Through BifrostGames, I explore new mechanics, experiment with ideas, and continue growing as both a developer and a creator. My goal is to craft games that are not only fun to play but memorable long after the credits roll.</p>
-                <div class="horizontal-container-around">
-                    <a class="secondary-link" href="/about/">More about me</a>
-                </div>
-            </div>
-            <a class="subtle-link"><img class="animated-pfp about-image" src="/assets/img/PfpAnimFrames/Frame1.png" alt="Hello, world!"></a>
-        </div>
-    </div>
-</section>
 <!-- </main> -->

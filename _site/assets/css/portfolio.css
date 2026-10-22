@@ -1,0 +1,455 @@
+/* portfolio.css: styles for /portfolio/.
+ *
+ * Uses the BifrostGames palette variables from your global :root block (--bg-dark,
+ * --bg-light, --chakra-*, --accent, --text, --text-muted, --border, --on-color).
+ * Each has a fallback below, so this file works even if a variable is missing.
+ *
+ * Sections alternate between the two backgrounds, and cards use the opposite
+ * background of the section they sit on.
+ *
+ * Fonts: Chakra Petch (headings) and DM Sans (body), same as the BifrostGames
+ * pages. To give the portfolio its own typefaces, change --pf-font-head and
+ * --pf-font-body below.
+ */
+
+.portfolio-page {
+  --pf-dark: var(--bg-dark, #0a0013);
+  --pf-light: var(--bg-light, #110020);
+  --pf-text: var(--text, #f4ecff);
+  --pf-muted: var(--text-muted, #b9a6d6);
+  --pf-border: var(--border, #2b1448);
+  --pf-accent: var(--accent, #9b4dff);
+  --pf-on: var(--on-color, #0a0013);
+  --pf-yellow: var(--chakra-yellow, #ffd400);
+  --pf-blue: var(--chakra-blue, #1aa7ff);
+  --pf-green: var(--chakra-green, #1fe07a);
+  --pf-violet: var(--chakra-violet, #9b4dff);
+
+  --pf-font-head: 'Chakra Petch', sans-serif;
+  --pf-font-body: 'DM Sans', system-ui, sans-serif;
+
+  background: var(--pf-dark);
+  color: var(--pf-text);
+  font-family: var(--pf-font-body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.portfolio-page h1,
+.portfolio-page h2,
+.portfolio-page h3,
+.pf-eyebrow,
+.pf-fact dt,
+.pf-skillgroup h3,
+.pf-project__kind,
+.pf-role__dates {
+  font-family: var(--pf-font-head);
+}
+
+.portfolio-page a { color: var(--pf-accent); }
+.portfolio-page a:hover { color: var(--pf-text); }
+
+.pf-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.pf-eyebrow {
+  margin: 0;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pf-accent);
+}
+
+.portfolio-page section[id] { scroll-margin-top: 16px; }
+
+/* ---------- Buttons ---------- */
+
+.portfolio-page .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 24px;
+  border: 1px solid var(--pf-accent);
+  border-radius: 10px;
+  background: var(--pf-accent);
+  color: var(--pf-on);
+  font-weight: 700;
+  text-decoration: none;
+}
+.portfolio-page .btn:hover { filter: brightness(1.15); color: var(--pf-on); }
+
+.portfolio-page .btn--ghost {
+  background: transparent;
+  border-color: var(--pf-border);
+  color: var(--pf-text);
+}
+.portfolio-page .btn--ghost:hover { border-color: var(--pf-accent); color: var(--pf-text); filter: none; }
+
+.pf-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ---------- Header ---------- */
+
+.pf-header { background: var(--pf-dark); border-bottom: 1px solid var(--pf-border); }
+
+.pf-header__inner {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.pf-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.pf-brand__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--pf-accent);
+  color: var(--pf-on);
+  font-family: var(--pf-font-head);
+  font-weight: 700;
+  font-size: 16px;
+}
+.pf-brand__name {
+  font-family: var(--pf-font-head);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--pf-text);
+}
+
+.pf-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+
+.portfolio-page .pf-nav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  color: var(--pf-muted);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+.portfolio-page .pf-nav__link:hover { color: var(--pf-text); border-bottom-color: var(--pf-accent); }
+.portfolio-page .pf-nav__link:focus-visible,
+.portfolio-page .btn:focus-visible,
+.portfolio-page .pf-link:focus-visible {
+  outline: 2px solid var(--pf-accent);
+  outline-offset: 2px;
+}
+
+.portfolio-page .pf-nav__cta { min-height: 44px; padding: 0 20px; margin-left: 12px; }
+
+/* ---------- Hero ---------- */
+
+.pf-hero { padding: 80px 0 72px; }
+
+.pf-hero__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 56px;
+}
+
+.pf-hero__text {
+  flex: 1 1 480px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.pf-hero h1 {
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(40px, 5.4vw, 64px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+
+.pf-lede { margin: 0; max-width: 600px; font-size: 18px; color: var(--pf-muted); }
+.pf-hero .pf-actions { margin-top: 8px; }
+
+.pf-hero__photo {
+  flex: 0 1 280px;
+  width: 280px;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 1px solid var(--pf-border);
+  border-radius: 24px;
+  background: var(--pf-light);
+}
+
+/* ---------- Quick facts ---------- */
+
+.pf-facts { padding: 0 0 72px; }
+
+.pf-facts__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 0;
+}
+
+/* cards on the dark section use the light background */
+.pf-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px 22px;
+  background: var(--pf-light);
+  border: 1px solid var(--pf-border);
+  border-radius: 14px;
+}
+.pf-fact dt {
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pf-muted);
+}
+.pf-fact dd { margin: 0; font-weight: 700; font-size: 17px; }
+.pf-fact .pf-fact__sub { font-weight: 400; font-size: 14px; color: var(--pf-muted); }
+
+/* ---------- Two-column section layout (Experience, Skills) ---------- */
+
+.pf-split { display: flex; flex-wrap: wrap; gap: 56px; }
+
+.pf-split__heading {
+  flex: 0 1 300px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pf-split__heading h2 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.15;
+}
+.pf-split__heading p:last-child { margin: 0; color: var(--pf-muted); }
+.pf-split__heading .pf-eyebrow + h2 + p { margin: 0; }
+
+/* ---------- Experience (light band) ---------- */
+
+.pf-experience {
+  padding: 80px 0;
+  background: var(--pf-light);
+  border-top: 1px solid var(--pf-border);
+  border-bottom: 1px solid var(--pf-border);
+}
+
+.pf-roles {
+  flex: 1 1 560px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.pf-role {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid var(--pf-border);
+}
+.pf-role:last-child { padding-bottom: 0; border-bottom: 0; }
+
+.pf-role__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+}
+.pf-role h3 { margin: 0; font-weight: 600; font-size: 20px; line-height: 1.3; }
+.pf-role__dates {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--pf-muted);
+}
+.pf-role__org { margin: 0; font-size: 15px; font-weight: 700; color: var(--pf-accent); }
+
+.pf-role ul {
+  margin: 4px 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--pf-muted);
+}
+
+/* ---------- Skills (dark band) ---------- */
+
+.pf-skills { padding: 80px 0 24px; }
+
+.pf-skills__groups {
+  flex: 1 1 560px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.pf-skillgroup { display: flex; flex-direction: column; gap: 12px; }
+.pf-skillgroup h3 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pf-muted);
+}
+
+.pf-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pf-pills li {
+  padding: 6px 14px;
+  border: 1px solid var(--pf-border);
+  border-radius: 999px;
+  background: var(--pf-light);
+  font-weight: 500;
+  font-size: 15px;
+}
+.pf-pills--accent li { border-color: var(--pf-accent); }
+
+/* ---------- Projects (light band) ---------- */
+
+.pf-projects {
+  padding: 72px 0 80px;
+  margin-top: 56px;
+  background: var(--pf-light);
+  border-top: 1px solid var(--pf-border);
+  border-bottom: 1px solid var(--pf-border);
+}
+
+.pf-projects__heading { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+.pf-projects__heading h2 { margin: 0; font-weight: 700; font-size: 36px; line-height: 1.15; }
+
+.pf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+@media (max-width: 420px) {
+  .pf-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* cards on the light band use the dark background */
+.pf-project {
+  display: flex;
+  flex-direction: column;
+  background: var(--pf-dark);
+  border: 1px solid var(--pf-border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* colored label bar, one color per kind of project */
+.pf-project__kind {
+  margin: 0;
+  padding: 8px 22px;
+  background: var(--pf-violet);
+  color: var(--pf-on);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.pf-project[data-kind='senior'] .pf-project__kind { background: var(--pf-yellow); }
+.pf-project[data-kind='class'] .pf-project__kind { background: var(--pf-blue); }
+.pf-project[data-kind='club'] .pf-project__kind { background: var(--pf-green); }
+.pf-project[data-kind='personal'] .pf-project__kind { background: var(--pf-violet); }
+
+.pf-project__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 auto;
+  padding: 20px 22px 22px;
+}
+.pf-project h3 { margin: 0; font-weight: 600; font-size: 20px; line-height: 1.3; }
+.pf-project__meta { margin: 0; font-size: 14px; color: var(--pf-muted); }
+.pf-project__desc { margin: 4px 0 0; font-size: 15px; color: var(--pf-muted); flex: 1 1 auto; }
+.portfolio-page .pf-link { margin-top: 6px; font-weight: 700; text-decoration: none; }
+
+/* "Looking for my independent games?" banner, on the light band so it uses the dark background */
+.pf-games-banner {
+  margin-top: 32px;
+  padding: 28px 32px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--pf-dark);
+  border: 1px solid var(--pf-accent);
+  border-radius: 16px;
+}
+.pf-games-banner__text { max-width: 640px; }
+.pf-games-banner h3 { margin: 0 0 4px; font-weight: 600; font-size: 20px; }
+.pf-games-banner p { margin: 0; font-size: 15px; color: var(--pf-muted); }
+
+/* ---------- Contact (dark band) ---------- */
+
+.pf-contact { padding: 72px 0; }
+
+.pf-contact__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+.pf-contact__text { flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.pf-contact h2 { margin: 0; font-weight: 700; font-size: 36px; line-height: 1.15; }
+.pf-contact p { margin: 0; max-width: 520px; font-size: 18px; color: var(--pf-muted); }
+
+/* ---------- Footer ---------- */
+
+.pf-footer {
+  background: var(--pf-light);
+  border-top: 1px solid var(--pf-border);
+  font-size: 14px;
+  color: var(--pf-muted);
+}
+.pf-footer__inner {
+  padding-top: 28px;
+  padding-bottom: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+}
+.pf-footer__links { display: flex; flex-wrap: wrap; gap: 20px; }
+.portfolio-page .pf-footer__links a { text-decoration: none; }
+
+@media (max-width: 720px) {
+  .pf-hero { padding: 48px 0 48px; }
+  .pf-experience { padding: 56px 0; }
+  .pf-skills { padding-top: 56px; }
+  .pf-projects { padding: 56px 0; }
+  .pf-contact { padding: 56px 0; }
+  .pf-games-banner { padding: 24px; }
+}

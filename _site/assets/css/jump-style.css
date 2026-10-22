@@ -1,0 +1,95 @@
+*{
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+body {
+    width: 100%;
+    margin: 0;
+    background-color: rgb(10, 0, 10);
+    padding: 50px 20px;
+    text-align: left;
+    color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.game{
+    width: 500px;
+    height: 200px;
+    border: 1px solid rgb(125, 0, 125);
+    margin: auto;
+}
+#character{
+    width: 17px;
+    height: 51px;
+    background-color: rgba(100, 0, 100, 0);
+    background-image: url("https://bifrostgames.org/assets/img/JumpGame/Player.png");
+    position:relative;
+    top: 149px;
+}
+.animate{
+    animation: jump 0.3s linear;
+}
+@keyframes jump{
+    0%{top: 149px;}
+    30%{top: 99px;}
+    70%{top: 99px;}
+    100%{top: 149px;}
+}
+
+#block{
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url("https://bifrostgames.org/assets/img/JumpGame/Haz.png");
+    width: 18px;
+    height: 18px;
+    position: relative;
+    top: 131px;
+    left: 500px;
+    animation: block 1s infinite linear;
+}
+@keyframes block{
+    0%{left: 500px}
+    100%{left: -20px}
+}
+p{
+    text-align: center;
+}
+
+.modal {
+    display: none; /* Hide the modal by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with transparency */
+}
+
+.modal-content {
+    background-color: rgb(10, 0, 10);
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out; /* Optional fade-in effect */
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Optional fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Personal Project Dev Log | BifrostGames</title>
+  <meta name="description" content="Indie games and game development by Ben Laube.">
+  
+  <link rel="icon" href="/assets/img/ProfileLogo_DarkBG.png">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/devlog.css">
+</head>
+<body>
+  <header id="header">
+    <nav>
+        <ul>
+            <li><a href="/"><img class="nav-image" id="nav-image" src="/assets/img/BannerLogo_Bifrost.png" alt="Bifrost Games"></a></li>
+            <li><a href="/games/">Games</a></li>
+            <li><a href="/portfolio/">Portfolio</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/contact/">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+  <section id="banner" class="section"></section>
+
+<!-- Sticky Navigation Tabs -->
+<div class="sticky-nav">
+    <ul class="sticky-nav-tabs">
+        <li><a href="#banner">Home</a></li>
+        <li><a href="./">All Dev Logs</a></li>
+    </ul>
+</div>
+
+<section id="devlog" class="section">
+    <div class="vertical-container devlog-container">
+        <h1>Personal Project Dev Log</h1>
+        <hr>
+        <section class="container vertical-container entry">
+            <h2>Dev Log 0: Initial Ideation</h2>
+            <h3>September 25, 2023</h3>
+            <p>
+                In class on Monday, we had some time to brainstorm for our Personal Project. Professor Carletto-Leon had mentioned that October is 
+                the perfect time to make a horror game which immediately made me inspired to make a something spooky. I knew I wanted to make a game 
+                that had a twist and leave the player shocked. I thought back to a game I had been working on over the summer about some friends on a camping 
+                trip that decide to smoke weed and end up hallucinating that they were being attacked by monsters. I thought it would be a clever twist to make 
+                the player's friends the "Red-eyed Monsters" that is revealed as a twist at the end of the game. It would add to the shock and horror if the player 
+                ends up killing their friends thinking they were defending themselves from a beast. I now realize that this is also what happens in the movie The Village 
+                except she was blind and not on drugs.
+            </p>
+            <br>
+            <p>
+                For this project I want to focus on the visual aspect. I want to create visuals that are reminiscent of old indie-horror games. I found an interesting 
+                method to give the game a pixelated look by rendering the camera view to a render texture, then putting the render texture onto a large image on a canvas. 
+                I can even set the exact pixel ratio of the render texture to get the perfect resolution. Low-poly 3D assets will look really good and vintage rendered at this low resolution.
+            </p>
+        </section>
+
+        <section class="container vertical-container entry">
+            <h2>Dev Log 1: Player Movement</h2>
+            <h3>September 27, 2023</h3>
+            <p>
+                I didn't do a ton today, but I got the beginnings of a 3D first person player movement script working. The movement is incredibly important for this game 
+                as it is most of the gameplay and it is what connects the player to the game world. The better that connection is the scarier the game will be.
+            </p>
+        </section>
+
+        <section class="container vertical-container entry">
+            <h2>Dev Log 2: Finalizing Player Movement</h2>
+            <h3>September 28, 2023</h3>
+            <p>
+                I started today by creating a basic environment to test my player movement in. I added a plane, and some stretched cubes to be walls.
+            </p>
+            <br>
+            <p>
+                After trying for too long to use the mouse to control the player's gaze, I ended up giving up and getting a prebuilt first person 
+                player controller from the Unity Asset Store. I modified the code to use Unity's new input system because I want to be able to play 
+                this game with mouse and keyboard or controller. The asset also came with crouch, sprint, and jump which may come in handy. 
+            </p>
+            <br>
+            <p>
+                Additionally, the asset came with an audio manager for footsteps, jump sound, crouch sounds, etc. The sounds were really good right off 
+                the bat; however, I slowed the player movement way down, so I also had to pitch down all of the audio sources. 
+            </p>
+            <br>
+            <p>
+                The last thing I added was a dynamic camera bob to simulate walking that adjusts when the player sprints. With the camera bob, repitched 
+                audio, and slowed movement the player controller was finished. I really like how it turned out, and it is the perfect horror vibe I was going for.
+            </p>
+        </section>
+
+        <section class="container vertical-container entry">
+            <h2>Dev Log 3: In-class Lab Time</h2>
+            <h3>October 4, 2023</h3>
+            <p>
+                During our in-class lab time I was able to do some experimenting with lighting and materials.
+            </p>
+            <br>
+            <p>
+                I want the scene to be dark, but it can't be completely dark (the player has to be able to see something). I originally set up my
+                moon as a sphere that was very far away from the player and very large. This created a nice effect of the moon always being the same.
+                size in the sky even if the player walked towards it. I then used a combination of a few components to create the moon's lighting effects.
+                First I made the moon texture have an emmision. This made the moon visible without illuminating the scene. Next, I used two directional lights:
+                one aimed at the moon to further illuminate the sphere, and another aimed away from the moon to act as the light coming from the moon and to illuminate
+                the scene. After some experimenting, I decided that just making the moon's material an emitter was enough and made the scene dark enough but not too dark.
+            </p>
+            <br>
+            <p>
+                I also messed around with a 3D character model. A big goal of mine is to create a properly horrifying monster for my game. A huge inspiration for me
+                is The Beast from Over the Garden Wall. In OTGW, The Beast is always depicted as a creepy silhouette until the end, when The Beast's true form is illuminated for
+                just a few frames. I want to emulate that same horror with my monster. I want the model to be a silhouette with glowing red eyes. So far,
+                I have not figured out a way to make a 3D model that is both darker than the surrounding area and yet still visible. I have a few ideas that I will test in the future.
+                One of which is to have the monster always illuminated from the back.
+            </p>
+            <br>
+            <p>
+                Lastly, I talked to Professor Francesca about level design, which I had been putting off thinking about. I will have to experiment, but I
+                I think I will go with a mostly open area with choke points to help guide the player. I plan on using the Slenderman map as inspiration.
+            </p>
+        </section>
+
+        <section class="container vertical-container entry">
+            <h2>Dev Log 4: Level Design Research</h2>
+            <h3>October 8, 2023</h3>
+            <p>
+                Today I didn't do a lot of technical work. Instead, I focused on researching level design, specifically for horror games. 
+                I also watched a GDC talk on YouTube about radically non-linear level design that gave me some good ideas. 
+                While I was researching level design, I realized that before I can decide how I should layout my level I really 
+                need to decide what my game is about. What is my game's story? I realized that I wasn't able to shorten my game's 
+                concept down into a few words or even a few sentences. I also didn't know what I wanted the main goal of the game to be. 
+                I can't tackle level design until I have at least a main goal, so figuring that out will be the next thing I do.
+            </p>
+        </section>
+
+        <section class="container vertical-container entry">
+            <h2>Dev Log 5: Story and Experimenting with Shaders</h2>
+            <h3>October 9, 2023</h3>
+            <p>
+                Today I finally ironed out the story of my game. The story went through a few iterations, but each version had the player 
+                make their way back to the campsite, and had a different ending for what happens once the player reaches the campsite. 
+                Originally, the plan was to present the player with a decision as the monster approaches (implemented as a quick-time event):
+            </p>
+            <ol>
+                <li>Run: if the player chooses to run, they end up hurting themselves in the process. This is considered a bad ending.</li>
+                <li>Fight: if the player chooses to fight, they overpower and kill the monster. The hallucination then fades, and the 
+                    player realizes what they have done. This is considered a bad ending.</li>
+                <li>Nothing: A secret third option would be to let the quick-time event pass without making a decision. 
+                    If the player chooses this, then the monster approaches, and the hallucination fades, revealing the true 
+                    identity of the monster was the friends all along. This would be the only good ending.</li>
+            </ol>
+            <p>I had a few issues with this ending:</p>
+            <ul>
+                <li>I would have to implement a quick-time event, which would feel out of place unless quick-time events were a part of the rest of the game.</li>
+                <li>I might not have time to implement a quick-time event.</li>
+                <li>The majority of the endings are “bad”, which isn't a huge issue for a horror game.</li>
+                <li>The player's actions during the game don't impact the ending in any way.</li>
+            </ul>
+            <p>The next iteration of the ending took these issues into account. The plan was to implement a few new mechanics:</p>
+            <ul>
+                <li>Stress level</li>
+                    <ul>
+                        <li>Tied to heart rate, breathing SFX, visual effects</li>
+                        <li>Triggers lose condition if it gets too high</li>
+                        <li>Lowers slowly over time</li>
+                    </ul>
+                <li>Faded level (highness)</li>
+                    <ul>
+                        <li>Tied to hallucination level (i.e. haziness filter)</li>
+                        <li>No way to lower</li>
+                    </ul>
+                <li>Smoke to increase Faded level and lower stress</li>
+                <li>Things that increase stress/heart rate:</li>
+                    <ul>
+                        <li>Looking at the monster</li>
+                        <li>Being close to the monster</li>
+                        <li>Sprinting</li>
+                    </ul>
+            </ul>
+            <p>With these mechanics, I would implement multiple endings once the player reaches the campsite. 
+                Similarly to the previous version, the player reaches the campsite, and the monster begins to approach.
+            </p>
+            <ol>
+                <li>If the player's Faded Level is too high, the monster approaches and the game ends with visual effects 
+                    indicating the player succumbing to their hallucinations.</li>
+                    <ol>
+                        <li>Bad ending</li>
+                    </ol>
+                <li>If the player's Faded Level is low enough, the hallucination fades, and the monster is revealed to be their friends.</li>
+                    <ol>
+                        <li>Good ending</li>
+                    </ol>
+                <li>If the player chooses to hide in a tent, then the player is safe until morning, and nothing is revealed about the monster or friends.</li>
+                    <ol>
+                        <li>Ambiguous ending</li>
+                    </ol>
+            </ol>
+            <p>I like this version due to the balance of good, bad, and ambiguous endings; however, the biggest limitation is 
+                the large amounts of mechanics I would have to implement which would increase development time and muddy-up the gameplay.
+            </p>
+            <p>The third and final version of the ending is similar to the previous version; however, it is more simplified. 
+                The simplified mechanics are now just:
+            </p>
+            <ol>
+                <li>Stress level
+                    <ol>
+                        <li>Tied to heart rate, breathing SFX, visual effects</li>
+                        <li>Triggers lose condition if it gets too high</li>
+                        <li>Lowers slowly over time</li>
+                    </ol>
+                </li>
+            </ol>
+            <p>I had always planned to have an artifact collecting mechanic in some shape or form. Artifact collection would be a 
+                main part of the gameplay, similar to Slender: The Eight Pages, so I wanted it to play a role in the ending of the game. 
+                Similar to the past version, once the player reaches the campsite, the monster begins to approach, then one of the following happen:
+            </p>
+            <ol>
+                <li>If the player didn't collect enough artifacts, the hallucination takes over and the monster closes in.</li>
+                    <ol>
+                        <li>Bad ending</li>
+                    </ol>
+                <li>If the player collected enough artifacts, the hallucination fades and the monster is revealed to be the friends.</li>
+                    <ol>
+                        <li>Good ending</li>
+                    </ol>
+                <li>If the player hides in a tent, the player is safe until day and nothing is revealed about the monster or friends.</li>
+                    <ol>
+                        <li>Ambiguous ending</li>
+                    </ol>
+            </ol>
+            <p>This version of the story keeps the balance and player agency of the previous version, while simplifying the necessary mechanics.</p>
+            <br>
+            <p>Besides ironing out the story, I also worked with shaders and post processing in Unity. 
+                I wrote a few scripts that gave me the ability to influence a few different audio and visual effects with a single variable. 
+                The player has a stress variable that will start at 0, and if it gets to 1 at any point the lose condition is triggered 
+                (not yet implemented).
+            </p>
+            <p>This stress variable is tied to a few different effects:</p>
+            <ul>
+                <li>Heartbeat audio volume and pitch</li>
+                <li>Shader noise strength</li>
+                <li>Shader red filter strength</li>
+            </ul>
+            <img class="border-image" src="/assets/img/Devlogs/personalProject/ezgif.com-gif-maker.gif" alt="Stess visual effects gif">
+        </section>
+
+        <section class="container vertical-container entry">
+            <h2>Dev Log 6: Getting Ready For Playtesting: Level Design and Artifact Mechanic</h2>
+            <h3>October 10, 2023</h3>
+            <p>Admittedly, today involved a little bit of crunch. I wanted to make sure I had something for in-class playtesting tomorrow. 
+                While I was in my meteorology lecture, I came up with an idea for the map of my game. 
+                I got inspiration from the show Yellowjackets, a show about a highschool soccer team that is stranded in a remote forest after 
+                a plane crash. In the show, a few of the characters begin mapping the nearby sections of woods and discover a set of symbols, 
+                and when the location of each symbol is mapped they all collectively form a larger version of the symbol. I wanted to do something 
+                similar with my game, so I designed a witchy, occult-like symbol using some alchemical symbols. 
+                I then drew the game map over this symbol, and placed the artifacts at each of the symbol's key vertices
+            </p>
+            <!-- <br> -->
+            <img class="border-image" src="/assets/img/Devlogs/personalProject/DevLogImages.png" alt="Map progression">
+            <p>To design this map in Unity I used a Terrain object, which allowed me to “paint” elevation, trees, and ground textures. 
+                Using this technique I was able to quickly lay out the game map that I had previously designed; 
+                however, it is not very easily edited or updated. For example, I decided the tree model I used did not match the aesthetic of 
+                my game, but I would have to repaint the entire map in order to change it.
+            </p>
+            <br>
+            <p>Painting trees onto the terrain also did not give me a lot of control over spacing. 
+                I want to have two hidden paths, and the spacing of the trees makes it quite difficult to find these paths. 
+                I'll have to see if they are too difficult to find during playtesting tomorrow.
+            </p>
+            <img class="border-image" src="/assets/img/Devlogs/personalProject/IngameMap.png" alt="Map progression">
+            <p>I also implemented a simple artifact collection mechanic that was mainly recycled from my Ludum Dare 54 game jam container vertical-container entry. 
+                I then placed an “Artifact” (currently just a cube) at each vertex of the occult symbol I designed.
+            </p>
+        </section>
+
+        <section class="container vertical-container entry">
+            <h2>Dev Log 7: Final Modifications, Reflection, Submission</h2>
+            <!-- <h3>October 13, 2023</h3> -->
+            <img src="/assets/img/Devlogs/personalProject/friday13.png" alt="Map progression">
+            <p>The final edits I wanted to make was to implement a main menu and win/lose conditions. I think that was the bare minimum I needed to add to make the game playable. I was not able to get everything I wanted to complete done, but I will continue to update the game after the deadline if I am allowed to.</p>
+            <br>
+            <p>I then spent time designing the game's Itch page. I wanted the page to match the aesthetic of the game. I also created some cover art and took some screenshots. </p>
+            <br>
+            <p>Lastly, I finalized my dev log submission and reflection and made sure the changes were updated on my website. I then decided to make a Friday the 13th decal to add to the page.</p>
+        </section>
+
+        <section class="container vertical-container entry">
+            <h2>Reflection</h2>
+            <h3>Summary</h3>
+            <p>I made a first-person, survival horror game about hallucinating in the woods on a camping trip with friends. The player gets separated and has to make their way back to camp while avoiding the Red-eyed Monsters.</p>
+            <br>
+            <p>The player navigates a dark forest to find all 10 artifacts, while making sure their heart rate doesn't get too high.</p>
+            <br>
+            <h3>What I Learned</h3>
+            <p>I learned how to use shaders and manipulate them through script. I learned how to modify a shader script to apply multiple variable filters. Additionally, I wrote a script to control the variables of the shader material, to give me control over the blur level and hue shift. I also applied a script to control rendering the shader to the main camera. </p>
+            <br>
+            <br>
+            <p>Another tool I experimented with is Unity's Terrain tool. I wanted to quickly design a layout for my forest environment, and happened upon a tutorial for using the Terrain tool in Unity. Using this tool I was able to quickly create mountains by altering the height of the terrain, apply a ground texture to the terrain, paint on a forest of trees, erase trees to draw the desired paths and clearings. I could then more easily control the flow of gameplay by quickly altering the paths through the trees. </p>
+            <br>
+            <h3>What I am Most Proud Of</h3>
+            <p>I am most proud of the visual effects I was able to create using post-processing shaders. I really made the game feel authentic and reflected the indie-horror game look I was going for. Having the visuals tied to in-game events and the players actions also adds to the immersion of the game and elevates the horror. Because of how important the shaders were to the success of the game, the shaders are what I am most proud of. </p>
+            <br>
+            <h3>My Biggest Challenge</h3>
+            <p>My biggest challenge was getting the in-game lighting to look good in combination with the shaders I created. I experimented with many combinations of point lights, directional lights, spot lights, as well as emission materials in order to get a perfect balance of light and shadow within the scene. When creating a build I ran into issues with visuals looking drastically different in the web-browser versus the Unity editor. After much experimenting I found a solution that was close enough to what I wanted to accomplish.</p>
+            <br>
+        </section>
+    </div>
+</section>
+  <footer>
+  <div class="vertical-container-stretch">
+      <nav>
+          <ul>
+              <li><a href="#header">To top</a></li>
+          </ul>
+      </nav>
+      <p>&copy; 2026 BifrostGames. All rights reserved.</p>
+  </div>
+</footer>
+  
+</body>
+</html>
