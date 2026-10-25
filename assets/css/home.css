@@ -544,7 +544,7 @@
   min-width: 260px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .collab-card__secondary {
@@ -560,17 +560,6 @@
   font-size: 17px;
 }
 
-/* Outlined secondary button. Scoped here in case base.css has no ghost style. */
-.collab-card .btn--ghost {
-  background: transparent;
-  border: 1px solid var(--border, #2b1448);
-  color: var(--text, #f4ecff);
-}
-.collab-card .btn--ghost:hover {
-  border-color: var(--accent, #9b4dff);
-  color: var(--text, #f4ecff);
-  filter: none;
-}
 
 @media (max-width: 720px) {
   .collab { padding-top: 56px; }
