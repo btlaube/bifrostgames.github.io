@@ -367,7 +367,29 @@
   gap: 16px;
   margin-top: 4px;
 }
-.game-card__actions .link { font-weight: 700; text-decoration: none; }
+
+.game-card__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  background: none;
+  border-radius: 0;
+  color: var(--lightPurple2);
+  text-decoration: underline transparent;
+  text-underline-offset: 5px;
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out, text-decoration 0.3s ease-in-out;
+}
+
+.game-card__link:hover {
+  color: var(--text-muted);
+  text-decoration: underline currentColor;
+  transform: translateY(-2px);
+}
+
+.game-card__link:focus-visible {
+  outline: 3px solid var(--textColor);
+  outline-offset: 3px;
+}
 
 /* ---------- Empty state ---------- */
 

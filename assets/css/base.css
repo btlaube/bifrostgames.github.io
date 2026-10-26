@@ -184,18 +184,11 @@ ul {
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 } */
 
-.hover-link {
-    transition: transform 0.3s;
-}
-
-.hover-link:hover {
-    transform: translateY(-2px);
-}
 
 /* .primary-link:hover, .secondary-link:hover {
     border-width: 3px;
-} */
-
+    } */
+    
 .primary-link {
     text-decoration: none;
     display: inline-flex;
@@ -229,22 +222,39 @@ ul {
     background-color: var(--lightPurple2);
 }
 
+/* a {
+    color: inherit;
+    text-decoration: inherit;
+} */
+
+/* Subtle Link Class */
 .subtle-link {
-    color: var(--textColor);
-    text-decoration: none;
-    transition: color 0.3s, text-decoration 0.3s;
-    font-size: 20px;
-    padding: 0 5px;
+  transition: color 0.3s ease, text-decoration-color 0.3s ease;
+  text-decoration: underline transparent; /* Starts with an invisible underline */
+  text-underline-offset: 4px;
 }
 
 .subtle-link:hover {
-    text-decoration: underline;
-    color: var(--text-muted);
+  color: var(--text-muted);
+  text-decoration-color: currentColor;
 }
 
-.subtle-link:active {
-    color: var(--hoverAccent);
+/* Hover Link Class (Raises on the Y axis) */
+.hover-link {
+  display: inline-block; /* Required for transform utilities to work on inline <a> tags */
+  transition: transform 0.3s ease-in-out;
 }
+
+.hover-link:hover {
+  transform: translateY(-2px);
+}
+
+/* Combined Class Selector to prevent transition overriding */
+.subtle-link.hover-link {
+  transition: color 0.3s ease, text-decoration-color 0.3s ease, transform 0.3s ease;
+}
+
+
 
 /* Containers */
 /* Centralized Content Container */

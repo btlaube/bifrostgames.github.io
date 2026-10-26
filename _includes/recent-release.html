@@ -25,7 +25,7 @@
 
   <div class="recent-item__info">
     <p class="recent-item__title">
-      <a class="hover-link" href="{{ g.url | relative_url }}">{{ g.title }}</a>
+      <a class="subtle-link hover-link" href="{{ g.url | relative_url }}">{{ g.title }}</a>
       {%- if g.new %}<span class="recent-item__new">New</span>{% endif %}
     </p>
     <p class="recent-item__meta">
@@ -40,6 +40,6 @@
   {%- endif %}
 
   {%- if g.itch %}
-  <a class="hover-link recent-item__play" href="{{ g.itch }}">Play →</a>
+  <a class="subtle-link hover-link recent-item__play" href="{{ g.itch }}">Play →</a>
   {%- endif %}
 </li>

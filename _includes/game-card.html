@@ -77,9 +77,9 @@
       {%- if g.itch %}
       <a class="btn" href="{{ g.itch }}">Play</a>
       {%- endif %}
-      <a class="hover-link primary-link" href="{{ g.url | relative_url }}">Game page</a>
+      <a class="game-card__link" href="{{ g.url | relative_url }}">Game page</a>
       {%- if g.source %}
-      <a class="hover-link primary-link" href="{{ g.source }}">Source</a>
+      <a class="game-card__link" href="{{ g.source }}">Source</a>
       {%- endif %}
     </div>
   </div>

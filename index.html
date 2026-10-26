@@ -33,7 +33,7 @@ js: home
     <div class="container recent-releases__inner">
         <header class="recent-head">
             <h2>Recent releases</h2>
-            <a class="hover-link recent-head__all" href="{{ '/games/' | relative_url }}">All games →</a>
+            <a class="hover-link subtle-link recent-head__all" href="{{ '/games/' | relative_url }}">All games →</a>
         </header>
         <ul class="recent-list">
             {% assign recent_releases = site.games | where_exp: "g", "g.date" | sort: "date" | reverse %}
@@ -51,7 +51,7 @@ js: home
         <div class="home-about__text">
         <h2>Hi there,</h2>
         <p>I'm Ben, the independent game developer behind BifrostGames. I've been creating games since 2019 and joining game jams like GMTK. Through BifrostGames I explore new mechanics, experiment with ideas and keep growing as a developer. My goal is to craft games that are fun to play and memorable long after the credits roll.</p>
-        <a class="home-about__link" href="{{ '/about/' | relative_url }}">More about me →</a>
+        <a class="subtle-link hover-link home-about__link" href="{{ '/about/' | relative_url }}">More about me →</a>
         </div>
     </div>
 
