@@ -1,27 +1,89 @@
-<article class="featured-project fp-showcase">
-    {% if include.game.screenshots %}
-    <div class="featured-project-media">
-        <div class="showcase">
-            <a><img src="{{ include.game.screenshots[0].src }}" class="display-image" alt="{{ include.game.screenshots[0].alt }}"></a>
-        </div>
-        <div class="gallery">
-            {% for shot in include.game.screenshots %}
-            <button class="dock-button" type="button"><img src="{{ shot.src }}" class="dock-image" alt="{{ shot.alt }}"></button>
-            {% endfor %}
-        </div>
+{%- comment -%}
+  featured-game.html: one featured project (text on one side, screenshot gallery on the other).
+
+  Usage:
+    {% include featured-game.html game=game %}
+
+  Front matter read from the game in _games/:
+    title, pitch, date, genre (string or list), category (jam|class|club|personal),
+    event, itch, browser (set false if it is not browser-playable)
+    screenshots: [list of screenshot paths]   # first one is shown large, all become thumbnails
+    cover:  single image used when there is no images list
+
+  The article is styled by .featured-game in home.css. Zigzag and the jam tag's chakra color
+  both come from the article's position among its siblings, so no extra markup is needed.
+{%- endcomment -%}
+
+{%- assign g = include.game -%}
+{%- assign genre_list = g.genre | join: "," | split: "," -%}
+
+{%- if g.screenshots and g.screenshots.size > 0 -%}
+  {%- assign screenshots = g.screenshots -%}
+{%- elsif g.cover -%}
+  {%- assign screenshots = g.cover | split: "~~" -%}
+{%- else -%}
+  {%- assign screenshots = "" | split: "" -%}
+{%- endif -%}
+
+{%- case g.category -%}
+  {%- when "jam" -%}{%- assign jam_fallback = "Game jam" -%}
+  {%- when "class" -%}{%- assign jam_fallback = "Class project" -%}
+  {%- when "club" -%}{%- assign jam_fallback = "Club project" -%}
+  {%- when "personal" -%}{%- assign jam_fallback = "Personal project" -%}
+  {%- else -%}{%- assign jam_fallback = "Featured" -%}
+{%- endcase -%}
+
+<article class="featured-game">
+  <div class="featured-game__text">
+    <p class="eyebrow featured-game__jam">{{ g.event | default: jam_fallback }}</p>
+    <h2 class="featured-game__title">{{ g.title }}</h2>
+    {%- if g.pitch %}
+    <p class="featured-game__desc">{{ g.pitch | strip_html }}</p>
+    {%- endif %}
+    <ul class="tags">
+        {%- for genre in genre_list %}{% if genre != "" %}
+        <li class="tag">{{ genre }}</li>
+        {%- endif %}{% endfor %}
+        {%- unless g.browser == false %}
+        <li class="tag">Play in browser</li>
+        {%- endunless %}
+        {%- if g.date %}
+        <li class="tag"><time datetime="{{ g.date | date: '%Y-%m-%d' }}">{{ g.date | date: "%B %Y" }}</time></li>
+        {%- endif %}
+    </ul>
+    <div class="featured-game__actions">
+        {%- if g.itch %}
+        <a class="btn" href="{{ g.itch }}">Play now</a>
+        {%- endif %}
+        <a class="btn btn--ghost" href="{{ g.url | relative_url }}">Game page</a>
+        {%- if g.source %}
+        <a class="featured-game__link" href="{{ g.source }}">Source Code</a>
+        {%- endif %}
     </div>
-    {% endif %}
-    <div class="featured-project-info">
-        <p class="fp-meta">
-            {% if include.game.event %}<span>{{ include.game.event }}</span>{% endif %}
-            <span>{{ include.game.date | date: "%B %Y" }}</span>
-        </p>
-        <h2 class="fp-title">{{ include.game.title }}</h2>
-        <p class="fp-pitch">{{ include.game.pitch }}</p>
-        <div class="fp-actions">
-            <a class="fp-btn fp-btn-primary" href="{{ include.game.itch }}" target="_blank" rel="noopener">Play on Itch</a>
-            <a class="fp-btn fp-btn-ghost" href="{{ include.game.url }}">Game page</a>
-            {% if include.game.source %}<a class="fp-link" href="{{ include.game.source }}" target="_blank" rel="noopener">Source code</a>{% endif %}
-        </div>
+  </div>
+
+  {%- if screenshots.size > 0 %}
+  <div class="featured-game__media">
+    <div class="gallery" data-gallery>
+      <div class="gallery__stage">
+        <img class="gallery__main" data-gallery-main src="{{ screenshots[0].src | relative_url }}" alt="{{ screenshots[0].alt | g.title }} screenshot 1 of {{ screenshots.size }}">
+      </div>
+      {%- if screenshots.size > 1 %}
+      <ul class="gallery__thumbs" data-gallery-strip tabindex="0" aria-label="{{ screenshots[0].alt | g.title }} screenshots">
+        {%- for image in screenshots %}
+        <li class="gallery__item">
+            <button class="gallery__thumb" data-gallery-thumb
+                data-src="{{ image.src | relative_url }}"
+                data-alt="{{ image.alt | g.title }} screenshot {{ forloop.index }} of {{ screenshots.size }}"
+                aria-label="Show screenshot {{ forloop.index }} of {{ screenshots.size }}"
+                aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">
+                <img src="{{ image.src | relative_url }}" alt="{{ image.alt | g.title }}" loading="lazy">
+            </button>
+        </li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
     </div>
+  </div>
+  {%- endif %}
 </article>

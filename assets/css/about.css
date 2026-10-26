@@ -37,14 +37,14 @@
   padding-right: 24px;
 }
 
-.about-page .eyebrow {
+/* .about-page .eyebrow {
   margin: 0;
   font-weight: 600;
   font-size: 13px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--a-accent);
-}
+} */
 
 /* ---------- Intro ---------- */
 
@@ -86,9 +86,7 @@
   width: 100%;
   aspect-ratio: 1 / 1;
   display: block;
-  border: 1px solid var(--a-border);
   border-radius: 20px;
-  background: var(--a-light);
   overflow: hidden;
 }
 .about-intro__photo img {

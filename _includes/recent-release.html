@@ -1,0 +1,45 @@
+{%- comment -%}
+  recent-release.html: one minimal row in the "Recent releases" list on the home page.
+
+  Usage (inside a <ul class="recent-list">):
+    {% include recent-release.html game=game %}
+
+  Front matter fields read from each file in _games/ (all optional except title):
+    title:   "Shifty Scales"
+    genre:   Puzzle              # a string, or a list: [Action, Roguelike]
+    event:   "GMTK Game Jam 2024"
+    date:    2024-08-20
+    cover:   /assets/img/Games/shifty-scales/SS_Cover.png    # thumbnail
+    color:   "#3b2a18"           # thumbnail fallback if there is no cover image
+    itch:    https://bifrostgames.itch.io/shifty-scales      # shows the "Play →" link
+    new:     true                # shows a green "New" badge
+{%- endcomment -%}
+
+{%- assign g = include.game -%}
+{%- assign genre_text = g.genre | join: ", " -%}
+
+<li class="recent-item">
+  <span class="recent-item__thumb" aria-hidden="true"
+    {%- if g.cover %} style="--thumb: url('{{ g.cover | relative_url }}')"
+    {%- elsif g.color %} style="--thumb-color: {{ g.color }}"{% endif %}></span>
+
+  <div class="recent-item__info">
+    <p class="recent-item__title">
+      <a class="hover-link" href="{{ g.url | relative_url }}">{{ g.title }}</a>
+      {%- if g.new %}<span class="recent-item__new">New</span>{% endif %}
+    </p>
+    <p class="recent-item__meta">
+      {%- if genre_text != "" %}{{ genre_text }}{% endif %}
+      {%- if genre_text != "" and g.event %} · {% endif %}
+      {%- if g.event %}{{ g.event }}{% endif -%}
+    </p>
+  </div>
+
+  {%- if g.date %}
+  <time class="recent-item__date" datetime="{{ g.date | date: '%Y-%m-%d' }}">{{ g.date | date: "%b %Y" }}</time>
+  {%- endif %}
+
+  {%- if g.itch %}
+  <a class="hover-link recent-item__play" href="{{ g.itch }}">Play →</a>
+  {%- endif %}
+</li>

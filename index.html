@@ -15,14 +15,27 @@ js: home
     </ul>
 </div> -->
 <!-- <main> -->
-<section id="banner" class="section banner">
+<!-- <section id="banner" class="section banner">
     <div class="banner-container">
         <a href="./"><img class="banner-image" id="banner-image" src="/assets/img/BannerLogo_Bifrost.png" alt="Bifrost Games"></a>
         <h3>Indie Game Developer and Designer</h3>
     </div>
+</section> -->
+
+<section class="section home-banner">
+    <div class="home-banner__inner">
+        <img class="home-banner__logo" src="{{ '/assets/img/BannerLogo_Bifrost.png' | relative_url }}" alt="Bifrost Games">
+        <!-- <h1 class="home-banner__title">BIFROST<span> GAMES</span></h1> -->
+        <p class="eyebrow">Indie game developer and designer</p>
+        <p class="home-banner__lede">Experimental mechanics, personal projects, and game jam entries, most of them playable right in your browser.</p>
+        <div class="home-banner__actions">
+            <a class="btn " href="#featured-projects">Explore featured games</a>
+            <a class="btn btn--ghost" href="{{ '/games/' | relative_url }}">Browse all games</a>
+        </div>
+    </div>
 </section>
 
-{% assign featured = site.games | where_exp: "g", "g.featured == true" | sort: "date" | reverse %}
+<!-- {% assign featured = site.games | where_exp: "g", "g.featured == true" | sort: "date" | reverse %}
 <section id="featured-projects" class="section">
     <div class="vertical-container featured-projects">
         <h1>Featured Projects</h1>
@@ -31,20 +44,81 @@ js: home
             {% include featured-game.html game=game %}
         {% endfor %}
     </div>
-</section>
+</section> -->
 
-<section id="recent-releases" class="section">
-    <div class="vertical-container featured-projects">
-        <h1>Recent Releases</h1>
-        <hr>
-        {% assign recent_releases = site.games | where_exp: "g", "g.date" | sort: "date" | reverse %}
-        {% for game in recent_releases limit:1 %}
+  <!-- FEATURED PROJECTS -->
+{% assign featured = site.games | where_exp: "g", "g.featured == true" | sort: "date" | reverse %}
+<section id="featured-projects" class="section featured-projects">
+    <div class="container featured-projects-inner">
+        <h1>Featured Projects</h1>
+        {% for game in featured %}
             {% include featured-game.html game=game %}
         {% endfor %}
     </div>
 </section>
 
-<section id="about" class="section">
+<!-- Recent Releases -->
+<section id="recent-releases" class="section recent-releases">
+    <div class="container recent-releases__inner">
+        <header class="recent-head">
+            <h2>Recent releases</h2>
+            <a class="hover-link recent-head__all" href="{{ '/games/' | relative_url }}">All games →</a>
+        </header>
+        <ul class="recent-list">
+            {% assign recent_releases = site.games | where_exp: "g", "g.date" | sort: "date" | reverse %}
+            {% for game in recent_releases limit:4 %}
+                {% include recent-release.html game=game %}
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+<!-- <section id="recent-releases" class="section">
+    <div class="vertical-container featured-projects">
+        <h1>Recent Releases</h1>
+        <hr>
+        {% assign recent_releases = site.games | where_exp: "g", "g.date" | sort: "date" | reverse %}
+        {% for game in recent_releases limit:1 %}
+            {% include recent-release.html game=game %}
+        {% endfor %}
+    </div>
+</section> -->
+
+
+<!-- ABOUT TEASER -->
+<section id="about" class="section home-about">
+    <div class="container home-about__inner">
+        <img class="animated-pfp home-about__photo" src="{{ '/assets/img/PfpAnimFrames/Frame1.png' | relative_url }}" alt="Hello, world!" width="240" height="240">
+        <div class="home-about__text">
+        <h2>Hi there,</h2>
+        <p>I'm Ben, the independent game developer behind BifrostGames. I've been creating games since 2019 and joining game jams like GMTK. Through BifrostGames I explore new mechanics, experiment with ideas and keep growing as a developer. My goal is to craft games that are fun to play and memorable long after the credits roll.</p>
+        <a class="home-about__link" href="{{ '/about/' | relative_url }}">More about me →</a>
+        </div>
+    </div>
+
+    <div class="collab-card">
+        <div class="collab-card__stripe" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="collab-card__inner">
+        <div class="collab-card__text">
+            <p class="collab-card__eyebrow">Work with me</p>
+            <h2>Let's collaborate.</h2>
+            <p>I'm open to game development roles and projects. See my experience, skills and resume on my portfolio, or keep exploring what I've made.</p>
+        </div>
+
+        <div class="collab-card__actions">
+            <a class="btn btn--lg" href="/portfolio/">Hire me: view my portfolio</a>
+            <div class="collab-card__secondary">
+            <a class="btn btn--ghost" href="/contact/">Contact me</a>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- <section id="about" class="section">
     <div class="container about-container">
         <h1>About Me</h1>
         <div class="horizontal-container-around">
@@ -76,12 +150,11 @@ js: home
             <a class="btn btn--lg" href="/portfolio/">Hire me: view my portfolio</a>
             <div class="collab-card__secondary">
             <a class="btn btn--ghost" href="/contact/">Contact me</a>
-            <!-- <a class="btn btn--ghost" href="/about/">About me</a> -->
             </div>
         </div>
         </div>
     </div>
-</section>
+</section> -->
 
 <!-- <section>
     <div class="container vertical-container">

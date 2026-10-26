@@ -88,7 +88,7 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding: 10rem;
+    /* scroll-padding: 10rem; */
 }
 
 /* Basic styles for the entire website */
@@ -153,6 +153,15 @@ h4 {
     /* text-align: center; */
 }
 
+.eyebrow {
+    color: var(--lightPurple1);
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
 p, a, li {
     font-size: 1.25rem;
 }
@@ -162,7 +171,7 @@ ul {
 }
 
 /* Reusable Components */
-.primary-link, .secondary-link {
+/* .primary-link, .secondary-link {
     border-style: solid;
     border-radius: 12.5px;
     border-width: 2px;
@@ -173,6 +182,14 @@ ul {
     margin-bottom: 12.5px;
     text-decoration: none;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+} */
+
+.hover-link {
+    transition: transform 0.3s;
+}
+
+.hover-link:hover {
+    transform: translateY(-2px);
 }
 
 /* .primary-link:hover, .secondary-link:hover {
@@ -180,13 +197,28 @@ ul {
 } */
 
 .primary-link {
-    background-color: var(--lightPurple2);
-    /* border-color: var(--borderColor); */
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    background: none;
+    border-radius: 0;
+    /* font-size: 1.1rem; */
+    color: var(--chakra-violet);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: background-color 0.3s, border-color 0.3s, transform 0.3s, text-decoration 1s;
 }
 
 .primary-link:hover {
-    background-color: var(--darkPurple1);
-    /* border-color: var(--borderColor2); */
+    text-decoration: underline;
+    color: var(--text-muted);
+    transform: translateY(-2px);
+}
+
+.primary-link:focus-visible {
+    outline: 3px solid var(--textColor);
+    outline-offset: 3px;
 }
 
 .secondary-link {
@@ -201,11 +233,13 @@ ul {
     color: var(--textColor);
     text-decoration: none;
     transition: color 0.3s, text-decoration 0.3s;
+    font-size: 20px;
+    padding: 0 5px;
 }
 
 .subtle-link:hover {
     text-decoration: underline;
-    color: var(--linkHoverColor);
+    color: var(--text-muted);
 }
 
 .subtle-link:active {
@@ -216,6 +250,7 @@ ul {
 /* Centralized Content Container */
 .container {
     margin: 0 auto;
+    max-width: 1200px;
     padding: 20px 20px;
 }
 
@@ -581,24 +616,29 @@ footer {
 /* ---------- Buttons ---------- */
 
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 0 20px;
-  border: 1px solid var(--chakra-violet);
-  border-radius: 10px;
-  background: var(--lightPurple1);
-  color: var(--darkPurple3);
-  font: inherit;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 20px;
+    border: 1px solid var(--chakra-violet);
+    border-radius: 10px;
+    background: var(--lightPurple1);
+    color: var(--darkPurple3);
+    font: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.3s;
 }
 
 .btn:hover {
     filter: brightness(1.15);
     /* background: var(--lightPurple1); */
+
+    /* transition effect */
+    transform: translateY(-2px);
 }
 
 .btn:disabled {
@@ -609,7 +649,7 @@ footer {
 
 .btn--ghost {
   background: transparent;
-  border: 1px solid var(--darkPurple1);
+  border: 2px solid var(--lightPurple1);
   color: var(--text, #f4ecff);
 }
 .btn--ghost:hover {
