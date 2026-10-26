@@ -51,6 +51,7 @@ ol ol, ul ul {
 
 .description {
     max-width: 50%;
+    /* color: var(--lightPurple2); */
 }
 
 .game-banner-image {

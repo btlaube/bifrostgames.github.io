@@ -1,12 +1,13 @@
 ---
 layout: bifrost-shell
+css: game
 ---
 <section class="section">
     <div class="main-container vertical-container">
 
         <div class="game-banner-container">
             {% if page.banner %}<img class="game-banner-image" src="{{ page.banner }}" alt="{{ page.title }} banner">{% endif %}
-            {% if page.itch %}<p class="align-center"><a class="secondary-link" href="{{ page.itch }}">Play on Itch.io</a></p>{% endif %}
+            {% if page.itch %}<p class="align-center"><a class="btn secondary-link" href="{{ page.itch }}">Play on Itch.io</a></p>{% endif %}
         </div>
 
         <div class="game-info-container">
@@ -28,7 +29,7 @@ layout: bifrost-shell
                 <hr>
                 <div class="horizontal-container-around">
                     {% for link in page.links %}
-                    <h4><a class="subtle-link" target="_blank" href="{{ link.url }}">{{ link.label }}</a></h4>
+                    <h4><a class="hover-link subtle-link" target="_blank" href="{{ link.url }}">{{ link.label }}</a></h4>
                     {% endfor %}
                 </div>
                 {% endif %}

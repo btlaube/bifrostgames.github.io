@@ -37,7 +37,7 @@ js: home
         </header>
         <ul class="recent-list">
             {% assign recent_releases = site.games | where_exp: "g", "g.date" | sort: "date" | reverse %}
-            {% for game in recent_releases limit:4 %}
+            {% for game in recent_releases limit:3 %}
                 {% include recent-release.html game=game %}
             {% endfor %}
         </ul>
