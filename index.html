@@ -5,27 +5,9 @@ description: Indie games by Ben Laube.
 css: home
 js: home
 ---
-<!-- Sticky Navigation Tabs -->
-<!-- <div class="sticky-nav">
-    <ul class="horizontal-container-between sticky-nav-tabs">
-        <li><a href="#banner">Home</a></li>
-        <li><a href="#featured-projects">Featured</a></li>
-        <li><a href="#links">Links</a></li>
-        <li><a href="#about">About</a></li>
-    </ul>
-</div> -->
-<!-- <main> -->
-<!-- <section id="banner" class="section banner">
-    <div class="banner-container">
-        <a href="./"><img class="banner-image" id="banner-image" src="/assets/img/BannerLogo_Bifrost.png" alt="Bifrost Games"></a>
-        <h3>Indie Game Developer and Designer</h3>
-    </div>
-</section> -->
-
 <section class="section home-banner">
     <div class="home-banner__inner">
         <img class="home-banner__logo" src="{{ '/assets/img/BannerLogo_Bifrost.png' | relative_url }}" alt="Bifrost Games">
-        <!-- <h1 class="home-banner__title">BIFROST<span> GAMES</span></h1> -->
         <p class="eyebrow">Indie game developer and designer</p>
         <p class="home-banner__lede">Experimental mechanics, personal projects, and game jam entries, most of them playable right in your browser.</p>
         <div class="home-banner__actions">
@@ -35,18 +17,7 @@ js: home
     </div>
 </section>
 
-<!-- {% assign featured = site.games | where_exp: "g", "g.featured == true" | sort: "date" | reverse %}
-<section id="featured-projects" class="section">
-    <div class="vertical-container featured-projects">
-        <h1>Featured Projects</h1>
-        <hr>
-        {% for game in featured %}
-            {% include featured-game.html game=game %}
-        {% endfor %}
-    </div>
-</section> -->
-
-  <!-- FEATURED PROJECTS -->
+<!-- FEATURED PROJECTS -->
 {% assign featured = site.games | where_exp: "g", "g.featured == true" | sort: "date" | reverse %}
 <section id="featured-projects" class="section featured-projects">
     <div class="container featured-projects-inner">
@@ -72,18 +43,6 @@ js: home
         </ul>
     </div>
 </section>
-
-<!-- <section id="recent-releases" class="section">
-    <div class="vertical-container featured-projects">
-        <h1>Recent Releases</h1>
-        <hr>
-        {% assign recent_releases = site.games | where_exp: "g", "g.date" | sort: "date" | reverse %}
-        {% for game in recent_releases limit:1 %}
-            {% include recent-release.html game=game %}
-        {% endfor %}
-    </div>
-</section> -->
-
 
 <!-- ABOUT TEASER -->
 <section id="about" class="section home-about">
@@ -117,108 +76,3 @@ js: home
         </div>
     </div>
 </section>
-
-<!-- <section id="about" class="section">
-    <div class="container about-container">
-        <h1>About Me</h1>
-        <div class="horizontal-container-around">
-            <a class="subtle-link"><img class="animated-pfp about-image" src="/assets/img/PfpAnimFrames/Frame1.png" alt="Hello, world!"></a>
-            <div class="vertical-container-stretch">
-                <p>Hi there!</p>
-                <p>My name is Ben Laube, and I'm the independent game developer behind BifrostGames. I've been creating games since 2019, developing projects through my university's Game Development Club, and participating in game jams like GMTK.</p>
-                <p>Through BifrostGames, I explore new mechanics, experiment with ideas, and continue growing as both a developer and a creator. My goal is to craft games that are not only fun to play but memorable long after the credits roll.</p>
-                <div class="horizontal-container-around">
-                    <a class="secondary-link" href="/about/">More about me</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="collab-card">
-        <div class="collab-card__stripe" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-        </div>
-
-        <div class="collab-card__inner">
-        <div class="collab-card__text">
-            <p class="collab-card__eyebrow">Work with me</p>
-            <h2>Let's collaborate.</h2>
-            <p>I'm open to game development roles and projects. See my experience, skills and resume on my portfolio, or keep exploring what I've made.</p>
-        </div>
-
-        <div class="collab-card__actions">
-            <a class="btn btn--lg" href="/portfolio/">Hire me: view my portfolio</a>
-            <div class="collab-card__secondary">
-            <a class="btn btn--ghost" href="/contact/">Contact me</a>
-            </div>
-        </div>
-        </div>
-    </div>
-</section> -->
-
-<!-- <section>
-    <div class="container vertical-container">
-        <div class="horizontal-container-around links-container">
-            <a class="secondary-link" href="/games">
-                <i class="fas fa-gamepad"></i> All Games
-            </a>
-            <a class="secondary-link" href="/portfolio">
-                <i class="fas fa-user"></i> Portfolio / Resume
-            </a>
-        </div>
-    </div>
-</section> -->
-
-<!-- <section id="links" class="section links">
-    <div class="container links-container">
-        <div class="link-grid">
-            <div class="link-category">
-                <h2>Social Media</h2>
-                <div class="vertical-container-stretch">
-                    <a class="secondary-link" href="https://www.youtube.com/@Bifrost_Games" target="_blank">
-                        <i class="fab fa-youtube"></i> Youtube (for dev logs and trailers)
-                    </a>
-                    <a class="secondary-link" href="https://twitter.com/BifrostGamesDev" target="_blank">
-                        <i class="fab fa-twitter"></i> X (for updates)
-                    </a>
-                    <a class="secondary-link" href="https://www.linkedin.com/in/ben-laube/" target="_blank">
-                        <i class="fab fa-linkedin"></i> LinkedIn (for professional experience)
-                    </a>
-                </div>
-            </div>
-            <div class="link-category">
-                <h2>Game Development</h2>
-                <div class="vertical-container-stretch">
-                    <a class="secondary-link" href="https://github.com/btlaube" target="_blank">
-                        <i class="fab fa-github-square"></i> GitHub (for project repositories)
-                    </a>
-                    <a class="secondary-link" href="https://bifrostgames.itch.io/" target="_blank">
-                        <i class="fas fa-gamepad"></i> Itch.io (for my full games collections)
-                    </a>
-                </div>
-            </div>
-            <div class="link-category">
-                <h2>Products and Services</h2>
-                <div class="vertical-container-stretch">
-                    <a class="secondary-link" href="https://www.redbubble.com/people/BifrostGames/shop" target="_blank">
-                        <i class="fas fa-paint-brush"></i> Redbubble
-                    </a>
-                    <a class="secondary-link">
-                        <i class="fas fa-cubes"></i> Unity Asset Store (coming soon...)
-                    </a>
-                    <a class="secondary-link">
-                        <i class="fas fa-briefcase"></i> Fiverr (coming soon...)
-                    </a>
-                </div>
-            </div>
-            <div class="link-category">
-                <h2>Support Me</h2>
-                <div class="vertical-container-stretch">
-                    <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support me on Ko-fi', '#8d35b4', 'V7V71C2TUT');kofiwidget2.draw();</script> 
-                </div>
-            </div>       
-        </div>
-    </div>
-</section> -->
-
-<!-- </main> -->
