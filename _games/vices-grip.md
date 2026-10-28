@@ -19,9 +19,6 @@ source: https://github.com/btlaube/LudumDare54
 # Game Images
 banner:
 cover: /assets/img/games/vices-grip/Cover.png
-screenshots:
-  - src: "/assets/img/games/vices-grip/sc_1.png"
-    alt: "Vice's Grip cover art: blood-splattered lettering reading Can you escape, the Vice's Grip, on a dark red background"
 
 # Audio and links
 links:

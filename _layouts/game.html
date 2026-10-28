@@ -65,15 +65,18 @@ css: game
                 <h4>Released: {{ page.date | date: "%B %-d, %Y" }}</h4>
             </div>
 
-            {% if page.screenshots %}
             <div class="container screenshots">
+                <div class="screenshot">
+                    <img src="{{ page.cover }}" alt="">
+                </div>
+                {% if page.screenshots %}
                 {% for shot in page.screenshots %}
                 <div class="screenshot">
                     <img src="{{ shot.src }}" alt="{{ shot.alt }}">
                 </div>
                 {% endfor %}
+                {% endif %}
             </div>
-            {% endif %}
         </div>
 
     </div>

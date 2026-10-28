@@ -19,9 +19,6 @@ source: https://github.com/btlaube/MetroidvaniaJamGame
 # Game Images
 banner:
 cover: /assets/img/games/deep-space-clean-up/Cover.png
-screenshots:
-  - src: "/assets/img/games/deep-space-clean-up/sc_1.png"
-    alt: "Deep Space Clean Up cover art: a space-suited janitor facing a red bat and a green lizard, with the game title in white and blue lettering"
 
 # Audio and links
 audio:

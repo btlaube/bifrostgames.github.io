@@ -19,9 +19,6 @@ source: https://github.com/btlaube/GMTKGameJam
 # Game Images
 banner: /assets/img/games/roll-or-die/Banner.png
 cover: /assets/img/games/roll-or-die/Cover.png
-screenshots:
-  - src: "/assets/img/games/roll-or-die/sc_1.png"
-    alt: "Roll or Die cover art: pixel-art lettering with gold dice for the letter O, on a green felt background with a gold border"
 
 # Audio and links
 audio:
