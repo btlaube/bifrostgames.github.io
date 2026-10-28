@@ -57,3 +57,30 @@ portfolio: true
 role: "Solo developer"
 new: false
 ---
+Explore an infinite, procedurally generated dungeon as a sentient sword passed from one wielder to the next. When a wielder falls in battle, another takes their place, and the journey resumes from the entrance of the last dungeon reached.
+
+As the sword, you can drain life from your current wielder to restore your own strength. If the sword itself shatters, you may choose to sacrifice the wielder for a full restoration; however, each run is limited to three wielders each with distinct stats.
+
+---
+
+It's a bug! It's a feature! Try attacking enemies through walls or ceilings...
+
+---
+
+## Controls
+
+**Movement**: Arrow Keys
+
+**Attack**: Z
+
+**Heal Sword**: X
+
+**Heal Wielder**: C
+
+---
+
+### Additional Features
+
+- Attack enemy projectiles to block them
+- Collect coins dropped by enemies
+- Buy sword and wielder health for coins between clears

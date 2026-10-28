@@ -64,8 +64,8 @@
     </ul>
 
     <p class="game-card__meta">
-      {%- if g.event %}{{ g.event }}{% endif %}
-      {%- if g.event and g.date %} · {% endif %}
+      {%- if g.jam %}{{ g.jam }}{% endif %}
+      {%- if g.jam and g.date %} · {% endif %}
       {%- if g.date %}<time datetime="{{ g.date | date: '%Y-%m-%d' }}">{{ g.date | date: "%b %Y" }}</time>{% endif -%}
     </p>
 

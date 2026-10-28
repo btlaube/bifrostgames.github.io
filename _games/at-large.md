@@ -46,3 +46,36 @@ portfolio: false
 role: "Solo developer"
 new: false
 ---
+You are an escaped convict at large, and every 5 seconds you need to make sure you are hidden amongst the crowd.
+
+---
+
+## Controls
+
+Use WASD to move ... that's it!
+
+... Oh and P to pause the game.
+
+---
+
+### Tip:
+
+If you aren't 70% covered when the timer runs out your score is reset!
+
+---
+
+Thank you for playing!
+
+How high can you get your score?
+
+---
+
+<div class="horizontal-container-between">
+  <div>
+    <p>Want to support BifrostGames?</p>
+    <p><a class="subtle-link" target="_blank" href="https://www.redbubble.com/people/BifrostGames/shop"><i class="fas fa-paint-brush"></i> Check out official artwork on Redbubble!</a></p>
+  </div>
+  <a class="screenshot" href="https://www.redbubble.com/people/BifrostGames/shop" target="_blank">
+    <img src="/assets/img/Games/at-large/sss,small,product,750x1000.jpg" alt="At Large merch preview">
+  </a>
+</div>

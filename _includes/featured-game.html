@@ -35,21 +35,22 @@
 
 <article class="featured-game">
   <div class="featured-game__text">
-    <p class="eyebrow featured-game__jam">{{ g.jam | default: jam_fallback }}</p>
+    <p class="eyebrow featured-game__jam">
+      {%- if g.date %}<time datetime="{{ g.date | date: '%Y-%m-%d' }}">{{ g.date | date: "%b %Y" }}</time>{% endif -%}
+      {%- if g.date and g.jam %} · {% endif %}
+      {%- if g.jam %}{{ g.jam }}{% endif %}
+    </p>
     <h2 class="featured-game__title">{{ g.title }}</h2>
     {%- if g.pitch %}
     <p class="featured-game__desc">{{ g.pitch | strip_html }}</p>
     {%- endif %}
     <ul class="tags">
         {%- for genre in genre_list %}{% if genre != "" %}
-        <li class="tag">{{ genre }}</li>
+        <li class="tag tag--fill">{{ genre }}</li>
         {%- endif %}{% endfor %}
         {%- unless g.browser == false %}
-        <li class="tag">Play in browser</li>
+        <li class="tag tag--outline">Play in browser</li>
         {%- endunless %}
-        {%- if g.date %}
-        <li class="tag"><time datetime="{{ g.date | date: '%Y-%m-%d' }}">{{ g.date | date: "%B %Y" }}</time></li>
-        {%- endif %}
     </ul>
     <div class="featured-game__actions">
         {%- if g.itch %}

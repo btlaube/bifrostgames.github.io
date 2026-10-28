@@ -56,3 +56,18 @@ portfolio: false
 role: "Solo developer"
 new: false
 ---
+You are the alchemist's shadow summoned for the task of retrieving lost alchemical artifacts.
+
+---
+
+## Controls
+
+**Move**: A/D, left arrow/right arrow
+
+**Jump**: Space, up arrow
+
+**Drop** (through platform): down arrow
+
+**Interact**: X
+
+**Dialogue**: Enter

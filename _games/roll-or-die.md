@@ -46,3 +46,19 @@ portfolio: false
 role: "Solo developer"
 new: false
 ---
+## How to Play:
+
+1. Roll Dice
+2. Spend the values you roll to:
+    1. **Heal**
+    2. **Damage** your opponent
+    3. Or buy more **Rolls**
+3. Don't run out of **Health** or **Rolls** or it's game over!
+
+---
+
+## Controls
+
+**Space**: to roll dice
+
+**Mouse click and drag**: dice faces to the action slots on the right
