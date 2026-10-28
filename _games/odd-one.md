@@ -1,54 +1,53 @@
 ---
-title: Odd One
-pitch: Odd One is a fast-paced horror, puzzle game about quickly identifying the "odd one out" in a crowd.
+# Base game info
+title: "Odd One"
 date: 2025-07-31
-event: Pirate Software Game Jam 17
-role: Solo developer
-order: 7
-featured: false
-portfolio: true
+tagline: "Spot the odd one out."
+pitch: "Odd One is a fast-paced horror, puzzle game about quickly identifying the \"odd one out\" in a crowd."
+genre:
+  - "Arcade"
+  - "Horror"
 
-banner: /assets/img/Games/odd-one/Banner.png
-cover: /assets/img/Games/odd-one/OO_Cover.png
+# Game jam info
+jam: "Pirate Software Game Jam 17"
+jam-note: "Completed in 2 weeks for the Pirate Software Game Jam 17"
+
+# Itch and GitHub links
 itch: https://bifrostgames.itch.io/odd-one
 source: https://github.com/btlaube/Odd-One
 
-links:
-  - label: Game Design Doc (Google Doc)
-    url: https://docs.google.com/document/d/1tC5ICCrQBXPAR37LwX4rgdOoAnaaqIBWQUtg7WdXunA/edit?usp=sharing
-  - label: Source Code (Github)
-    url: https://github.com/btlaube/Odd-One
-
-credits: All assets and code created by Ben Laube
-software:
-  - Unity (engine)
-  - Audacity and Waveform (music, sfx)
-  - Aseprite and Gimp (art, animations)
-
+# Game Images
+banner: /assets/img/games/odd-one/Banner.png
+cover: /assets/img/games/odd-one/Cover.png
 screenshots:
-  - src: /assets/img/Games/odd-one/sc1.png
+  - src: "/assets/img/games/odd-one/sc_1.png"
     alt: "Odd One title screen: large dark lettering in a dark room under a spot light"
-  - src: /assets/img/Games/odd-one/sc2.png
-    alt: Night 2, 12:05 AM
-  - src: /assets/img/Games/odd-one/sc3.png
-    alt: Night 3, 12:55 AM
-  - src: /assets/img/Games/odd-one/sc4.png
-    alt: Night 4, 12:05 AM
+  - src: "/assets/img/games/odd-one/sc_2.png"
+    alt: "Night 2, 12:05 AM"
+  - src: "/assets/img/games/odd-one/sc_3.png"
+    alt: "Night 3, 12:55 AM"
+  - src: "/assets/img/games/odd-one/sc_4.png"
+    alt: "Night 4, 12:05 AM"
+
+# Audio and links
+links:
+  - label: "Game Design Doc (Google Doc)"
+    url: "https://docs.google.com/document/d/1tC5ICCrQBXPAR37LwX4rgdOoAnaaqIBWQUtg7WdXunA/edit?usp=sharing"
+  - label: "Source Code (Github)"
+    url: "https://github.com/btlaube/Odd-One"
+
+# Credits
+credits: "All assets and code created by Ben Laube"
+software:
+  - "Unity (engine)"
+  - "Audacity and Waveform (music, sfx)"
+  - "Aseprite and Gimp (art, animations)"
+
+# Behavior
+browser: true
+featured: false
+listed: true
+portfolio: false
+role: "Solo developer"
+new: false
 ---
-### Theme: "Only One"
-
----
-
-Something’s not quite right…
-
-In *Odd One*, you observe a bustling crowd, but there’s an imposter among them. Watch closely. One of these “people” doesn’t quite belong.
-
-Each night brings only one imposter. You have only one hour*. Correctly identify the imposter on 5 nights to win.
-
-*1 minute in game passes every real world second.
-
----
-
-## Controls:
-
-- Left Mouse: click to identify the odd one

@@ -35,7 +35,7 @@
 
 <article class="game-card"
   data-title="{{ g.title | escape }}"
-  data-search="{{ g.title | append: ' ' | append: g.event | append: ' ' | append: g.description | append: ' ' | append: genre_csv | strip_html | downcase | escape }}"
+  data-search="{{ g.title | append: ' ' | append: g.event | append: ' ' | append: g.pitch | append: ' ' | append: genre_csv | strip_html | downcase | escape }}"
   data-genres="{{ g.genre | join: '|' | downcase | escape }}"
   data-category="{{ g.category | default: 'other' }}"
   data-year="{{ g.date | date: '%Y' }}"
@@ -69,8 +69,8 @@
       {%- if g.date %}<time datetime="{{ g.date | date: '%Y-%m-%d' }}">{{ g.date | date: "%b %Y" }}</time>{% endif -%}
     </p>
 
-    {%- if g.description %}
-    <p class="game-card__desc">{{ g.description | strip_html }}</p>
+    {%- if g.tagline %}
+    <p class="game-card__desc">{{ g.tagline | strip_html }}</p>
     {%- endif %}
 
     <div class="game-card__actions">

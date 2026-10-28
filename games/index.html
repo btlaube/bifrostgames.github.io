@@ -11,7 +11,7 @@ description: Every game BifrostGames has released, newest first. Filter by genre
   Build the filter options from the games themselves, so new games show up
   automatically. Newest first is also the no-JavaScript order.
 {%- endcomment -%}
-{%- assign games = site.games | sort: "date" | reverse -%}
+{%- assign games = site.games | where_exp: "g", "g.listed != false" | sort: "date" | reverse -%}
 
 {%- assign genre_csv = "" -%}
 {%- assign year_csv = "" -%}
@@ -71,15 +71,13 @@ description: Every game BifrostGames has released, newest first. Filter by genre
             </div>
           </fieldset>
 
-          <fieldset class="group">
+          <!-- <fieldset class="group">
             <legend>Made for</legend>
             <div class="chips">
               <label class="chip chip--jam"><input type="checkbox" name="category" value="jam"><span>Game jam</span></label>
-              <label class="chip chip--class"><input type="checkbox" name="category" value="class"><span>Class project</span></label>
-              <label class="chip chip--club"><input type="checkbox" name="category" value="club"><span>Club project</span></label>
               <label class="chip chip--personal"><input type="checkbox" name="category" value="personal"><span>Personal project</span></label>
             </div>
-          </fieldset>
+          </fieldset> -->
 
           <fieldset class="group">
             <legend>Year</legend>

@@ -35,7 +35,7 @@
 
 <article class="featured-game">
   <div class="featured-game__text">
-    <p class="eyebrow featured-game__jam">{{ g.event | default: jam_fallback }}</p>
+    <p class="eyebrow featured-game__jam">{{ g.jam | default: jam_fallback }}</p>
     <h2 class="featured-game__title">{{ g.title }}</h2>
     {%- if g.pitch %}
     <p class="featured-game__desc">{{ g.pitch | strip_html }}</p>
