@@ -5,15 +5,29 @@ collections:
   games:
     output: true
     permalink: /games/:name/
+  devlogs:
+    output: true
+    permalink: /devlogs/:path/
+  devlog_hubs:
+    output: true
+    permalink: /devlogs/:name/
 
 defaults:
-  - scope:
-      path: ""
-      type: games
+  - scope: { path: "", type: games }
     values:
       layout: game
       css: game
-      noindex: true      # keeps search engines away from preview pages; remove at switch-over
+      noindex: true      # remove at switch-over
+  - scope: { path: "", type: devlogs }
+    values:
+      layout: devlog
+      css: devlog
+      noindex: true
+  - scope: { path: "", type: devlog_hubs }
+    values:
+      layout: devlog-hub
+      css: devlog
+      noindex: true
 
 exclude:
   - _tools/

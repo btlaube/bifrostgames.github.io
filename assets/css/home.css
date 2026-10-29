@@ -380,6 +380,8 @@
     color: inherit;
 }
 
+/* ---------- Recent Updates subsection ---------- */
+
 
 /* ---------- About Section (light band) ---------- */
 
@@ -564,4 +566,42 @@
   .collab-card__inner { padding: 28px 24px; }
   .collab-card h2 { font-size: 32px; }
   .collab-card__actions { min-width: 0; width: 100%; }
+}
+
+
+
+/* ---------- "Recent updates" row (home page): thumbnail left, date right ---------- */
+ 
+.devlog-row--update { flex-wrap: nowrap; align-items: center; gap: 4px 20px; }
+.devlog-row__thumb {
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border: 1px solid var(--darkPurple1);
+  border-radius: 10px;
+  background: var(--darkPurple2);
+}
+.devlog-row--update .devlog-row__body { flex: 1 1 auto; }
+.devlog-row--update .devlog-row__date { flex: 0 0 auto; padding-top: 0; margin-left: auto; text-align: right; white-space: nowrap; }
+ 
+/* ---------- Recent-update rows (home page): thumbnail left, date right ---------- */
+ 
+.devlog-row--recent { align-items: center; gap: 12px 20px; }
+.devlog-row__thumb {
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border: 1px solid var(--darkPurple1);
+  border-radius: 10px;
+  background: var(--darkPurple2);
+}
+.devlog-row--recent .devlog-row__body { flex: 1 1 240px; }
+.devlog-row--recent .devlog-row__date {
+  flex: 0 0 auto;
+  margin-left: auto;
+  padding-top: 0;
+  text-align: right;
+  white-space: nowrap;
 }

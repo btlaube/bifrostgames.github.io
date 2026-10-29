@@ -1,0 +1,25 @@
+{%- comment -%}
+  devlog-entry-row.html: one dev log entry as a row (date, title, short preview).
+  Used by devlog-hub.html and devlog-index.html.
+
+  Usage:  {% include devlog-entry-row.html entry=entry number=3 %}
+  number is optional (the entry's position, 1 = oldest).
+{%- endcomment -%}
+
+{%- assign e = include.entry -%}
+{%- assign preview = e.excerpt | strip_html | strip_newlines | truncatewords: 28 -%}
+
+<li class="devlog-row">
+  <time class="devlog-row__date" datetime="{{ e.date | date: '%Y-%m-%d' }}">{{ e.date | date: "%b %-d, %Y" }}</time>
+  <div class="devlog-row__body">
+    <p class="devlog-row__title">
+      <a class="hover-link" href="{{ e.url | relative_url }}">
+        {%- if include.number %}<span class="devlog-row__num">#{{ include.number }}</span> {% endif -%}
+        {{ e.title }}
+      </a>
+    </p>
+    {%- if preview != "" %}
+    <p class="devlog-row__preview">{{ preview }}</p>
+    {%- endif %}
+  </div>
+</li>

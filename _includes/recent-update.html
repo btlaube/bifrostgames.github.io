@@ -1,0 +1,28 @@
+{%- assign d = include.devlog -%}
+{%- assign game = site.games | where: "slug", d.project | first -%}
+{%- assign preview = d.excerpt | strip_html | strip_newlines | truncatewords: 24 -%}
+ 
+<li class="devlog-row devlog-row--recent">
+  {%- if game and game.cover %}
+  <img class="devlog-row__thumb" src="{{ game.cover | relative_url }}" alt="" loading="lazy">
+  {%- else %}
+  <span class="devlog-row__thumb devlog-row__thumb--empty" aria-hidden="true"></span>
+  {%- endif %}
+ 
+  <div class="devlog-row__body">
+    <p class="devlog-row__project">
+      {%- if game %}<a class="subtle-link" href="{{ game.url | relative_url }}">{{ game.title }}</a>{% else %}{{ d.project | replace: "-", " " | capitalize }}{% endif -%}
+    </p>
+    <p class="devlog-row__title">
+      <a class="hover-link" href="{{ d.url | relative_url }}">{{ d.title }}</a>
+    </p>
+    {%- if preview != "" %}
+    <p class="devlog-row__preview">{{ preview }}</p>
+    {%- endif %}
+  </div>
+ 
+  {%- if d.date %}
+  <time class="devlog-row__date" datetime="{{ d.date | date: '%Y-%m-%d' }}">{{ d.date | date: "%b %-d, %Y" }}</time>
+  {%- endif %}
+</li>
+ 

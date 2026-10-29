@@ -42,6 +42,22 @@ js: home
             {% endfor %}
         </ul>
     </div>
+    {% assign recent_updates_count = 3 %}
+    {% if site.devlogs.size > 0 %}
+    <div class="container recent-releases__inner">
+        <header class="recent-head">
+            <h2>Recent updates</h2>
+            <a class="hover-link subtle-link recent-head__all" href="{{ '/devlogs/' | relative_url }}">All dev logs →</a>
+        </header>
+        <ul class="devlog-list">
+            {% assign recent_updates = site.devlogs | where_exp: "d", "d.date" | sort: "date" | reverse %}
+            {% for devlog in recent_updates limit: recent_updates_count %}
+                {% include recent-update.html devlog=devlog show_project=true %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    
 </section>
 
 <!-- ABOUT TEASER -->

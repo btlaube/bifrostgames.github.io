@@ -1,0 +1,56 @@
+---
+layout: bifrost-shell
+---
+{%- comment -%}
+  _layouts/devlog-hub.html: every dev log for one game, newest first.
+
+  Hub front matter: project (the game's slug), title ("<Game> Dev Logs").
+  Needs css: devlog, set in _config.yml defaults.
+{%- endcomment -%}
+
+{%- assign game = site.games | where: "slug", page.project | first -%}
+{%- assign entries = site.devlogs | where: "project", page.project | sort: "date" | reverse -%}
+{%- assign total = entries.size -%}
+
+<main class="devlog-page">
+
+  <nav class="devlog-crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a class="subtle-link" href="{{ '/devlogs/' | relative_url }}">Dev logs</a></li>
+    </ol>
+  </nav>
+
+  <header class="devlog-hub__header">
+    {%- if game and game.cover %}
+    <img class="devlog-hub__cover" src="{{ game.cover | relative_url }}" alt="" loading="lazy">
+    {%- endif %}
+    <div class="devlog-hub__text">
+      <p class="eyebrow">Dev logs</p>
+      <h1>{{ page.title }}</h1>
+      {%- if game and game.pitch %}
+      <p class="devlog-hub__pitch">{{ game.pitch | strip_html }}</p>
+      {%- endif %}
+      {%- if game %}
+      <div class="devlog-actions">
+        <a class="btn" href="{{ game.url | relative_url }}">Game page</a>
+        {%- if game.itch %}<a class="btn btn--ghost" href="{{ game.itch }}">Play on itch.io</a>{% endif %}
+      </div>
+      {%- endif %}
+    </div>
+  </header>
+
+  <section class="devlog-hub__list" aria-label="Dev log entries">
+    {%- if total > 0 %}
+    <p class="devlog-count">{{ total }} {% if total == 1 %}entry{% else %}entries{% endif %}, newest first</p>
+    <ul class="devlog-list">
+      {%- for entry in entries %}
+      {%- assign number = total | minus: forloop.index0 %}
+      {% include devlog-entry-row.html entry=entry number=number %}
+      {%- endfor %}
+    </ul>
+    {%- else %}
+    <p class="devlog-empty">No dev logs for this game yet.</p>
+    {%- endif %}
+  </section>
+
+</main>

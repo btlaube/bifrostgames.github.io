@@ -1,0 +1,97 @@
+---
+layout: bifrost-shell
+---
+{%- comment -%}
+  _layouts/devlog.html: one dev log entry.
+
+  Entry front matter: project (the game's slug), title, date.
+  Links on this page:
+    - breadcrumb at the top:  Dev logs (index)  ›  <Game> (this game's dev log hub)
+    - previous / next entry for the SAME project (older / newer)
+    - a strip at the bottom with the game page link and the hub link
+  Needs css: devlog, set in _config.yml defaults (a layout's own front matter does not reach page.css).
+{%- endcomment -%}
+
+{%- assign game = site.games | where: "slug", page.project | first -%}
+{%- assign hub = site.devlog_hubs | where: "project", page.project | first -%}
+{%- assign entries = site.devlogs | where: "project", page.project | sort: "date" -%}
+{%- if game -%}
+  {%- assign game_title = game.title -%}
+{%- else -%}
+  {%- assign game_title = page.project | replace: "-", " " | capitalize -%}
+{%- endif -%}
+
+{%- for entry in entries -%}
+  {%- if entry.url == page.url -%}
+    {%- unless forloop.first -%}{%- assign prev_i = forloop.index0 | minus: 1 -%}{%- assign prev_entry = entries[prev_i] -%}{%- endunless -%}
+    {%- unless forloop.last -%}{%- assign next_i = forloop.index0 | plus: 1 -%}{%- assign next_entry = entries[next_i] -%}{%- endunless -%}
+    {%- assign entry_number = forloop.index -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<main class="devlog-page">
+  <article class="devlog-entry">
+
+    <nav class="devlog-crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a class="subtle-link" href="{{ '/devlogs/' | relative_url }}">Dev logs</a></li>
+        <li>
+          {%- if hub %}<a class="subtle-link" href="{{ hub.url | relative_url }}">{{ game_title }}</a>
+          {%- elsif game %}<a class="subtle-link" href="{{ game.url | relative_url }}">{{ game_title }}</a>
+          {%- else %}{{ game_title }}{% endif -%}
+        </li>
+      </ol>
+    </nav>
+
+    <header class="devlog-entry__header">
+      <p class="eyebrow">Dev log{% if entries.size > 1 %} {{ entry_number }} of {{ entries.size }}{% endif %}</p>
+      <h1>{{ page.title }}</h1>
+      {%- if page.date %}
+      <p class="devlog-entry__date"><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%B %-d, %Y" }}</time></p>
+      {%- endif %}
+    </header>
+
+    <div class="devlog-prose">
+      {{ content }}
+    </div>
+
+    {%- if prev_entry or next_entry %}
+    <nav class="devlog-pager" aria-label="More {{ game_title }} dev logs">
+      {%- if prev_entry %}
+      <a class="devlog-pager__link devlog-pager__link--prev" href="{{ prev_entry.url | relative_url }}" rel="prev">
+        <span class="devlog-pager__label">← Previous</span>
+        <span class="devlog-pager__title">{{ prev_entry.title }}</span>
+      </a>
+      {%- else %}<span></span>{% endif %}
+      {%- if next_entry %}
+      <a class="devlog-pager__link devlog-pager__link--next" href="{{ next_entry.url | relative_url }}" rel="next">
+        <span class="devlog-pager__label">Next →</span>
+        <span class="devlog-pager__title">{{ next_entry.title }}</span>
+      </a>
+      {%- else %}<span></span>{% endif %}
+    </nav>
+    {%- endif %}
+
+    {%- if game %}
+    <aside class="devlog-game" aria-label="About {{ game_title }}">
+      {%- if game.cover %}
+      <img class="devlog-game__cover" src="{{ game.cover | relative_url }}" alt="" loading="lazy">
+      {%- endif %}
+      <div class="devlog-game__text">
+        <p class="eyebrow">About the game</p>
+        <p class="devlog-game__title"><a class="hover-link" href="{{ game.url | relative_url }}">{{ game_title }}</a></p>
+        {%- if game.pitch %}
+        <p class="devlog-game__pitch">{{ game.pitch | strip_html | truncatewords: 30 }}</p>
+        {%- endif %}
+      </div>
+      <div class="devlog-game__actions">
+        <a class="btn" href="{{ game.url | relative_url }}">Game page</a>
+        {%- if hub %}
+        <a class="btn btn--ghost" href="{{ hub.url | relative_url }}">All dev logs</a>
+        {%- endif %}
+      </div>
+    </aside>
+    {%- endif %}
+
+  </article>
+</main>

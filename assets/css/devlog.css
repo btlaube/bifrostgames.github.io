@@ -1,31 +1,198 @@
-.devlog-container {
-    width: 100%;
-    max-width: 1000px;
+/* devlog.css: styles for the dev log pages
+ *   _layouts/devlog.html        one entry
+ *   _layouts/devlog-hub.html    all entries for one game
+ *   _layouts/devlog-index.html  /devlogs/ landing page
+ *   _includes/devlog-entry-row.html
+ *
+ * Everything here is prefixed .devlog-, so nothing leaks onto other pages. Buttons, links,
+ * .eyebrow and headings come from base.css. Load with css: devlog (set in _config.yml defaults).
+ * The page background is --darkPurple3, so cards sit on the opposite one, --darkPurple2.
+ */
+
+.devlog-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
 }
 
-.devlog-container img {
-    max-width: 50%;
-}
+/* base.css gives .eyebrow a low-contrast purple; use the lavender on these pages */
+.devlog-page .eyebrow { margin: 0; color: var(--highlightColor); }
 
-.entry {
-    max-width: 1200px;
-    background-color: var(--lightPurple3);
-    border-radius: 20px;
-    box-shadow: 0 0 3px 5px var(--shadowColor);
-}
+/* lists: base.css indents every <ul>, so reset the ones used as components */
+.devlog-crumbs ol,
+.devlog-list,
+.devlog-groups { margin: 0; padding: 0; list-style: none; }
 
-.entry h3 {
-    text-align: left;
-}
+/* ---------- Breadcrumb ---------- */
 
-ol, ul {
-    margin-left: 50px; /* Adjust indentation for all lists */
-}
+.devlog-crumbs { margin-bottom: 32px; }
+.devlog-crumbs ol { display: flex; flex-wrap: wrap; gap: 4px 0; }
+.devlog-crumbs li { display: inline-flex; align-items: center; font-size: 1rem; color: var(--text-muted); }
+.devlog-crumbs li + li::before { content: '›'; margin: 0 10px; color: var(--text-muted); }
+.devlog-crumbs a { display: inline-flex; align-items: center; min-height: 44px; color: var(--highlightColor); }
 
-ol ol, ul ul {
-    margin-left: 25px; /* Further indent nested lists */
-}
+/* ---------- Page headers (entry, hub, index) ---------- */
 
-li {
-    margin-bottom: 10px;
+.devlog-entry__header,
+.devlog-index__header { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+
+.devlog-entry__header h1,
+.devlog-index__header h1,
+.devlog-hub__text h1 { margin: 0; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; }
+
+.devlog-entry__date { margin: 0; font-size: 1rem; color: var(--text-muted); }
+.devlog-index__lede { margin: 0; max-width: 620px; font-size: 1.15rem; color: var(--text-muted); }
+
+/* ---------- Entry body (the Markdown you write) ---------- */
+
+.devlog-prose {
+  padding-top: 28px;
+  border-top: 1px solid var(--darkPurple1);
+  line-height: 1.7;
+}
+.devlog-prose > * + * { margin-top: 1.1em; }
+.devlog-prose p { font-size: 1.125rem; }
+.devlog-prose h2 { margin: 1.8em 0 0; font-size: 1.75rem; }
+.devlog-prose h3 { margin: 1.6em 0 0; font-size: 1.35rem; }
+.devlog-prose ul,
+.devlog-prose ol { margin-left: 1.5em; }
+.devlog-prose li { font-size: 1.125rem; margin-top: 0.4em; }
+.devlog-prose a { color: var(--highlightColor); text-decoration: underline; text-underline-offset: 3px; }
+.devlog-prose a:hover { color: var(--textColor); }
+.devlog-prose img { display: block; max-width: 100%; height: auto; border: 1px solid var(--darkPurple1); border-radius: 12px; }
+.devlog-prose blockquote {
+  margin-left: 0;
+  padding: 4px 0 4px 20px;
+  border-left: 3px solid var(--chakra-violet);
+  color: var(--textColor2);
+}
+.devlog-prose code {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: var(--darkPurple2);
+  font-size: 0.95em;
+}
+.devlog-prose pre {
+  padding: 16px;
+  overflow-x: auto;
+  border: 1px solid var(--darkPurple1);
+  border-radius: 10px;
+  background: var(--darkPurple2);
+}
+.devlog-prose pre code { padding: 0; background: none; }
+.devlog-prose hr { margin: 2em 0; border-width: 1px; border-color: var(--darkPurple1); max-width: none; }
+
+/* ---------- Previous / next ---------- */
+
+.devlog-pager {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 56px;
+}
+.devlog-pager__link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 44px;
+  padding: 16px 20px;
+  border: 1px solid var(--darkPurple1);
+  border-radius: 12px;
+  background: var(--darkPurple2);
+  transition: border-color 0.3s, transform 0.3s;
+}
+.devlog-pager__link:hover { border-color: var(--chakra-violet); transform: translateY(-2px); }
+.devlog-pager__link:focus-visible { outline: 3px solid var(--textColor); outline-offset: 3px; }
+.devlog-pager__link--next { grid-column: 2; text-align: right; }
+.devlog-pager__label { font-size: 0.875rem; color: var(--text-muted); }
+.devlog-pager__title { font-size: 1.1rem; color: var(--textColor2); font-family: var(--font-head); }
+
+/* ---------- "About the game" strip on an entry ---------- */
+
+.devlog-game {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px 24px;
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid var(--darkPurple1);
+  border-radius: 14px;
+  background: var(--darkPurple2);
+}
+.devlog-game__cover { flex: 0 0 96px; width: 96px; height: 96px; object-fit: cover; border-radius: 10px; }
+.devlog-game__text { flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.devlog-game__title { margin: 0; font-family: var(--font-head); font-size: 1.35rem; color: var(--textColor2); }
+.devlog-game__pitch { margin: 0; font-size: 1rem; color: var(--text-muted); }
+.devlog-game__actions,
+.devlog-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ---------- Hub header ---------- */
+
+.devlog-hub__header { display: flex; flex-wrap: wrap; align-items: center; gap: 24px 32px; margin-bottom: 40px; }
+.devlog-hub__cover { flex: 0 0 160px; width: 160px; height: 160px; object-fit: cover; border: 1px solid var(--darkPurple1); border-radius: 14px; }
+.devlog-hub__text { flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+.devlog-hub__pitch { margin: 0; max-width: 560px; font-size: 1.1rem; color: var(--text-muted); }
+
+.devlog-count { margin: 0 0 12px; font-size: 0.95rem; color: var(--text-muted); }
+.devlog-empty { margin: 40px 0; font-size: 1.1rem; color: var(--text-muted); }
+
+/* ---------- Entry rows (hub and index) ---------- */
+
+.devlog-list { border-top: 1px solid var(--darkPurple1); }
+
+.devlog-row {
+  --row-color: var(--chakra-red);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  padding: 18px 0 18px 18px;
+  border-bottom: 1px solid var(--darkPurple1);
+  border-left: 4px solid var(--row-color);
+}
+/* the bar on each row follows the chakra order */
+.devlog-row:nth-child(7n + 2) { --row-color: var(--chakra-orange); }
+.devlog-row:nth-child(7n + 3) { --row-color: var(--chakra-yellow); }
+.devlog-row:nth-child(7n + 4) { --row-color: var(--chakra-green); }
+.devlog-row:nth-child(7n + 5) { --row-color: var(--chakra-blue); }
+.devlog-row:nth-child(7n + 6) { --row-color: var(--chakra-indigo); }
+.devlog-row:nth-child(7n + 7) { --row-color: var(--chakra-violet); }
+
+.devlog-row__date { flex: 0 0 110px; padding-top: 4px; font-size: 0.9rem; color: var(--text-muted); font-family: var(--font-head); }
+.devlog-row__body { flex: 1 1 320px; min-width: 0; }
+.devlog-row__title { margin: 0; font-family: var(--font-head); font-size: 1.3rem; line-height: 1.3; color: var(--textColor2); }
+.devlog-row__title a { display: inline-block; padding: 2px 0; }
+.devlog-row__num { margin-right: 6px; color: var(--highlightColor); }
+.devlog-row__preview { margin: 6px 0 0; font-size: 1rem; color: var(--text-muted); }
+
+/* ---------- Index: one group per game ---------- */
+
+.devlog-groups { display: flex; flex-direction: column; gap: 56px; }
+
+.devlog-group__header { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-bottom: 16px; }
+.devlog-group__cover { flex: 0 0 64px; width: 64px; height: 64px; object-fit: cover; border: 1px solid var(--darkPurple1); border-radius: 10px; }
+.devlog-group__text { flex: 1 1 200px; min-width: 0; }
+.devlog-group__text h2 { margin: 0; font-size: 1.75rem; line-height: 1.2; }
+.devlog-group__meta { margin: 2px 0 0; font-size: 0.95rem; color: var(--text-muted); }
+.devlog-group__game { display: inline-flex; align-items: center; min-height: 44px; font-size: 1rem; color: var(--highlightColor); }
+.devlog-group__more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 12px;
+  font-size: 1.1rem;
+  color: var(--highlightColor);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.devlog-group__more:hover { color: var(--textColor); }
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 640px) {
+  .devlog-page { padding: 16px 16px 56px; }
+  .devlog-pager { grid-template-columns: minmax(0, 1fr); }
+  .devlog-pager__link--next { grid-column: 1; text-align: left; }
+  .devlog-hub__cover { flex-basis: 96px; width: 96px; height: 96px; }
+  .devlog-row__date { flex-basis: 100%; padding-top: 0; }
 }

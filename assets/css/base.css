@@ -667,3 +667,34 @@ footer {
   color: var(--textColor);
   filter: none;
 }
+
+
+
+
+/* ---------- Entry rows (hub and index) ---------- */
+
+.devlog-list { border-top: 1px solid var(--darkPurple1); }
+
+.devlog-row {
+  --row-color: var(--chakra-red);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  padding: 18px 0 18px 18px;
+  border-bottom: 1px solid var(--darkPurple1);
+  border-left: 4px solid var(--row-color);
+}
+/* the bar on each row follows the chakra order */
+.devlog-row:nth-child(7n + 2) { --row-color: var(--chakra-orange); }
+.devlog-row:nth-child(7n + 3) { --row-color: var(--chakra-yellow); }
+.devlog-row:nth-child(7n + 4) { --row-color: var(--chakra-green); }
+.devlog-row:nth-child(7n + 5) { --row-color: var(--chakra-blue); }
+.devlog-row:nth-child(7n + 6) { --row-color: var(--chakra-indigo); }
+.devlog-row:nth-child(7n + 7) { --row-color: var(--chakra-violet); }
+
+.devlog-row__date { flex: 0 0 110px; padding-top: 4px; font-size: 0.9rem; color: var(--text-muted); font-family: var(--font-head); }
+.devlog-row__body { flex: 1 1 320px; min-width: 0; }
+.devlog-row__title { margin: 0; font-family: var(--font-head); font-size: 1.3rem; line-height: 1.3; color: var(--textColor2); }
+.devlog-row__title a { display: inline-block; padding: 2px 0; }
+.devlog-row__num { margin-right: 6px; color: var(--highlightColor); }
+.devlog-row__preview { margin: 6px 0 0; font-size: 1rem; color: var(--text-muted); }

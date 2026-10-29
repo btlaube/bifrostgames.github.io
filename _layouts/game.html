@@ -63,6 +63,23 @@ css: game
 
                 <hr>
                 <h4>Released: {{ page.date | date: "%B %-d, %Y" }}</h4>
+                {% assign game_logs_count = 3 %}
+                {% assign game_logs = site.devlogs | where: "project", page.slug | sort: "date" | reverse %}
+                {% if game_logs.size > 0 %}
+                {% assign game_hub = site.devlog_hubs | where: "project", page.slug | first %}
+                <hr>
+                <h2>Dev logs</h2>
+                <ul class="devlog-list">
+                    {% for entry in game_logs limit: game_logs_count %}
+                        {% assign entry_number = game_logs.size | minus: forloop.index0 %}
+                        {% include devlog-entry-row.html entry=entry number=entry_number %}
+                    {% endfor %}
+                </ul>
+                {% if game_hub and game_logs.size > game_logs_count %}
+                <a class="devlog-more hover-link" href="{{ game_hub.url | relative_url }}">View all {{ game_logs.size }} dev logs →</a>
+                {% endif %}
+                {% endif %}
+                
             </div>
 
             <div class="container screenshots">
