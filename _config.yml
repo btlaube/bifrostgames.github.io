@@ -11,6 +11,12 @@ collections:
   devlog_hubs:
     output: true
     permalink: /devlogs/:name/
+  portfolio_devlogs:
+    output: true
+    permalink: /portfolio/devlogs/:path/
+  portfolio_devlog_hubs:
+    output: true
+    permalink: /portfolio/devlogs/:name/
 
 defaults:
   - scope: { path: "", type: games }
@@ -23,11 +29,33 @@ defaults:
       layout: devlog
       css: devlog
       noindex: true
+      hubs_collection: devlog_hubs
+      entries_collection: devlogs
+      index_url: /devlogs/
   - scope: { path: "", type: devlog_hubs }
     values:
       layout: devlog-hub
       css: devlog
       noindex: true
+      hubs_collection: devlog_hubs
+      entries_collection: devlogs
+      index_url: /devlogs/
+  - scope: { path: "", type: portfolio_devlogs }
+    values:
+      layout: portfolio-devlog
+      css: devlog
+      noindex: true
+      hubs_collection: portfolio_devlog_hubs
+      entries_collection: portfolio_devlogs
+      index_url: /portfolio/devlogs/
+  - scope: { path: "", type: portfolio_devlog_hubs }
+    values:
+      layout: portfolio-devlog-hub
+      css: devlog
+      noindex: true
+      hubs_collection: portfolio_devlog_hubs
+      entries_collection: portfolio_devlogs
+      index_url: /portfolio/devlogs/
 
 exclude:
   - _tools/

@@ -5,6 +5,13 @@ layout: bifrost-shell
   _layouts/devlog.html: one dev log entry.
 
   Entry front matter: project (the game's slug), title, date.
+  Works for both dev log lists. These come from _config.yml defaults (see the scope blocks):
+    entries_collection   devlogs | portfolio_devlogs
+    hubs_collection      devlog_hubs | portfolio_devlog_hubs
+    parent_collection    where the project/game page lives (default: games)
+    index_url            /devlogs/ | /portfolio/devlogs/   (default /devlogs/)
+    index_label          crumb text for the index (default "Dev logs")
+    parent_label         "About the game" strip heading and button text (default "Game page")
   Links on this page:
     - breadcrumb at the top:  Dev logs (index)  ›  <Game> (this game's dev log hub)
     - previous / next entry for the SAME project (older / newer)
@@ -12,9 +19,16 @@ layout: bifrost-shell
   Needs css: devlog, set in _config.yml defaults (a layout's own front matter does not reach page.css).
 {%- endcomment -%}
 
-{%- assign game = site.games | where: "slug", page.project | first -%}
-{%- assign hub = site.devlog_hubs | where: "project", page.project | first -%}
-{%- assign entries = site.devlogs | where: "project", page.project | sort: "date" -%}
+{%- assign entries_name = page.entries_collection | default: "devlogs" -%}
+{%- assign hubs_name = page.hubs_collection | default: "devlog_hubs" -%}
+{%- assign parent_name = page.parent_collection | default: "games" -%}
+{%- assign index_url = page.index_url | default: "/devlogs/" -%}
+{%- assign index_label = page.index_label | default: "Dev logs" -%}
+{%- assign parent_label = page.parent_label | default: "Game page" -%}
+
+{%- assign game = site[parent_name] | where: "slug", page.project | first -%}
+{%- assign hub = site[hubs_name] | where: "project", page.project | first -%}
+{%- assign entries = site[entries_name] | where: "project", page.project | sort: "date" -%}
 {%- if game -%}
   {%- assign game_title = game.title -%}
 {%- else -%}
@@ -34,7 +48,7 @@ layout: bifrost-shell
 
     <nav class="devlog-crumbs" aria-label="Breadcrumb">
       <ol>
-        <li><a class="subtle-link" href="{{ '/devlogs/' | relative_url }}">Dev logs</a></li>
+        <li><a class="subtle-link" href="{{ index_url | relative_url }}">{{ index_label }}</a></li>
         <li>
           {%- if hub %}<a class="subtle-link" href="{{ hub.url | relative_url }}">{{ game_title }}</a>
           {%- elsif game %}<a class="subtle-link" href="{{ game.url | relative_url }}">{{ game_title }}</a>
@@ -85,7 +99,7 @@ layout: bifrost-shell
         {%- endif %}
       </div>
       <div class="devlog-game__actions">
-        <a class="btn" href="{{ game.url | relative_url }}">Game page</a>
+        <a class="btn" href="{{ game.url | relative_url }}">{{ parent_label }}</a>
         {%- if hub %}
         <a class="btn btn--ghost" href="{{ hub.url | relative_url }}">All dev logs</a>
         {%- endif %}

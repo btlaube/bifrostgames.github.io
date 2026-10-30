@@ -1,0 +1,77 @@
+---
+layout: portfolio-shell
+---
+{%- comment -%}
+  _layouts/portfolio-devlog-index.html: the /portfolio/devlogs/ landing page.
+  One group per game that has at least one dev log, groups ordered by most recent entry,
+  each showing its newest entries and a link to that game's hub.
+  Needs css: devlog (set in the page's front matter).
+{%- endcomment -%}
+
+{%- assign all_logs = site.portfolio_devlogs -%}
+{%- assign projects = all_logs | map: "project" | uniq -%}
+
+{%- comment -%} order projects by the date of their newest entry {%- endcomment -%}
+{%- assign keys = "" -%}
+{%- for p in projects -%}
+  {%- assign latest = all_logs | where: "project", p | sort: "date" | last -%}
+  {%- capture key -%}{{ latest.date | date: "%Y-%m-%d" }}|{{ p }}{%- endcapture -%}
+  {%- assign keys = keys | append: key | append: "," -%}
+{%- endfor -%}
+{%- assign ordered = keys | split: "," | sort | reverse -%}
+
+<main class="devlog-page">
+
+  <header class="devlog-index__header">
+    <p class="eyebrow">Development notes</p>
+    <h1>Dev Logs</h1>
+    <p class="devlog-index__lede">How my games came together: design decisions, problems and what I learned along the way.</p>
+  </header>
+
+  {%- if all_logs.size > 0 %}
+  <div class="devlog-groups">
+    {%- for key in ordered %}
+    {%- assign p = key | split: "|" | last -%}
+    {%- if p != "" %}
+    {%- assign game = site.games | where: "slug", p | first -%}
+    {%- assign hub = site.devlog_hubs | where: "project", p | first -%}
+    {%- assign entries = all_logs | where: "project", p | sort: "date" | reverse -%}
+    {%- assign total = entries.size -%}
+    {%- assign max_shown = 3 -%}
+    {%- unless hub -%}{%- assign max_shown = total -%}{%- endunless -%}
+    {%- if game -%}{%- assign game_title = game.title -%}{%- else -%}{%- assign game_title = p | replace: "-", " " | capitalize -%}{%- endif %}
+
+    <section class="devlog-group" id="{{ p }}" aria-labelledby="{{ p }}-heading">
+      <header class="devlog-group__header">
+        {%- if game and game.cover %}
+        <img class="devlog-group__cover" src="{{ game.cover | relative_url }}" alt="" loading="lazy">
+        {%- endif %}
+        <div class="devlog-group__text">
+          <h2 id="{{ p }}-heading">
+            {%- if hub %}<a class="hover-link" href="{{ hub.url | relative_url }}">{{ game_title }}</a>{% else %}{{ game_title }}{% endif -%}
+          </h2>
+          <p class="devlog-group__meta">{{ total }} {% if total == 1 %}entry{% else %}entries{% endif %} · latest {{ entries.first.date | date: "%b %-d, %Y" }}</p>
+        </div>
+        {%- if game %}
+        <a class="devlog-group__game subtle-link" href="{{ game.url | relative_url }}">Game page →</a>
+        {%- endif %}
+      </header>
+
+      <ul class="devlog-list">
+        {%- for entry in entries limit: max_shown %}
+        {% include devlog-entry-row.html entry=entry %}
+        {%- endfor %}
+      </ul>
+
+      {%- if total > 3 and hub %}
+      <a class="devlog-group__more hover-link" href="{{ hub.url | relative_url }}">View all {{ total }} dev logs →</a>
+      {%- endif %}
+    </section>
+    {%- endif %}
+    {%- endfor %}
+  </div>
+  {%- else %}
+  <p class="devlog-empty">No dev logs yet. Check back soon.</p>
+  {%- endif %}
+
+</main>

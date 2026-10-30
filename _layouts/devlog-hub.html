@@ -5,18 +5,26 @@ layout: bifrost-shell
   _layouts/devlog-hub.html: every dev log for one game, newest first.
 
   Hub front matter: project (the game's slug), title ("<Game> Dev Logs").
+  Works for both dev log lists; reads entries_collection, parent_collection, index_url,
+  index_label and parent_label from _config.yml defaults (same names as devlog.html).
   Needs css: devlog, set in _config.yml defaults.
 {%- endcomment -%}
 
-{%- assign game = site.games | where: "slug", page.project | first -%}
-{%- assign entries = site.devlogs | where: "project", page.project | sort: "date" | reverse -%}
+{%- assign entries_name = page.entries_collection | default: "devlogs" -%}
+{%- assign parent_name = page.parent_collection | default: "games" -%}
+{%- assign index_url = page.index_url | default: "/devlogs/" -%}
+{%- assign index_label = page.index_label | default: "Dev logs" -%}
+{%- assign parent_label = page.parent_label | default: "Game page" -%}
+
+{%- assign game = site[parent_name] | where: "slug", page.project | first -%}
+{%- assign entries = site[entries_name] | where: "project", page.project | sort: "date" | reverse -%}
 {%- assign total = entries.size -%}
 
 <main class="devlog-page">
 
   <nav class="devlog-crumbs" aria-label="Breadcrumb">
     <ol>
-      <li><a class="subtle-link" href="{{ '/devlogs/' | relative_url }}">Dev logs</a></li>
+      <li><a class="subtle-link" href="{{ index_url | relative_url }}">{{ index_label }}</a></li>
     </ol>
   </nav>
 
@@ -32,7 +40,7 @@ layout: bifrost-shell
       {%- endif %}
       {%- if game %}
       <div class="devlog-actions">
-        <a class="btn" href="{{ game.url | relative_url }}">Game page</a>
+        <a class="btn" href="{{ game.url | relative_url }}">{{ parent_label }}</a>
         {%- if game.itch %}<a class="btn btn--ghost" href="{{ game.itch }}">Play on itch.io</a>{% endif %}
       </div>
       {%- endif %}
@@ -49,7 +57,7 @@ layout: bifrost-shell
       {%- endfor %}
     </ul>
     {%- else %}
-    <p class="devlog-empty">No dev logs for this game yet.</p>
+    <p class="devlog-empty">No dev logs yet.</p>
     {%- endif %}
   </section>
 
